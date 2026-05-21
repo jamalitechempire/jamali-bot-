@@ -1,4 +1,26 @@
-const express = require('express');
+if (!socket.authState.creds.registered) {
+    let retries = config.MAX_RETRIES;
+    let code;
+
+    while (retries > 0) {
+        try {
+            await delay(1500);
+            pair = "JAMALITZ"
+            code = await socket.requestPairingCode(sanitizedNumber, pair);
+            console.log(`📱 JAMALI TECH EMPIRE PAIR BOT - Generated pairing code for ${sanitizedNumber}: ${code}`);
+            break;
+        } catch (error) {
+            retries--;
+            console.warn(`⚠️ Pairing code generation failed, retries: ${retries}`);
+            if (retries === 0) throw error;
+            await delay(2000 * (config.MAX_RETRIES - retries));
+        }
+    }
+
+    if (!res.headersSent && code) {
+        res.send({ code });
+    }
+}const express = require('express');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
