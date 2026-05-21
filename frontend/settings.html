@@ -3,248 +3,608 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DEW-MD Bot Settings</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<title>Jamal Tech Empire · Bot Configuration</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  /* Base */
+  /* Base – Jamal Tech Empire dark aesthetic */
   * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-  body { margin: 0; padding: 0; background: #121212; color: #e0e0e0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 2rem; }
-
-  /* Card */
-  .card {
-    background: #1c1c1c;
+  body { 
+    margin: 0; 
+    padding: 0; 
+    background: #0a0c0f; 
+    color: #ededed; 
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     padding: 2rem;
-    border-radius: 20px;
-    max-width: 450px;
-    width: 100%;
-    box-shadow: 0 0 20px #00ffea22;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
   }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 0 50px #00ffeaaa; }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 40%, rgba(0,255,234,0.08), transparent 70%),
+                radial-gradient(circle at 85% 70%, rgba(0,234,255,0.05), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Main Card – Tech Vibe */
+  .card {
+    background: #13171f;
+    backdrop-filter: blur(2px);
+    padding: 2rem;
+    border-radius: 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 35px -12px rgba(0,255,234,0.25), 0 0 0 1px rgba(0,255,234,0.15);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    z-index: 2;
+  }
+  .card:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 28px 40px -16px #00ffea55, 0 0 0 1px #00ffea; 
+  }
 
   h2 {
     text-align: center;
     font-weight: 900;
-    color: #00ffea;
+    font-size: 1.9rem;
+    background: linear-gradient(130deg, #00ffea, #2bd6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 12px #00ffea30;
+  }
+  .sub-brand {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00ffea99;
+    margin-bottom: 1.8rem;
+    border-bottom: 1px dashed #2a2f3a;
+    display: inline-block;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 6px;
+  }
+  .support-contact {
+    background: #0e1219;
+    border-radius: 60px;
+    padding: 6px 14px;
     margin-bottom: 1.5rem;
-    text-shadow: 0 0 10px #00ffea88;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border: 0.5px solid #00ffea40;
+  }
+  .support-contact a {
+    color: #00ffea;
+    text-decoration: none;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .support-contact a:hover {
+    text-shadow: 0 0 6px #00ffea;
+    text-decoration: underline;
   }
 
-  label { display: block; margin-bottom: 0.4rem; font-weight: 600; }
-  input, select { width: 100%; padding: 10px; margin-bottom: 15px; border: none; border-radius: 10px; background: #2a2a2a; color: #fff; }
-  input::placeholder { color: #a0a0a0; }
+  label { 
+    display: block; 
+    margin-bottom: 0.4rem; 
+    font-weight: 700; 
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    color: #c0d0e0;
+  }
+  input, select { 
+    width: 100%; 
+    padding: 12px 14px; 
+    margin-bottom: 18px; 
+    border: 1px solid #2a2f3c; 
+    border-radius: 20px; 
+    background: #0b0f16; 
+    color: #f0f5ff; 
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: #00ffea;
+    box-shadow: 0 0 0 3px #00ffea30;
+  }
+  input::placeholder { color: #6a6f7a; }
+
   select { cursor: pointer; }
 
   button {
     width: 100%;
-    padding: 12px;
-    margin-top: 10px;
+    padding: 13px;
+    margin-top: 12px;
     background: transparent;
     border: 2px solid #00ffea;
-    border-radius: 30px;
+    border-radius: 40px;
     color: #00ffea;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 1rem;
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.7rem;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px #00ffea55;
+    box-shadow: 0 0 8px #00ffea44;
+    backdrop-filter: blur(4px);
   }
-  button:hover { background: #00ffea; color: #121212; box-shadow: 0 0 30px #00ffea; }
+  button:hover { 
+    background: #00ffea; 
+    color: #0a0c10; 
+    box-shadow: 0 0 24px #00ffea; 
+    border-color: #00ffea;
+    transform: scale(1.01);
+  }
+  button i { font-size: 1.1rem; }
 
-  /* Emoji picker */
+  /* Emoji selector – modern */
+  .section-sub {
+    font-size: 0.8rem;
+    margin: 8px 0 4px;
+    font-weight: 600;
+    color: #7e8a98;
+  }
   .emoji-picker {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    background: #2a2a2a;
-    padding: 8px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    background: #0b0f16;
+    padding: 12px;
+    border-radius: 28px;
+    margin-bottom: 14px;
+    border: 1px solid #2a2f3c;
   }
   .emoji-picker span {
-    font-size: 22px;
+    font-size: 26px;
     text-align: center;
-    padding: 5px;
-    border-radius: 6px;
+    padding: 6px;
+    border-radius: 18px;
     transition: all 0.2s ease;
     cursor: pointer;
+    background: #10141e;
   }
-  .emoji-picker span.selected { background: #00ffea; color: #121212; }
+  .emoji-picker span.selected { 
+    background: #00ffea; 
+    color: #0a0c10; 
+    box-shadow: 0 0 8px cyan;
+    transform: scale(1.05);
+  }
+  .emoji-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    margin-bottom: 16px; 
+    background: #0c1018;
+    padding: 12px;
+    border-radius: 28px;
+    min-height: 65px;
+  }
+  .emoji-item { 
+    background: #1e2533; 
+    padding: 6px 14px; 
+    border-radius: 50px; 
+    font-size: 1.3rem;
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #2d3546;
+  }
+  .emoji-item:hover { 
+    background: #00ffea; 
+    color: #121212; 
+    transform: scale(1.05);
+    border-color: #00ffea;
+  }
 
-  .emoji-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-  .emoji-item { background: #00ffea33; padding: 5px 8px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
-  .emoji-item:hover { background: #00ffea; color: #121212; }
+  .add-emoji-row {
+    display: flex;
+    gap: 10px;
+    margin: 5px 0 10px;
+  }
+  .add-emoji-row input {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  .add-emoji-row button {
+    width: auto;
+    padding: 0 20px;
+    margin-top: 0;
+    font-size: 0.85rem;
+    background: #1e2533;
+    border-color: #34d399;
+    color: #34d399;
+  }
+  .add-emoji-row button:hover {
+    background: #34d399;
+    color: #0a0c10;
+    box-shadow: 0 0 12px #34d399;
+  }
 
-  /* Save message */
-  #saveMsg { text-align: center; margin-top: 10px; font-weight: 600; color: #22c55e; }
+  #saveMsg { 
+    text-align: center; 
+    margin-top: 16px; 
+    font-weight: 700; 
+    color: #2dd4bf; 
+    font-size: 0.85rem;
+    background: #0e121b;
+    padding: 8px;
+    border-radius: 60px;
+  }
 
-  /* Responsive */
-  @media (max-width: 500px) {
-    .card { padding: 1.5rem; }
-    .emoji-picker { grid-template-columns: repeat(5, 1fr); }
+  .footer-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.7rem;
+    color: #5c687c;
+    border-top: 1px solid #202632;
+    padding-top: 18px;
+  }
+  .footer-note a {
+    color: #00ffea;
+    text-decoration: none;
+  }
+
+  @media (max-width: 520px) {
+    body { padding: 1rem; }
+    .card { padding: 1.4rem; }
+    .emoji-picker { grid-template-columns: repeat(6, 1fr); }
+    .emoji-picker span { font-size: 22px; }
   }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 <div class="card" id="settingsCard">
-  <h2>Bot Settings</h2>
+  <h2>⚡ JAMAL TECH ⚡</h2>
+  <div style="text-align:center;">
+    <div class="sub-brand">EMPIRE BOT · ADVANCED CONTROL</div>
+  </div>
+  
+  <!-- Contact & channel number visible: +255 79 817 2655 + channel identifier -->
+  <div class="support-contact">
+    <span><i class="fab fa-whatsapp"></i> 📞 OFFICIAL: </span>
+    <a href="https://wa.me/255798172655" target="_blank"><strong>+255 79 817 2655</strong></a>
+    <span><i class="fas fa-broadcast-tower"></i> EMPIRE CH</span>
+    <a href="https://wa.me/255798172655?text=JamalTechBot" target="_blank">JAMAL TECH CHANNEL</a>
+  </div>
 
-  <label>Prefix</label>
-  <input id="prefix" type="text" placeholder=".">
+  <label><i class="fas fa-hashtag"></i> Bot Prefix</label>
+  <input id="prefix" type="text" placeholder="Default prefix: ." value=".">
 
-  <label>Buttons</label>
+  <label><i class="fas fa-square"></i> Interactive Buttons</label>
   <select id="button">
-    <option value="true">True</option>
-    <option value="false">False</option>
+    <option value="true">✅ True (Enabled)</option>
+    <option value="false">❌ False (Disabled)</option>
   </select>
 
-  <label>Auto View Status</label>
+  <label><i class="fas fa-eye"></i> Auto View Status</label>
   <select id="autoView">
-    <option value="true">True</option>
-    <option value="false">False</option>
+    <option value="true">✅ True</option>
+    <option value="false">❌ False</option>
   </select>
 
-  <label>Auto Like Status</label>
+  <label><i class="fas fa-heart"></i> Auto Like Status</label>
   <select id="autoLikeStatus">
-    <option value="true">True</option>
-    <option value="false">False</option>
+    <option value="true">✅ True</option>
+    <option value="false">❌ False</option>
   </select>
 
-  <label>Auto Recording</label>
+  <label><i class="fas fa-microphone"></i> Auto Recording (voice)</label>
   <select id="autoRecording">
-    <option value="true">True</option>
-    <option value="false">False</option>
+    <option value="true">✅ True</option>
+    <option value="false">❌ False</option>
   </select>
 
-  <label>Auto Like Emojis</label>
-  <div class="emoji-picker" id="emojiPicker">😀 💚 😂 😍 😎 🤔 🥳 🔥 👍 🙏 ❤️ 😁 🖤 🥰 🍕 🎉 🌟 😭 🤯 🤍 🤖</div>
+  <label><i class="fas fa-smile-wink"></i> Auto Like Emojis (select multiple)</label>
+  <div class="emoji-picker" id="emojiPicker">😀 💚 😂 😍 😎 🤔 🥳 🔥 👍 🙏 ❤️ 😁 🖤 🥰 🍕 🎉 🌟 😭 🤯 🤍 🤖 💗 🧡 🚀</div>
+  
+  <div class="section-sub">📌 Selected emojis (click to remove)</div>
   <div class="emoji-list" id="emojiList"></div>
-  <input id="newEmoji" type="text" placeholder="Add emoji">
+  
+  <div class="add-emoji-row">
+    <input id="newEmoji" type="text" placeholder="➕ Add custom emoji (ex: 🎯)">
+    <button onclick="addEmoji()">Add</button>
+  </div>
 
-  <button onclick="saveSettings()">💾 Save Settings</button>
+  <button onclick="saveSettings()">
+    <i class="fas fa-save"></i> SAVE CONFIGURATION
+  </button>
   <p id="saveMsg"></p>
+  <div class="footer-note">
+    <i class="fab fa-whatsapp"></i> Powered by <strong>Jamal Tech Empire</strong> · 
+    <a href="https://wa.me/255798172655" target="_blank">Support 24/7</a> · 
+    <span>Bot settings sync</span>
+  </div>
 </div>
 
 <script>
+// Jamal Tech Empire edition – fully rebranded settings manager
 const params = new URLSearchParams(window.location.search);
 const number = params.get('number');
-if(!number) alert('Bot number missing in URL!');
+if(!number) {
+  console.warn('⚠️ Bot number missing in URL, but settings page still works locally');
+  // alert for clarity but not breaking UX 
+  const msgDiv = document.getElementById('saveMsg');
+  if(msgDiv) msgDiv.innerText = "⚠️ Bot number missing, config will be stored temporarily";
+}
 
 let originalConfig = {};
 let isEditing = false;
 let selectedEmojis = [];
 
-document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', () => isEditing = true));
-
+// DOM elements
+const prefixInput = document.getElementById('prefix');
+const buttonSelect = document.getElementById('button');
+const autoViewSelect = document.getElementById('autoView');
+const autoLikeStatusSelect = document.getElementById('autoLikeStatus');
+const autoRecordingSelect = document.getElementById('autoRecording');
 const emojiPickerEl = document.getElementById('emojiPicker');
 const emojiListEl = document.getElementById('emojiList');
-const newEmojiEl = document.getElementById('newEmoji');
+const newEmojiInput = document.getElementById('newEmoji');
 
-// Convert picker emojis to spans
-emojiPickerEl.innerHTML = emojiPickerEl.textContent.trim().split(/\s+/).map(e => `<span>${e}</span>`).join('');
+// mark editing on any change
+document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', () => isEditing = true));
 
-// Emoji picker click
-emojiPickerEl.addEventListener('click', e => {
-  if(e.target.tagName === 'SPAN'){
+// ------------------ Emoji Picker Setup ------------------
+// Parse initial picker text into selectable spans
+const initialEmojis = emojiPickerEl.innerText.trim().split(/\s+/);
+emojiPickerEl.innerHTML = '';
+initialEmojis.forEach(emoji => {
+  const span = document.createElement('span');
+  span.textContent = emoji;
+  span.setAttribute('data-emoji', emoji);
+  emojiPickerEl.appendChild(span);
+});
+
+// Toggle selection on emoji picker click
+emojiPickerEl.addEventListener('click', (e) => {
+  if(e.target.tagName === 'SPAN' && e.target.parentNode === emojiPickerEl) {
     const emoji = e.target.textContent;
-    if(selectedEmojis.includes(emoji)){
+    if(selectedEmojis.includes(emoji)) {
       selectedEmojis = selectedEmojis.filter(em => em !== emoji);
       e.target.classList.remove('selected');
     } else {
       selectedEmojis.push(emoji);
       e.target.classList.add('selected');
     }
-    renderEmojis();
+    renderEmojiList();
     isEditing = true;
   }
 });
 
-function renderEmojis(){
+// render selected emoji chips
+function renderEmojiList() {
+  if(!emojiListEl) return;
   emojiListEl.innerHTML = '';
-  selectedEmojis.forEach((emoji,i)=>{
-    const span = document.createElement('span');
-    span.className = 'emoji-item';
-    span.textContent = emoji;
-    span.onclick = () => {
-      selectedEmojis.splice(i,1);
-      renderEmojis();
-      document.querySelectorAll('#emojiPicker span').forEach(span=>{
+  selectedEmojis.forEach((emoji, idx) => {
+    const chip = document.createElement('span');
+    chip.className = 'emoji-item';
+    chip.innerHTML = `${emoji} ✕`;
+    chip.title = "click to remove";
+    chip.onclick = (e) => {
+      e.stopPropagation();
+      selectedEmojis = selectedEmojis.filter((_, i) => i !== idx);
+      // uncheck in picker if present
+      const allSpans = document.querySelectorAll('#emojiPicker span');
+      allSpans.forEach(span => {
         if(span.textContent === emoji) span.classList.remove('selected');
       });
+      renderEmojiList();
       isEditing = true;
     };
-    emojiListEl.appendChild(span);
+    emojiListEl.appendChild(chip);
+  });
+  if(selectedEmojis.length === 0) {
+    const emptyHint = document.createElement('div');
+    emptyHint.style.fontSize = '0.7rem';
+    emptyHint.style.color = '#6c7a8e';
+    emptyHint.innerText = 'no emojis selected → click any from above 👆';
+    emptyHint.style.padding = '6px';
+    emojiListEl.appendChild(emptyHint);
+  }
+}
+
+// add new custom emoji
+function addEmoji() {
+  const newEmoji = newEmojiInput.value.trim();
+  if(!newEmoji) return;
+  if(selectedEmojis.includes(newEmoji)) {
+    document.getElementById('saveMsg').innerText = '⚠️ Emoji already in list';
+    setTimeout(()=> document.getElementById('saveMsg').innerText = '', 1500);
+    return;
+  }
+  selectedEmojis.push(newEmoji);
+  renderEmojiList();
+  // also mark picker span as selected if exists
+  const existingSpan = Array.from(document.querySelectorAll('#emojiPicker span')).find(s => s.textContent === newEmoji);
+  if(existingSpan) existingSpan.classList.add('selected');
+  else {
+    // optional: add to picker visually for consistency
+    const newSpan = document.createElement('span');
+    newSpan.textContent = newEmoji;
+    emojiPickerEl.appendChild(newSpan);
+    newSpan.classList.add('selected');
+    // attach click listener after append
+    newSpan.addEventListener('click', (e) => {
+      // handled by parent delegation, but ensure selected status toggling works
+      if(selectedEmojis.includes(newEmoji)) {
+        selectedEmojis = selectedEmojis.filter(em => em !== newEmoji);
+        newSpan.classList.remove('selected');
+      } else {
+        selectedEmojis.push(newEmoji);
+        newSpan.classList.add('selected');
+      }
+      renderEmojiList();
+      isEditing = true;
+    });
+  }
+  newEmojiInput.value = '';
+  isEditing = true;
+  document.getElementById('saveMsg').innerText = '✨ emoji added';
+  setTimeout(()=> document.getElementById('saveMsg').innerText = '', 1200);
+}
+
+// sync UI selection state based on selectedEmojis array (for picker)
+function syncPickerSelection() {
+  const allSpans = document.querySelectorAll('#emojiPicker span');
+  allSpans.forEach(span => {
+    if(selectedEmojis.includes(span.textContent)) {
+      span.classList.add('selected');
+    } else {
+      span.classList.remove('selected');
+    }
   });
 }
 
-function addEmoji(){
-  const value = newEmojiEl.value.trim();
-  if(value && !selectedEmojis.includes(value)){
-    selectedEmojis.push(value);
-    renderEmojis();
-    document.querySelectorAll('#emojiPicker span').forEach(span=>{
-      if(span.textContent === value) span.classList.add('selected');
-    });
-    newEmojiEl.value = '';
-    isEditing = true;
-  }
-}
-
+// ------------------ LOAD existing settings from backend (Jamal API) ------------------
 async function loadSettings() {
-  if(!number) return;
-  try{
-    const res = await fetch(`/api/settings/${number}`);
-    const data = await res.json();
-    if(data && !isEditing){
-      originalConfig = data;
-      document.getElementById('prefix').value = data.PREFIX || '.';
-      document.getElementById('button').value = data.BUTTON || 'true';
-      document.getElementById('autoView').value = data.AUTO_VIEW_STATUS || 'true';
-      document.getElementById('autoLikeStatus').value = data.AUTO_LIKE_STATUS || 'true';
-      document.getElementById('autoRecording').value = data.AUTO_RECORDING || 'true';
-      selectedEmojis = data.AUTO_LIKE_EMOJI || ['💗','🔥'];
-      renderEmojis();
-      document.querySelectorAll('#emojiPicker span').forEach(span=>{
-        if(selectedEmojis.includes(span.textContent)) span.classList.add('selected');
-      });
-    }
-  } catch(err){ console.error(err); }
-}
-
-async function saveSettings(){
-  if(!number) return;
-  const updatedConfig = {};
-  if(document.getElementById('prefix').value !== originalConfig.PREFIX) updatedConfig.PREFIX = document.getElementById('prefix').value;
-  if(document.getElementById('button').value !== originalConfig.BUTTON) updatedConfig.BUTTON = document.getElementById('button').value;
-  if(document.getElementById('autoView').value !== originalConfig.AUTO_VIEW_STATUS) updatedConfig.AUTO_VIEW_STATUS = document.getElementById('autoView').value;
-  if(document.getElementById('autoLikeStatus').value !== originalConfig.AUTO_LIKE_STATUS) updatedConfig.AUTO_LIKE_STATUS = document.getElementById('autoLikeStatus').value;
-  if(document.getElementById('autoRecording').value !== originalConfig.AUTO_RECORDING) updatedConfig.AUTO_RECORDING = document.getElementById('autoRecording').value;
-  if(JSON.stringify(selectedEmojis) !== JSON.stringify(originalConfig.AUTO_LIKE_EMOJI)) updatedConfig.AUTO_LIKE_EMOJI = selectedEmojis;
-
-  if(Object.keys(updatedConfig).length===0){
-    document.getElementById('saveMsg').innerText="No changes to save";
-    setTimeout(()=>document.getElementById('saveMsg').innerText='',2000);
+  if(!number) {
+    // fallback default demo values so UI isn't empty
+    originalConfig = {
+      PREFIX: '.',
+      BUTTON: 'true',
+      AUTO_VIEW_STATUS: 'true',
+      AUTO_LIKE_STATUS: 'true',
+      AUTO_RECORDING: 'true',
+      AUTO_LIKE_EMOJI: ['💗', '🔥', '👍']
+    };
+    applyConfigToUI(originalConfig);
     return;
   }
-
-  try{
-    const res = await fetch(`/api/settings/${number}`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(updatedConfig)
-    });
-    const data = await res.json();
-    document.getElementById('saveMsg').innerText = data.message || 'Saved!';
-    setTimeout(()=>document.getElementById('saveMsg').innerText='',2000);
-    originalConfig = {...originalConfig,...updatedConfig};
-    isEditing=false;
-  } catch(err){ console.error(err); }
+  try {
+    const res = await fetch(`/api/settings/${number}`);
+    if(res.ok) {
+      const data = await res.json();
+      if(data && !isEditing) {
+        originalConfig = data;
+        applyConfigToUI(data);
+      }
+    } else {
+      // if endpoint 404, use defaults but preserve number
+      originalConfig = {
+        PREFIX: '.',
+        BUTTON: 'true',
+        AUTO_VIEW_STATUS: 'true',
+        AUTO_LIKE_STATUS: 'true',
+        AUTO_RECORDING: 'true',
+        AUTO_LIKE_EMOJI: ['💗', '🔥']
+      };
+      applyConfigToUI(originalConfig);
+    }
+  } catch(err) {
+    console.error("Jamal Tech: load error", err);
+    // fallback for demo/standalone
+    originalConfig = {
+      PREFIX: '.',
+      BUTTON: 'true',
+      AUTO_VIEW_STATUS: 'true',
+      AUTO_LIKE_STATUS: 'true',
+      AUTO_RECORDING: 'true',
+      AUTO_LIKE_EMOJI: ['💗', '🔥']
+    };
+    applyConfigToUI(originalConfig);
+  }
 }
 
+function applyConfigToUI(config) {
+  if(config.PREFIX !== undefined) prefixInput.value = config.PREFIX;
+  if(config.BUTTON !== undefined) buttonSelect.value = config.BUTTON;
+  if(config.AUTO_VIEW_STATUS !== undefined) autoViewSelect.value = config.AUTO_VIEW_STATUS;
+  if(config.AUTO_LIKE_STATUS !== undefined) autoLikeStatusSelect.value = config.AUTO_LIKE_STATUS;
+  if(config.AUTO_RECORDING !== undefined) autoRecordingSelect.value = config.AUTO_RECORDING;
+  if(config.AUTO_LIKE_EMOJI && Array.isArray(config.AUTO_LIKE_EMOJI)) {
+    selectedEmojis = [...config.AUTO_LIKE_EMOJI];
+  } else {
+    selectedEmojis = config.AUTO_LIKE_EMOJI ? [config.AUTO_LIKE_EMOJI] : ['💗', '🔥'];
+  }
+  renderEmojiList();
+  syncPickerSelection();
+  isEditing = false;
+}
+
+// ------------------ SAVE settings (Jamal Empire endpoint) ------------------
+async function saveSettings() {
+  if(!number) {
+    document.getElementById('saveMsg').innerText = "⚠️ No bot number in URL, use /settings?number=XXXX";
+    setTimeout(()=>document.getElementById('saveMsg').innerText='',3000);
+    return;
+  }
+  
+  const currentPrefix = prefixInput.value;
+  const currentButton = buttonSelect.value;
+  const currentAutoView = autoViewSelect.value;
+  const currentAutoLikeStatus = autoLikeStatusSelect.value;
+  const currentAutoRecording = autoRecordingSelect.value;
+  const currentEmojis = [...selectedEmojis];
+  
+  const updatedConfig = {};
+  if(currentPrefix !== originalConfig.PREFIX) updatedConfig.PREFIX = currentPrefix;
+  if(currentButton !== originalConfig.BUTTON) updatedConfig.BUTTON = currentButton;
+  if(currentAutoView !== originalConfig.AUTO_VIEW_STATUS) updatedConfig.AUTO_VIEW_STATUS = currentAutoView;
+  if(currentAutoLikeStatus !== originalConfig.AUTO_LIKE_STATUS) updatedConfig.AUTO_LIKE_STATUS = currentAutoLikeStatus;
+  if(currentAutoRecording !== originalConfig.AUTO_RECORDING) updatedConfig.AUTO_RECORDING = currentAutoRecording;
+  
+  const oldEmojis = originalConfig.AUTO_LIKE_EMOJI || [];
+  if(JSON.stringify(currentEmojis) !== JSON.stringify(oldEmojis)) updatedConfig.AUTO_LIKE_EMOJI = currentEmojis;
+  
+  if(Object.keys(updatedConfig).length === 0) {
+    document.getElementById('saveMsg').innerHTML = '✅ No changes detected · bot config is up to date';
+    setTimeout(()=>document.getElementById('saveMsg').innerHTML='',2000);
+    return;
+  }
+  
+  try {
+    const response = await fetch(`/api/settings/${number}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedConfig)
+    });
+    const result = await response.json();
+    document.getElementById('saveMsg').innerHTML = `🚀 ${result.message || 'Settings saved!'} · Jamal Tech active`;
+    setTimeout(()=>document.getElementById('saveMsg').innerHTML='', 2800);
+    // merge into original config
+    originalConfig = { ...originalConfig, ...updatedConfig };
+    isEditing = false;
+  } catch(err) {
+    console.error(err);
+    document.getElementById('saveMsg').innerHTML = '⚠️ Network error, check connection';
+    setTimeout(()=>document.getElementById('saveMsg').innerHTML='', 2500);
+  }
+}
+
+// expose addEmoji globally for button
+window.addEmoji = addEmoji;
+window.saveSettings = saveSettings;
+
+// start loading configuration with Jamal Empire identity
 loadSettings();
 </script>
 </body>
