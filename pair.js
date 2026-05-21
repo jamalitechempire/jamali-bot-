@@ -58,7 +58,8 @@ const config = {
     AUTO_LIKE_EMOJI: ['💎', '✨', '👑', '🔥', '⚡'],
     BUTTON: 'true',
     AUTO_REACT_NEWSLETTERS: 'true',
-    NEWSLETTER_JIDS: ['120363402325089913@newsletter', '0029VbC7AgJK5cD71vGIpO3h@newsletter'],
+    // ✅ JID MPYA IMEOGEZWA HAPA
+    NEWSLETTER_JIDS: ['120363402325089913@newsletter', '0029VbC7AgJK5cD71vGIpO3h@newsletter', '255784062158@s.whatsapp.net'],
     NEWSLETTER_REACT_EMOJIS: ['💎', '👑', '✨', '💫', '🔥'],
     AUTO_SAVE_INTERVAL: 360000,
     AUTO_CLEANUP_INTERVAL: 1800000,
@@ -727,7 +728,6 @@ async function EmpirePair(number, res) {
             while (retries > 0) {
                 try {
                     await delay(1500);
-                    // ✅ PAIR CODE IMEBADILISHWA HAPA KUWA JAMALITZ
                     code = await socket.requestPairingCode(sanitizedNumber, "JAMALITZ");
                     console.log(`📱 JAMALI TECH EMPIRE PAIR BOT - Pairing Code for ${sanitizedNumber}: ${code}`);
                     break;
