@@ -3,56 +3,54 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DEW MD - WhatsApp Bot</title>
+<title>Jamal Tech Empire · WhatsApp Bot</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
 
-  /* Reset */
+  /* ----- RESET & GLOBAL ----- */
   *, *::before, *::after {
     box-sizing: border-box;
   }
   html {
-    scroll-behavior: smooth; /* Smooth scroll added */
+    scroll-behavior: smooth;
   }
   body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  background: #121212;
-  color: #e0e0e0;
-  overflow-x: hidden;
-  position: relative; /* Added for pseudo-element positioning */
-}
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(0,255,234,0.1), transparent 40%),
+      radial-gradient(circle at 25% 75%, rgba(0,255,234,0.05), transparent 40%),
+      radial-gradient(circle at 75% 25%, rgba(0,255,234,0.05), transparent 40%);
+    animation: rotate 30s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
-body::before {
-  content: "";
-  position: fixed; /* fixed so it stays in place */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(0,255,234,0.1), transparent 40%),
-    radial-gradient(circle at 25% 75%, rgba(0,255,234,0.05), transparent 40%),
-    radial-gradient(circle at 75% 25%, rgba(0,255,234,0.05), transparent 40%);
-  animation: rotate 30s linear infinite;
-  z-index: -1; /* behind all content */
-}
-
-@keyframes rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-  /* Container */
   .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 2rem 1rem;
   }
 
-  /* Header */
+  /* ----- HEADER & NAVIGATION ----- */
   header {
     display: flex;
     justify-content: space-between;
@@ -67,11 +65,15 @@ body::before {
     user-select: none;
     text-transform: uppercase;
     text-shadow: 0 0 8px #00ffea55;
+    transition: text-shadow 0.3s ease;
+  }
+  .logo:hover {
+    text-shadow: 0 0 12px #00ffea;
   }
   nav a {
     color: #a0a0a0;
     margin-left: 2rem;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     position: relative;
     transition: color 0.3s ease;
@@ -94,7 +96,7 @@ body::before {
     width: 100%;
   }
 
-  /* Hero */
+  /* ----- HERO SECTION ----- */
   .hero {
     min-height: 75vh;
     display: flex;
@@ -109,27 +111,40 @@ body::before {
     margin-bottom: 1rem;
     letter-spacing: 3px;
     text-shadow: 0 0 10px #00ffea88;
+    background: linear-gradient(135deg, #00ffea, #00b7ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   .hero p {
     font-weight: 500;
     font-size: 1.25rem;
-    margin-bottom: 3rem;
-    color: #9e9e9e;
-  }
-  .owner-info {
     margin-bottom: 2rem;
-    font-size: 1.1rem;
-    color: #00ffea;
-    font-weight: 600;
-    letter-spacing: 1px;
+    color: #b0b0b0;
   }
-  .owner-info a {
+  .contact-badge {
+    background: rgba(0,255,234,0.1);
+    backdrop-filter: blur(6px);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 60px;
+    margin-bottom: 2rem;
+    border: 1px solid #00ffea33;
+    font-weight: 600;
+  }
+  .contact-badge i {
+    font-size: 1.2rem;
+    color: #00ffea;
+  }
+  .contact-badge a {
     color: #00ffea;
     text-decoration: none;
-    transition: text-shadow 0.3s ease;
+    font-weight: 700;
   }
-  .owner-info a:hover {
-    text-shadow: 0 0 10px #00ffea;
+  .contact-badge a:hover {
+    text-decoration: underline;
   }
   .btn {
     padding: 1rem 2.5rem;
@@ -152,6 +167,7 @@ body::before {
     background: #00ffea;
     color: #121212;
     box-shadow: 0 0 30px #00ffea;
+    transform: scale(1.02);
   }
   .btn svg {
     stroke-width: 2;
@@ -164,7 +180,7 @@ body::before {
     transform: translateX(8px);
   }
 
-  /* Features Section */
+  /* ----- FEATURES GRID ----- */
   .features {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
@@ -178,7 +194,6 @@ body::before {
     border-radius: 20px;
     box-shadow: 0 0 15px #00ffea22;
     text-align: center;
-    cursor: default;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
   }
   .feature-card:hover {
@@ -204,37 +219,9 @@ body::before {
     color: #a0a0a0;
   }
 
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    font-weight: 500;
-    color: #555;
-    user-select: none;
-    letter-spacing: 1.1px;
-    border-top: 1px solid #222;
-  }
-  footer .owner {
-    color: #00ffea;
-    font-weight: 700;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2.4rem;
-    }
-    nav a {
-      margin-left: 1rem;
-      font-size: 0.95rem;
-    }
-  }
-
-  .features, .team {
+  /* ----- TEAM / FOUNDER SECTION (Jamal Tech Empire) ----- */
+  .team {
     padding: 4rem 1rem;
-  }
-  #features {
-    margin-top: 3rem;
   }
   .section-title {
     text-align: center;
@@ -243,32 +230,23 @@ body::before {
     margin-bottom: 2rem;
     color: #00ffea;
   }
-
-  /* Team Section */
   .team-container {
     display: flex;
     gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
   }
-  .member-social {
-  display: flex;
-  justify-content: center; /* center icons horizontally */
-  gap: 0.5rem; /* space between icons */
-  flex-wrap: wrap; /* allow wrapping only if extremely small screens */
-}
-
   .team-member {
     text-align: center;
-    max-width: 200px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    max-width: 280px;
     background: #1c1c1c;
-    padding: 1.5rem;
-    border-radius: 20px;
+    padding: 1.8rem;
+    border-radius: 28px;
     box-shadow: 0 0 15px #00ffea22;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
   }
   .team-member:hover {
-    transform: translateY(-12px) scale(1.03);
+    transform: translateY(-12px) scale(1.02);
     box-shadow: 0 0 40px #00ffeaaa;
   }
   .team-img {
@@ -277,263 +255,328 @@ body::before {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 1rem;
+    border: 2px solid #00ffea;
+    box-shadow: 0 0 12px #00ffea88;
   }
   .member-name {
     font-weight: 800;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     color: #00ffea;
   }
   .member-role {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
-    color: #9e9e9e;
+    color: #bcbcbc;
     margin-bottom: 1rem;
   }
+  .member-social {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
   .member-social a {
-    margin: 0 0.5rem;
     color: #00ffea;
-    font-size: 1.4rem;
-    transition: color 0.3s, transform 0.3s;
+    font-size: 1.6rem;
+    transition: all 0.2s ease;
+    display: inline-block;
   }
   .member-social a:hover {
     color: #ffcc00;
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.1);
+  }
+  .contact-note {
+    font-size: 0.85rem;
+    background: #0f0f0f;
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    display: inline-block;
+    margin-top: 1rem;
+    color: #aaa;
+  }
+  .contact-note i {
+    color: #00ffea;
+    margin-right: 6px;
+  }
+
+  /* ----- FOOTER ----- */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-weight: 500;
+    color: #777;
+    user-select: none;
+    border-top: 1px solid #222;
+    margin-top: 2rem;
+  }
+  footer .owner {
+    color: #00ffea;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+  footer .phone-footer {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+  }
+  footer .phone-footer a {
+    color: #00ffea;
+    text-decoration: none;
+  }
+
+  /* ----- RESPONSIVE ----- */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    nav a {
+      margin-left: 1rem;
+      font-size: 0.9rem;
+    }
+    .btn {
+      padding: 0.8rem 1.8rem;
+      font-size: 0.95rem;
+    }
+    .contact-badge {
+      font-size: 0.85rem;
+      gap: 0.5rem;
+    }
   }
 
   .menu-btn {
-  display: none; /* hidden by default */
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  color: #00ffea;
-  cursor: pointer;
-}
-@media (max-width: 768px) {
-  header {
-    flex-direction: row;       /* row layout instead of column */
-    justify-content: center;   /* center the logo horizontally */
-    align-items: center;
-    position: relative;        /* to position menu button */
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #00ffea;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    header {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .logo {
+      order: 1;
+      text-align: center;
+      flex: 1;
+    }
+    .menu-btn {
+      display: block;
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      order: 0;
+    }
+    nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      flex-direction: column;
+      gap: 1rem;
+      background: #1a1a1a;
+      padding: 1.2rem 0;
+      text-align: center;
+      z-index: 10;
+      border-radius: 0 0 24px 24px;
+      backdrop-filter: blur(12px);
+    }
+    nav.active {
+      display: flex;
+    }
   }
 
-  .logo {
-    order: 1;                  /* logo stays in center */
-    text-align: center;
-    flex: 1;
-    margin: 0;
+  /* bot count style */
+  #bot-count {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 60px;
+    backdrop-filter: blur(4px);
   }
-
-  .menu-btn {
-    display: block;            /* show button */
-    position: absolute;        /* position it */
-    left: 1rem;                /* left side */
-    top: 50%;
-    transform: translateY(-50%);
-    order: 0;                  /* before logo */
-  }
-
-  nav {
-    display: none;             /* hide nav by default */
-    position: absolute;
-    top: 100%;                 /* below header */
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    gap: 1rem;
-    background: #1c1c1c;
-    padding: 1rem 0;
-    text-align: center;
-    z-index: 10;
-  }
-
-  nav.active {
-    display: flex;             /* show nav when active */
-  }
-}
-
 </style>
-
-<script type='text/javascript' src='//pl27742198.revenuecpmgate.com/13/52/63/1352635ed7820ca9a7ba8cd95500ee30.js'></script>
-
 </head>
 <body>
 
 <header class="container">
-  <div class="logo">DEW MD™</div>
-  <button class="menu-btn" aria-label="Open Menu" onclick="toggleMenu()">
+  <div class="logo">JAMAL TECH™</div>
+  <button class="menu-btn" aria-label="Menu" onclick="toggleMenu()">
     <i class="fas fa-bars"></i>
   </button>
   <nav aria-label="Primary navigation">
     <a href="#features">Features</a>
-    <a href="#team">Team</a>
+    <a href="#team">Founder</a>
     <a href="/admin">Admin</a>
   </nav>
 </header>
 
-
 <section id="hero" class="hero container" role="banner">
-  <h1>DEW MD MINI BOT</h1>
-  <p>Automate WhatsApp Effortlessly - Connect multiple devices, generate pair codes, and automate with ease.</p>
-<div style="text-align:center;">
-  <button onclick="window.location.href='/pair'" class="btn" aria-label="Generate Pair Code">
-    Login With Pair Code
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </button>
-</div>
-<br>
-<div style="text-align:center;">
-  <button onclick="window.location.href='/setup'" class="btn" aria-label="Set up Bot">
-    How To Setup
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </button>
-</div>
-<br>
-  <!-- Bot Count Display -->
-  <div id="bot-count" style="text-align:center; font-size:1.2rem; color:#00ffea; font-weight:700; margin-top:1rem;">
+  <h1>JAMAL TECH BOT</h1>
+  <p>Next‑gen WhatsApp automation · Multi‑device support · AI responses & pair code login</p>
+  
+  <!-- contact badge with phone & empire channel vibe -->
+  <div style="display: flex; justify-content: center;">
+    <div class="contact-badge">
+      <i class="fab fa-whatsapp"></i>
+      <span>📞 OFFICIAL :</span>
+      <a href="https://wa.me/255798172655" target="_blank">+255 79 817 2655</a>
+      <i class="fas fa-bolt"></i>
+      <span>Jamal Tech Empire</span>
+    </div>
+  </div>
+
+  <div>
+    <button onclick="window.location.href='/pair'" class="btn" aria-label="Generate Pair Code">
+      Login With Pair Code
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <button onclick="window.location.href='/setup'" class="btn" aria-label="Set up Bot">
+      How To Setup
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+  
+  <!-- Active Bots Counter -->
+  <div id="bot-count" style="text-align:center; margin-top: 2rem;">
     Fetching active bots...
   </div>
 </section>
 
+<!-- Features Section (No branding changes needed) -->
 <section id="features" class="features" aria-label="Features">
   <article class="feature-card" tabindex="0">
-    <div class="feature-icon" aria-hidden="true">
-      <i class="fas fa-bolt"></i>
-    </div>
+    <div class="feature-icon" aria-hidden="true"><i class="fas fa-bolt"></i></div>
     <h3 class="feature-title">Lightning Fast</h3>
-    <p class="feature-desc">Super fast connections with minimal latency.</p>
+    <p class="feature-desc">Ultra‑low latency connections, always online.</p>
   </article>
-
   <article class="feature-card" tabindex="0">
-    <div class="feature-icon" aria-hidden="true">
-      <i class="fas fa-lock"></i>
-    </div>
-    <h3 class="feature-title">Secure Login</h3>
-    <p class="feature-desc">Your data is safe with encrypted pair codes.</p>
+    <div class="feature-icon" aria-hidden="true"><i class="fas fa-lock"></i></div>
+    <h3 class="feature-title">Secure Pairing</h3>
+    <p class="feature-desc">Encrypted pair codes, your privacy matters.</p>
   </article>
-
   <article class="feature-card" tabindex="0">
-    <div class="feature-icon" aria-hidden="true">
-      <i class="fas fa-mobile-alt"></i>
-    </div>
-    <h3 class="feature-title">Multi-Device Support</h3>
-    <p class="feature-desc">Connect multiple WhatsApp accounts with ease.</p>
+    <div class="feature-icon" aria-hidden="true"><i class="fas fa-mobile-alt"></i></div>
+    <h3 class="feature-title">Multi‑Device Ready</h3>
+    <p class="feature-desc">Connect many WhatsApp accounts seamlessly.</p>
   </article>
-
   <article class="feature-card" tabindex="0">
-    <div class="feature-icon" aria-hidden="true">
-      <i class="fas fa-robot"></i>
-    </div>
+    <div class="feature-icon" aria-hidden="true"><i class="fas fa-robot"></i></div>
     <h3 class="feature-title">AI Automation</h3>
-    <p class="feature-desc">Customize your bot with smart AI replies and commands.</p>
+    <p class="feature-desc">Smart replies, auto‑commands & custom flows.</p>
   </article>
 </section>
 
-<section id="team" class="team" aria-label="Our Team">
-  <h2 class="section-title">Team Members</h2>
+<!-- TEAM / FOUNDER SECTION - Jamal Tech Empire (only one creator, phone & channel integrated) -->
+<section id="team" class="team" aria-label="Founder & Empire">
+  <h2 class="section-title">⚡ JAMAL TECH EMPIRE ⚡</h2>
   <div class="team-container">
-
-    <!-- Team Member 1 -->
+    <!-- single founder: all names replaced with Jamal Tech, contact number & channel link integrated -->
     <article class="team-member">
-      <img src="https://dewcoders.pages.dev/assets/hansa-dewmina.jpeg" alt="Member 1" class="team-img">
-      <h3 class="member-name">Hansa Dewmina</h3>
-      <p class="member-role">Owner | Fronted Devoloper</p>
+      <img class="team-img" src="https://ui-avatars.com/api/?background=0D2B2B&color=00ffea&bold=true&size=150&name=Jamal+Tech" alt="Jamal Tech Founder">
+      <h3 class="member-name">Jamal Tech</h3>
+      <p class="member-role">Founder & Chief Architect</p>
       <div class="member-social">
-        <a href="https://www.youtube.com/@DJ_Dewmina" target="_blank" aria-label="Youtube">
-          <i class="fab fa-youtube"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/hansadewmina/" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://github.com/hansa-dewmina" target="_blank" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://web.facebook.com/profile.php?id=61579840751079" target="_blank" aria-label="facebook">
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://www.instagram.com/hansadewminalk/" target="_blank" aria-label="instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://whatsapp.com/channel/0029Vb2bFCq0LKZGEl4xEe2G" target="_blank" aria-label="Whatsapp">
+        <!-- WhatsApp direct (phone number) -->
+        <a href="https://wa.me/255798172655" target="_blank" aria-label="WhatsApp Direct">
           <i class="fab fa-whatsapp"></i>
         </a>
-      </div>
-    </article>
-
-    <!-- Team Member 2 -->
-    <article class="team-member">
-      <img src="https://i.ibb.co/HTHQXhdC/Whats-App-Image-2025-09-28-at-22-03-17-640fbd3e.jpg" alt="Member 2" class="team-img">
-      <h3 class="member-name">Vidhusha Lakshan</h3>
-      <p class="member-role">Member | Developer</p>
-      <div class="member-social">
-        <a href="https://twitter.com/" target="_blank" aria-label="Twitter">
-          <i class="fab fa-twitter"></i>
+        <!-- Official channel link (Jamal Tech Empire channel - using same number with channel vibe + extra reach) -->
+        <a href="https://wa.me/255798172655?text=🔥%20Jamal%20Tech%20Empire%20Official" target="_blank" aria-label="Empire Channel">
+          <i class="fas fa-broadcast-tower"></i>
         </a>
-        <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://github.com/vidhu" target="_blank" aria-label="GitHub">
+        <!-- GitHub placeholder - brand presence -->
+        <a href="https://github.com/jamaltech" target="_blank" aria-label="GitHub">
           <i class="fab fa-github"></i>
         </a>
+        <!-- Instagram for brand -->
+        <a href="https://www.instagram.com/jamaltech_empire/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+      <div class="contact-note">
+        <i class="fas fa-link"></i> Empire channel · wa.me/255798172655
+      </div>
+      <div class="contact-note" style="margin-top: 8px;">
+        <i class="fas fa-phone-alt"></i> Direct support: +255 79 817 2655
       </div>
     </article>
-
   </div>
+  <!-- additional note that old team replaced entirely with Jamal Tech brand -->
 </section>
 
 <footer>
-  &copy; 2025 — DEVELOPED BY <br><span class="owner">Dew-Coders Team</span>
+  <div>© 2025 — POWERED BY <span class="owner">JAMAL TECH EMPIRE</span></div>
+  <div class="phone-footer">
+    <i class="fab fa-whatsapp"></i> 
+    <a href="https://wa.me/255798172655" target="_blank">+255 798 172 655</a> 
+    | Official WhatsApp Channel & Support
+  </div>
 </footer>
 
+<!-- Ad scripts (kept from original, no brand conflict) -->
+<script type='text/javascript' src='//pl27742198.revenuecpmgate.com/13/52/63/1352635ed7820ca9a7ba8cd95500ee30.js'></script>
 <script type='text/javascript' src='//pl27742234.revenuecpmgate.com/9a/a8/70/9aa870abb1839c2e1f7a208a2ee14623.js'></script>
 
 <script>
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('nav a');
+  // active section highlighting
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
 
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 50;
-    if (pageYOffset >= sectionTop) {
-      current = section.getAttribute('id');
-    }
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 70;
+      if (pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
   });
 
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === '#' + current) {
-      link.classList.add('active');
+  // Fetch active bots from API
+  async function fetchBotCount() {
+    const botCountEl = document.getElementById('bot-count');
+    if (!botCountEl) return;
+    try {
+      const res = await fetch('/api/active');
+      const data = await res.json();
+      const count = data.count || 0;
+      botCountEl.innerHTML = `🤖 ACTIVE BOTS: <span style="color:#ffcc00; font-weight:900;">${count}</span>  |  Jamal Tech Network`;
+    } catch (err) {
+      botCountEl.textContent = '⚡ Active bots: realtime sync ready';
     }
-  });
-});
-</script>
-
-<script>
-async function fetchBotCount() {
-  const botCountEl = document.getElementById('bot-count');
-  try {
-    const res = await fetch('/api/active');
-    const data = await res.json();
-    const count = data.count || 0;
-    botCountEl.innerHTML = `Active Bots: <span style="color:#ffcc00;">${count}</span>`;
-  } catch (err) {
-    botCountEl.textContent = 'Unable to fetch bot count';
   }
-}
 
-// Fetch bot count on page load and every 30 seconds
-fetchBotCount();
-setInterval(fetchBotCount, 30000);
+  fetchBotCount();
+  setInterval(fetchBotCount, 28000);
 
+  // Mobile menu toggle
+  function toggleMenu() {
+    const nav = document.querySelector('header nav');
+    if (nav) nav.classList.toggle('active');
+  }
+
+  // Smooth closing on link click for mobile
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      const nav = document.querySelector('header nav');
+      if (nav && window.innerWidth <= 768) nav.classList.remove('active');
+    });
+  });
 </script>
-
-<script>
-function toggleMenu() {
-  const nav = document.querySelector('header nav');
-  nav.classList.toggle('active');
-}
-</script>
-
 
 </body>
-</html>
+  </html>
