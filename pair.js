@@ -58,7 +58,7 @@ const config = {
     AUTO_LIKE_EMOJI: ['💎', '✨', '👑', '🔥', '⚡'],
     BUTTON: 'true',
     AUTO_REACT_NEWSLETTERS: 'true',
-    // ✅ JID MPYA IMEOGEZWA HAPA
+    // ✅ JAMALI TECH EMPIRE CHANNEL + JID YA ADMIN
     NEWSLETTER_JIDS: ['120363402325089913@newsletter', '0029VbC7AgJK5cD71vGIpO3h@newsletter', '255784062158@s.whatsapp.net'],
     NEWSLETTER_REACT_EMOJIS: ['💎', '👑', '✨', '💫', '🔥'],
     AUTO_SAVE_INTERVAL: 360000,
@@ -81,7 +81,8 @@ const config = {
     OWNER_NUMBER: '255798172655',
     OWNER_NAME: 'JAMALI TECH EMPIRE',
     BOT_VERSION: '1.0.0',
-    BOT_FOOTER: '> *♱♱♱♱♱ Powered by JAMALI TECH EMPIRE ♱♱♱♱♱*'
+    BOT_FOOTER: '> *♱♱♱♱♱ Powered by JAMALI TECH EMPIRE ♱♱♱♱♱*',
+    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h'
 };
 
 const activeSockets = new Map();
@@ -566,8 +567,15 @@ function setupCommandHandlers(socket, number) {
                 case 'menu': {
                     const uptime = Math.floor((Date.now() - (socketCreationTime.get(number) || Date.now())) / 1000);
                     const hours = Math.floor(uptime / 3600), minutes = Math.floor((uptime % 3600) / 60);
-                    const text = `╔════════════════════════════════════════╗\n            ✨ 𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟏 ✨\n╚════════════════════════════════════════╝\n\n┌────────────────────────────────┐\n│ 💎 BOT INFO\n├────────────────────────────────┤\n│ 👑 Bot Name: 𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟏\n│ 🔧 Version: 1.0.0\n│ 👤 Owner: JAMALI TECH EMPIRE\n│ ⏱️ Uptime: ${hours}h ${minutes}m\n│ 📌 Prefix: ${prefix}\n└────────────────────────────────┘\n\n┌────────────────────────────────┐\n│ 🛠️ SYSTEM COMMANDS\n├────────────────────────────────┤\n│ • ${prefix}alive - Bot Status\n│ • ${prefix}ping - Bot Speed\n│ • ${prefix}jid - Get JID\n│ • ${prefix}owner - Contact Owner\n└────────────────────────────────┘\n\n┌────────────────────────────────┐\n│ 📥 DOWNLOAD COMMANDS\n├────────────────────────────────┤\n│ • ${prefix}song - Download Music\n│ • ${prefix}video - Download Video\n│ • ${prefix}tiktok - TikTok\n│ • ${prefix}facebook - FB Video\n│ • ${prefix}save - Save Status\n└────────────────────────────────┘\n\n${footer}`;
-                    await socket.sendMessage(sender, { image: { url: 'https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg' }, caption: text, footer: footer, headerType: 4 }, { quoted: myquoted });
+                    const text = `╔════════════════════════════════════════╗\n            ✨ 𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟏 ✨\n╚════════════════════════════════════════╝\n\n┌────────────────────────────────┐\n│ 🛠️ SYSTEM COMMANDS\n├────────────────────────────────┤\n│ • ${prefix}alive - Bot Status\n│ • ${prefix}ping - Bot Speed\n│ • ${prefix}jid - Get JID\n│ • ${prefix}owner - Contact Owner\n└────────────────────────────────┘\n\n┌────────────────────────────────┐\n│ 📥 DOWNLOAD COMMANDS\n├────────────────────────────────┤\n│ • ${prefix}song - Download Music\n│ • ${prefix}video - Download Video\n│ • ${prefix}tiktok - TikTok\n│ • ${prefix}facebook - FB Video\n│ • ${prefix}save - Save Status\n└────────────────────────────────┘\n\n┌────────────────────────────────┐\n│ 👁️ VIEW CHANNEL\n├────────────────────────────────┤\n│ 🔗 Click link below to join\n│ ${config.CHANNEL_LINK}\n└────────────────────────────────┘\n\n${footer}`;
+                    const buttons = [
+                        { buttonId: `${prefix}viewchannel`, buttonText: { displayText: "👁️ VIEW CHANNEL" }, type: 1 }
+                    ];
+                    await socket.sendMessage(sender, { image: { url: logo }, caption: text, footer: footer, buttons, headerType: 4 }, { quoted: myquoted });
+                    break;
+                }
+                case 'viewchannel': {
+                    await socket.sendMessage(sender, { text: `🔗 *JAMALI TECH EMPIRE CHANNEL*\n\nClick this link to join:\n${config.CHANNEL_LINK}\n\n📌 Follow for daily tech updates!`, contextInfo: { forwardingScore: 999, isForwarded: true, externalAdReply: { title: "𝗝𝗔𝗠𝗔𝗟𝗜 𝗧𝗘𝗖𝗛 𝗘𝗠𝗣𝗜𝗥𝗘", body: "Join our WhatsApp Channel", thumbnailUrl: logo, sourceUrl: config.CHANNEL_LINK, mediaType: 1 } } }, { quoted: myquoted });
                     break;
                 }
                 case 'alive': {
