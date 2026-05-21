@@ -1,192 +1,496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>𝚂𝙸𝙻𝙰 𝙼𝙸𝙽𝙸 - Pair Code</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Jamal Tech Empire · Pair Code Portal</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800&display=swap');
 
-  /* Reset */
-  *, *::before, *::after { box-sizing: border-box; }
-  body { 
-    margin:0; padding:0;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #0c0b12;
     font-family: 'Inter', sans-serif;
-    background: #0a0a0a;
-    color: #e0e0e0;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
     min-height: 100vh;
-    overflow: hidden;
-  }
-
-  /* Animated background */
-  body::before {
-    content:"";
-    position:absolute; width:200%; height:200%;
-    top:-50%; left:-50%;
-    background: radial-gradient(circle at 50% 50%, rgba(0,100,255,0.15), transparent 40%),
-                radial-gradient(circle at 25% 75%, rgba(0,80,255,0.08), transparent 40%),
-                radial-gradient(circle at 75% 25%, rgba(0,120,255,0.08), transparent 40%);
-    animation: rotate 30s linear infinite;
-    z-index:0;
-  }
-  @keyframes rotate { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
-
-  /* Card */
-  .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
     position: relative;
-    z-index:1;
-    background: #141428;
-    padding: 40px 30px;
-    border-radius: 20px;
+    overflow-x: hidden;
+  }
+
+  /* DYNAMIC EMPIRE BACKGROUND - GOLD & DARK ROYAL */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 35%, rgba(212, 175, 55, 0.12), transparent 55%),
+      radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.08), transparent 60%),
+      repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.02) 0px, rgba(212, 175, 55, 0.02) 2px, transparent 2px, transparent 12px);
+    animation: empireGlow 22s infinite alternate;
+    z-index: -2;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" opacity="0.08"><path fill="none" stroke="%23d4af37" stroke-width="1.5" d="M200 150 L280 110 L360 150 L400 220 L360 290 L280 330 L200 290 L160 220 L200 150Z M750 500 L820 470 L890 510 L870 590 L790 610 L730 560 L750 500Z M80 680 L140 650 L200 680 L170 740 L90 750 L60 700 L80 680Z"/><circle cx="980" cy="200" r="14" stroke="%23f5cb5c" fill="none" stroke-width="1.8"/><circle cx="110" cy="480" r="22" stroke="%23d4af37" fill="none" stroke-width="1"/><path d="M540 720 L590 690 L640 720 L620 770 L560 780 L520 740 L540 720Z" stroke="%23ffd966" fill="none"/></svg>') repeat;
+    background-size: 240px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.3;
+  }
+
+  @keyframes empireGlow {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+    100% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  }
+
+  /* MAIN CARD – IMPERIAL THRONE */
+  .empire-card {
+    background: rgba(16, 18, 26, 0.88);
+    backdrop-filter: blur(12px);
+    border-radius: 2.2rem;
+    padding: 2.2rem 1.8rem 2rem;
     width: 100%;
-    max-width: 380px;
+    max-width: 460px;
     text-align: center;
-    box-shadow: 0 0 20px #0066ff33, 0 0 40px #0044ff11;
-    border: 1px solid rgba(0,100,255,0.3);
-    backdrop-filter: blur(10px);
-    animation: float 6s ease-in-out infinite;
-  }
-  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-
-  h1 {
-    color:#4488ff;
-    font-size:2rem;
-    margin-bottom:0.5rem;
-    font-weight:700;
-    text-shadow: 0 0 15px #4488ff88, 0 0 30px #2266ff44;
-  }
-  h4 {
-    color:#8899bb;
-    font-weight:400;
-    margin-bottom:25px;
-    font-size:1rem;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 1px rgba(212, 175, 55, 0.25) inset, 0 10px 30px rgba(212, 175, 55, 0.2);
+    transition: 0.25s ease;
   }
 
+  .empire-card:hover {
+    border-color: rgba(212, 175, 55, 0.85);
+    box-shadow: 0 30px 55px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(240, 185, 70, 0.5) inset, 0 0 28px rgba(212, 175, 55, 0.4);
+  }
+
+  /* header */
+  .empire-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+  .empire-logo i {
+    font-size: 2.4rem;
+    color: #f5b81b;
+    filter: drop-shadow(0 0 6px #f5b81b);
+  }
+  .empire-card h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #F9E0A0, #EBB42D, #D4AF37);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.25rem;
+  }
+  .tagline {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #bd9e5a;
+    border-top: 1px dashed rgba(212, 175, 55, 0.5);
+    display: inline-block;
+    padding-top: 0.6rem;
+    margin-bottom: 1.8rem;
+  }
+
+  /* input group */
   .input-group {
     position: relative;
-    margin-bottom: 20px;
+    margin: 1.2rem 0 1rem;
   }
-
-  input {
+  .input-group i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e5b83c;
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  .empire-card input {
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 35px;
-    border: 2px solid #3355aa55;
-    background: #0a0a1a;
-    color: #e0e0e0;
-    font-size:1rem;
-    outline:none;
-    transition: all 0.3s ease;
+    background: #11131f;
+    border: 1.5px solid #2f2a3a;
+    border-radius: 60px;
+    padding: 0.9rem 1.2rem 0.9rem 3rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f2eee5;
+    transition: all 0.2s;
+    font-family: 'Inter', monospace;
   }
-  input:focus { 
-    border-color:#4488ff; 
-    box-shadow: 0 0 15px #4488ff33;
+  .empire-card input:focus {
+    outline: none;
+    border-color: #f5b81b;
+    background: #0b0d16;
+    box-shadow: 0 0 0 4px rgba(245, 184, 27, 0.25), 0 0 12px rgba(229, 184, 60, 0.5);
   }
-  input::placeholder { color: #556677; }
+  .empire-card input::placeholder {
+    color: #6a6a82;
+    font-weight: 400;
+  }
 
-  button {
+  /* GOLDEN BUTTON */
+  .gold-btn {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #4488ff;
-    background: transparent;
-    color: #4488ff;
-    font-weight:700;
-    font-size:1.1rem;
-    border-radius: 35px;
-    cursor:pointer;
-    transition: all 0.3s ease;
-    box-shadow:0 0 10px #4488ff44;
-    display:inline-flex; align-items:center; justify-content:center; gap:0.5rem;
+    background: linear-gradient(100deg, #d4a017, #f5b81b, #e6b422);
+    border: none;
+    border-radius: 3rem;
+    padding: 0.9rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    color: #0c0b12;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.3), 0 0 8px #f5b81b66;
+    margin-top: 0.3rem;
   }
-  button:hover {
-    background:#4488ff;
-    color:#0a0a1a;
-    box-shadow:0 0 25px #4488ff88, 0 0 50px #2266ff33;
+  .gold-btn i {
+    font-size: 1rem;
   }
-
-  #pair {
-    margin-top:20px;
-    font-size:1rem;
-    color:#fff;
+  .gold-btn:hover {
+    background: linear-gradient(100deg, #f0b90b, #ffd966, #f5cb5c);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5), 0 0 15px #f5b81b;
+    transform: translateY(-1px);
   }
-  #copy {
-    cursor:pointer;
-    color:#ff4d4d;
-    font-weight:bold;
-    margin-left:5px;
-    transition:0.3s;
+  .gold-btn:active {
+    transform: translateY(1px);
   }
-  #copy:hover { color:#ff8080; }
-
-  .footer {
-    margin-top:25px;
-    font-size:0.8rem;
-    color:#556677;
-  }
-  .footer a { 
-    color:#4488ff; 
-    text-decoration:none;
-    transition: 0.3s;
-  }
-  .footer a:hover {
-    color:#66aaff;
-    text-shadow: 0 0 10px #4488ff55;
+  .gold-btn:disabled {
+    background: #6f5a2c;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
   }
 
+  /* Pair code area */
+  .code-area {
+    margin-top: 1.8rem;
+    background: #0d0f18;
+    border-radius: 2rem;
+    padding: 0.7rem 1rem;
+    border: 1px dashed #e5b83c55;
+    transition: 0.2s;
+  }
+  .code-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .code-value {
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    background: #01010140;
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    color: #ffdf8c;
+    word-break: break-all;
+  }
+  .copy-icon {
+    background: #21222c;
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f5b81b;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #f5b81b55;
+  }
+  .copy-icon:hover {
+    background: #f5b81b;
+    color: #0c0b12;
+    box-shadow: 0 0 8px #f5b81b;
+  }
+  .info-message {
+    font-size: 0.75rem;
+    color: #baa66e;
+    margin-top: 0.5rem;
+  }
+  .error-message {
+    color: #ff9966;
+    background: #2a1f1a66;
+    border-radius: 2rem;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    border-left: 3px solid #f5b81b;
+  }
+
+  /* WHATSAPP CHANNEL SECTION */
+  .channel-section {
+    margin-top: 1.8rem;
+    background: rgba(212, 175, 55, 0.08);
+    border-radius: 1.8rem;
+    padding: 0.9rem 1rem;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(245, 184, 27, 0.3);
+    transition: 0.2s;
+  }
+  .channel-section a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #1e1f2c;
+    padding: 0.65rem 1.2rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #f5d98b;
+    border: 1px solid #f5b81b66;
+    transition: 0.2s;
+    width: auto;
+    max-width: 100%;
+    word-break: break-word;
+  }
+  .channel-section a i {
+    font-size: 1.2rem;
+    color: #25D366;
+  }
+  .channel-section a:hover {
+    background: #f5b81b;
+    color: #0c0b12;
+    border-color: #ffeaac;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .channel-text {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #cfb87c;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.3px;
+  }
+  .empire-footer {
+    margin-top: 1.8rem;
+    font-size: 0.65rem;
+    color: #7b6b48;
+    text-align: center;
+    border-top: 1px solid rgba(212, 175, 55, 0.25);
+    padding-top: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    .empire-card { padding: 1.6rem; }
+    .code-value { font-size: 1rem; }
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
-  <h1>𝚂𝙸𝙻𝙰 𝙼𝙸𝙽𝙸™</h1>
-  <h4>Enter your WhatsApp number with country code</h4>
-  <div class="input-group">
-    <input type="number" id="number" placeholder="e.g. 255789xxxxxx">
+<div class="empire-card">
+  <div class="empire-logo">
+    <i class="fas fa-crown"></i>
+    <i class="fas fa-microchip"></i>
   </div>
-  <button id="submit"><i class="fas fa-key"></i> Generate Code</button>
-  <div id="pair"></div>
-  <div class="footer">&copy; 2025 — Developed by <br><a href="#">𝚂𝙸𝙻𝙰 𝚃𝚎𝚌𝚑</a></div>
+  <h1>𝙹𝙰𝙼𝙰𝙻𝙸 𝚃𝙴𝙲𝙷 𝙴𝙼𝙿𝙸𝚁𝙴</h1>
+  <div class="tagline">⚡ PAIRING NEXUS ⚡</div>
+
+  <div class="input-group">
+    <i class="fas fa-phone-alt"></i>
+    <input type="tel" id="phoneNumber" placeholder="WhatsApp number with country code (e.g. 255712345678)" autocomplete="off">
+  </div>
+
+  <button id="generateBtn" class="gold-btn">
+    <i class="fas fa-link"></i> GENERATE PAIR CODE <i class="fas fa-arrow-right"></i>
+  </button>
+
+  <div id="pairResult" class="code-area" style="display: none;">
+    <!-- dynamic pair code will appear here -->
+  </div>
+  <div id="errorMsg" class="error-message" style="display: none;"></div>
+
+  <!-- WHATSAPP CHANNEL LINK - JAMALI TECH EMPIRE OFFICIAL -->
+  <div class="channel-section">
+    <div class="channel-text">
+      <i class="fab fa-whatsapp"></i> JOIN THE OFFICIAL BROADCAST
+    </div>
+    <a href="https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-whatsapp"></i> Follow the 𝗝𝗔𝗠𝗔𝗟𝗜 𝗧𝗘𝗖𝗛 𝗘𝗠𝗣𝗜𝗥𝗘 channel on WhatsApp
+      <i class="fas fa-external-link-alt"></i>
+    </a>
+  </div>
+
+  <div class="empire-footer">
+    <i class="fas fa-lock"></i> encrypted pairing • EMPIRE SECURE CORE
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
 <script>
-  const input = document.getElementById("number");
-  const button = document.getElementById("submit");
-  const output = document.getElementById("pair");
+  // ----- Jamal Tech Empire Pairing System -----
+  const phoneInput = document.getElementById('phoneNumber');
+  const generateButton = document.getElementById('generateBtn');
+  const pairResultDiv = document.getElementById('pairResult');
+  const errorMsgDiv = document.getElementById('errorMsg');
 
-  async function Copy() {
-    const codeEl = document.getElementById("copy");
-    if(!codeEl) return;
-    const code = codeEl.innerText.replace("CODE: ","");
-    await navigator.clipboard.writeText(code);
-    codeEl.innerText = "COPIED!";
-    setTimeout(()=>{ codeEl.innerText = "CODE: "+code },1000);
+  let isRequesting = false;
+
+  function showError(text) {
+    errorMsgDiv.textContent = text;
+    errorMsgDiv.style.display = 'block';
+    pairResultDiv.style.display = 'none';
+    setTimeout(() => {
+      if (errorMsgDiv.style.display === 'block') errorMsgDiv.style.display = 'none';
+    }, 4000);
   }
 
-  button.addEventListener("click", async () => {
-    const raw = input.value.trim().replace(/[^0-9]/g,"");
-    if(!raw || raw.length < 11) {
-      output.innerHTML = `<p style="color:#ff6b6b;">Invalid number</p>`;
+  function hideError() {
+    errorMsgDiv.style.display = 'none';
+  }
+
+  // display pair code with copy functionality
+  function displayPairCode(code) {
+    if (!code || code === 'Unavailable' || code === 'undefined') {
+      showError('❌ Pair code not received. Please try again later.');
       return;
     }
-    input.disabled = true;
-    button.innerText = "Please wait...";
-    output.innerHTML = `<p style="color:#4488ff;">Fetching Code...</p>`;
-    try {
-      const { data } = await axios(`/freebot?number=${raw}`);
-      const code = data.code || "Unavailable";
-      output.innerHTML = `<p id="copy" onclick="Copy()">CODE: <span style="color:white">${code}</span></p>`;
-    } catch (e) {
-      output.innerHTML = `<p style="color:red;">Server error</p>`;
+    // create interactive display area
+    pairResultDiv.style.display = 'block';
+    pairResultDiv.innerHTML = `
+      <div class="code-display">
+        <span class="code-value" id="pairCodeSpan">${escapeHtml(code)}</span>
+        <span class="copy-icon" id="copyCodeBtn"><i class="far fa-copy"></i> COPY CODE</span>
+      </div>
+      <div class="info-message"><i class="fas fa-clock"></i> Use this code within 5 minutes to pair your device</div>
+    `;
+    // attach copy event
+    const copyBtn = document.getElementById('copyCodeBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => copyPairCode(code));
     }
-    input.disabled = false;
-    button.innerText = "Generate Code";
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  async function copyPairCode(code) {
+    try {
+      await navigator.clipboard.writeText(code);
+      const copyBtn = document.getElementById('copyCodeBtn');
+      if (copyBtn) {
+        const originalHTML = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+        setTimeout(() => {
+          if (copyBtn) copyBtn.innerHTML = originalHTML;
+        }, 1800);
+      }
+    } catch (err) {
+      showError('⚠️ Could not copy manually, select the code and copy.');
+    }
+  }
+
+  // main generation request
+  async function generatePairCode() {
+    if (isRequesting) return;
+    
+    let rawNumber = phoneInput.value.trim().replace(/[^0-9]/g, '');
+    if (!rawNumber || rawNumber.length < 9) {
+      showError('⚠️ Enter a valid WhatsApp number with country code (min 9 digits).');
+      return;
+    }
+    
+    // basic validation: ensure starts with country code, not start with 0
+    if (rawNumber.startsWith('0')) {
+      showError('⚠️ Use international format without leading zero. Example: 255712345678');
+      return;
+    }
+    
+    hideError();
+    pairResultDiv.style.display = 'none';
+    isRequesting = true;
+    generateButton.disabled = true;
+    const originalBtnText = generateButton.innerHTML;
+    generateButton.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> CONTACTING EMPIRE NEXUS ...';
+    
+    try {
+      // calling the backend endpoint /freebot?number=...
+      const response = await axios.get(`/freebot?number=${encodeURIComponent(rawNumber)}`, {
+        timeout: 15000
+      });
+      const data = response.data;
+      let receivedCode = (data && data.code) ? data.code : null;
+      if (!receivedCode && data && typeof data === 'object') {
+        // fallback if code in different key
+        receivedCode = data.pairCode || data.pairingCode || data.result || null;
+      }
+      if (receivedCode) {
+        displayPairCode(String(receivedCode));
+      } else {
+        let errMessage = (data && data.message) ? data.message : 'Pair code not generated. Ensure backend is active.';
+        showError(`❌ ${errMessage}`);
+      }
+    } catch (error) {
+      console.error('Pairing API error:', error);
+      let errorText = '⚠️ Server error. Empire gateway unreachable.';
+      if (error.response && error.response.data && error.response.data.message) {
+        errorText = error.response.data.message;
+      } else if (error.request) {
+        errorText = '⚠️ No response from backend. Check /freebot endpoint.';
+      }
+      showError(errorText);
+    } finally {
+      isRequesting = false;
+      generateButton.disabled = false;
+      generateButton.innerHTML = originalBtnText;
+    }
+  }
+
+  generateButton.addEventListener('click', generatePairCode);
+  
+  // allow Enter key in input
+  phoneInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      generatePairCode();
+    }
+  });
+  
+  // small placeholder guidance
+  phoneInput.placeholder = "255784062158 or 1xxxxxxxxxx";
+  
+  // initial hide pair area until used
+  pairResultDiv.style.display = 'none';
+  errorMsgDiv.style.display = 'none';
+  
+  // extra hygiene: clear error when user starts typing
+  phoneInput.addEventListener('input', () => {
+    if (errorMsgDiv.style.display === 'block') errorMsgDiv.style.display = 'none';
   });
 </script>
-
 </body>
 </html>
