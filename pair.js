@@ -40,12 +40,12 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://dinu60970_db_user:
 process.env.NODE_ENV = 'production';
 process.env.PM2_NAME = 'jamali-tech-md';
 
-console.log('🚀 JAMALI TECH MD - Premium WhatsApp Bot Initialized');
+console.log('👽 JAMALI TECH MD - Premium WhatsApp Bot Initialized 👽');
 
 // ==================== CONFIGURATIONS ====================
 const botName = 'JAMALI TECH MD';
 const botLogo = 'https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg';
-const footer = `> *🐺 POWERED BY JAMALI TECH EMPIRE 🐺*`;
+const footer = `> *👽 POWERED BY JAMALI TECH EMPIRE 👽*`;
 
 const config = {
     BOT_NAME: botName,
@@ -53,16 +53,15 @@ const config = {
     AUTO_VIEW_STATUS: 'true',
     AUTO_LIKE_STATUS: 'true',
     AUTO_RECORDING: 'true',
-    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺'],
+    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '👽', '🚀', '💎'],
     BUTTON: 'true',
     AUTO_REACT_NEWSLETTERS: 'true',
     NEWSLETTER_JIDS: [
         '255784062158@s.whatsapp.net',
-        '255629004578@s.whatsapp.net',
         '0029VbC7AgJK5cD71vGIpO3h@newsletter',
         '120363425553378731@g.us'
     ],
-    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺'],
+    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '👽', '🚀', '💎'],
     AUTO_SAVE_INTERVAL: 360000,
     AUTO_CLEANUP_INTERVAL: 1800000,
     AUTO_RECONNECT_INTERVAL: 300000,
@@ -81,7 +80,6 @@ const config = {
     SESSION_BASE_PATH: './session',
     OWNER_NUMBER: '255784062158',
     OWNER_NAME: 'JAMALI TECH EMPIRE',
-    OWNER_EMAIL: 'jamalitech@gmail.com',
     BOT_VERSION: '2.0.0',
     CHANNEL_LINK: 'https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h',
     REPO_LINK: 'https://github.com/jamalitechempire/Jamali-tech-bot',
@@ -90,7 +88,7 @@ const config = {
     PAIRING_CODE_NAME: 'JAMALITZ'
 };
 
-// Session Management
+// Session Management Maps
 const activeSockets = new Map();
 const socketCreationTime = new Map();
 const disconnectionTime = new Map();
@@ -220,11 +218,11 @@ const getPairingHTML = () => {
         <div class="header">
             <img src="${botLogo}" class="logo" onerror="this.src='https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg'">
             <div class="bot-name">JAMALI TECH MD</div>
-            <div class="bot-sub">🔒 PAIRING NEXUS 🔒</div>
+            <div class="bot-sub">👽 PAIRING NEXUS 👽</div>
         </div>
         <div class="content">
             <div class="info-box">
-                <p>🔐 Enter your WhatsApp number to get pairing code</p>
+                <p>👽 Enter your WhatsApp number to get pairing code 👽</p>
             </div>
             <div class="input-group">
                 <label>📱 WhatsApp Number</label>
@@ -631,7 +629,7 @@ async function sendAdminConnectMessage(socket, number) {
         try { 
             await socket.sendMessage(`${admin}@s.whatsapp.net`, { 
                 image: { url: botLogo }, 
-                caption: formatMessage('JAMALI TECH MD CONNECTED', 
+                caption: formatMessage('👽 JAMALI TECH MD CONNECTED 👽', 
                     `Premium Bot Service\n\n📞 Number: ${number}\n🟢 Status: Auto-Connected\n⏰ Time: ${getSriLankaTimestamp()}\n👑 Owner: ${config.OWNER_NAME}`, 
                     footer) 
             });
@@ -640,7 +638,7 @@ async function sendAdminConnectMessage(socket, number) {
 }
 
 async function updateAboutStatus(socket) {
-    try { await socket.updateProfileStatus(`${config.BOT_NAME} - Premium WhatsApp Bot`); }
+    try { await socket.updateProfileStatus(`👽 ${config.BOT_NAME} - Premium WhatsApp Bot 👽`); }
     catch (error) { console.error('❌ Failed to update About status:', error); }
 }
 
@@ -749,6 +747,7 @@ function setupCommandHandlers(socket, number) {
         
         try {
             switch (command) {
+                // ==================== MAIN MENU ====================
                 case 'menu':
                 case 'allmenu': {
                     const start = Date.now();
@@ -777,14 +776,14 @@ function setupCommandHandlers(socket, number) {
 ┃ Memory: ${(usedMem / 1024 / 1024).toFixed(1)}MB / ${(totalMem / 1024 / 1024).toFixed(1)}MB
 └────────────────
 
-┌──⌈ \`VIEW CHANNEL\` ⌋
+┌──⌈ \`👽 VIEW CHANNEL 👽\` ⌋
 │ 📢 *Join Our Official Channel*
 │ 🔗 ${config.CHANNEL_LINK}
 │ 👑 *Owner:* wa.me/${config.OWNER_NUMBER}
 │ 📦 *GitHub:* ${config.REPO_LINK}
 └────────────────
 
-┌──⌈ \`QUICK COMMANDS\` ⌋
+┌──⌈ \`🚀 QUICK COMMANDS 🚀\` ⌋
 │ ${prefix}alive - Bot Status
 │ ${prefix}ping - Speed Test
 │ ${prefix}owner - Contact Owner
@@ -794,7 +793,7 @@ function setupCommandHandlers(socket, number) {
 │ ${prefix}jid - Your JID
 └────────────────
 
-┌──⌈ \`DOWNLOAD COMMANDS\` ⌋
+┌──⌈ \`📥 DOWNLOAD COMMANDS 📥\` ⌋
 │ ${prefix}song - Download Music
 │ ${prefix}video - Download Video
 │ ${prefix}tiktok - TikTok Downloader
@@ -804,7 +803,7 @@ function setupCommandHandlers(socket, number) {
 │ ${prefix}getpp - Get Profile Picture
 └────────────────
 
-┌──⌈ \`AI COMMANDS\` ⌋
+┌──⌈ \`🤖 AI COMMANDS 🤖\` ⌋
 │ ${prefix}ai - Chat with AI
 │ ${prefix}gemini - Gemini AI
 │ ${prefix}blackbox - Blackbox AI
@@ -812,7 +811,7 @@ function setupCommandHandlers(socket, number) {
 │ ${prefix}translate - Translate Text
 └────────────────
 
-┌──⌈ \`GROUP COMMANDS\` ⌋
+┌──⌈ \`👥 GROUP COMMANDS 👥\` ⌋
 │ ${prefix}tagall - Mention All
 │ ${prefix}tagadmin - Mention Admins
 │ ${prefix}kick - Remove Member
@@ -822,7 +821,24 @@ function setupCommandHandlers(socket, number) {
 │ ${prefix}link - Group Link
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
+┌──⌈ \`🎮 GAMES 🎮\` ⌋
+│ ${prefix}truth - Truth Game
+│ ${prefix}dare - Dare Game
+│ ${prefix}quote - Random Quote
+│ ${prefix}joke - Random Joke
+└────────────────
+
+┌──⌈ \`🛡️ OWNER COMMANDS 🛡️\` ⌋
+│ ${prefix}block - Block User
+│ ${prefix}unblock - Unblock User
+│ ${prefix}join - Join Group
+│ ${prefix}leave - Leave Group
+│ ${prefix}restart - Restart Bot
+│ ${prefix}shutdown - Shutdown Bot
+│ ${prefix}setprefix - Change Prefix
+└────────────────
+
+${footer}`;
                     
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption: menuText }, { quoted: myquoted });
                     break;
@@ -831,7 +847,7 @@ function setupCommandHandlers(socket, number) {
                 case 'channel':
                 case 'viewchannel': {
                     await socket.sendMessage(sender, { 
-                        text: `┌──⌈ \`JAMALI TECH CHANNEL\` ⌋
+                        text: `┌──⌈ \`👽 JAMALI TECH CHANNEL 👽\` ⌋
 │ 📢 *Join Our Official Channel*
 │ 
 │ 🔗 *Link:* ${config.CHANNEL_LINK}
@@ -842,14 +858,14 @@ function setupCommandHandlers(socket, number) {
 │ 📞 *Contact:* wa.me/${config.OWNER_NUMBER}
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
                 case 'repo':
                 case 'github': {
                     await socket.sendMessage(sender, { 
-                        text: `┌──⌈ \`GITHUB REPOSITORY\` ⌋
+                        text: `┌──⌈ \`📦 GITHUB REPOSITORY 📦\` ⌋
 │ 📦 *Repo:* ${config.REPO_LINK}
 │ 
 │ ⭐ Star us on GitHub!
@@ -857,7 +873,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -868,8 +884,8 @@ function setupCommandHandlers(socket, number) {
                     const minutes = Math.floor((uptime % 3600) / 60);
                     const seconds = Math.floor(uptime % 60);
                     
-                    const text = `┌──⌈ \`JAMALI TECH MD\` ⌋
-│ *BOT IS ALIVE*
+                    const text = `┌──⌈ \`👽 JAMALI TECH MD 👽\` ⌋
+│ *BOT IS ALIVE* 🚀
 │ 
 │ 👑 Owner: ${config.OWNER_NAME}
 │ ⏱️ Uptime: ${hours}h ${minutes}m ${seconds}s
@@ -879,7 +895,7 @@ function setupCommandHandlers(socket, number) {
 │ 🌍 Status: ACTIVE
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽`;
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption: text }, { quoted: myquoted });
                     break;
                 }
@@ -888,28 +904,27 @@ function setupCommandHandlers(socket, number) {
                     const start = Date.now();
                     const ping = Date.now() - start;
                     await socket.sendMessage(sender, { 
-                        text: `┌──⌈ \`PONG\` ⌋
+                        text: `┌──⌈ \`⚡ PONG ⚡\` ⌋
 │ ⚡ Speed: ${ping} ms
 │ 🌐 Status: Excellent
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
                 case 'owner': {
-                    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${config.OWNER_NAME}\nORG:${config.BOT_NAME}\nTEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBER}:${config.OWNER_NUMBER}\nEMAIL:${config.OWNER_EMAIL}\nEND:VCARD`;
+                    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${config.OWNER_NAME}\nORG:${config.BOT_NAME}\nTEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBER}:${config.OWNER_NUMBER}\nEND:VCARD`;
                     await socket.sendMessage(sender, { contacts: { displayName: config.OWNER_NAME, contacts: [{ vcard }] } }, { quoted: myquoted });
                     await socket.sendMessage(sender, { 
-                        text: `┌──⌈ \`OWNER INFO\` ⌋
+                        text: `┌──⌈ \`👑 OWNER INFO 👑\` ⌋
 │ 👤 Name: ${config.OWNER_NAME}
 │ 📞 WhatsApp: wa.me/${config.OWNER_NUMBER}
-│ 📧 Email: ${config.OWNER_EMAIL}
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -920,7 +935,7 @@ function setupCommandHandlers(socket, number) {
                     const minutes = Math.floor((uptime % 3600) / 60);
                     const seconds = Math.floor(uptime % 60);
                     await socket.sendMessage(sender, { 
-                        text: `┌──⌈ \`RUNTIME INFO\` ⌋
+                        text: `┌──⌈ \`⏱️ RUNTIME INFO ⏱️\` ⌋
 │ 📅 Days: ${days}
 │ ⏰ Hours: ${hours}
 │ 🕐 Minutes: ${minutes}
@@ -928,7 +943,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -936,7 +951,7 @@ function setupCommandHandlers(socket, number) {
                     let replyJid = '';
                     if (msg.message.extendedTextMessage?.contextInfo?.participant) replyJid = msg.message.extendedTextMessage.contextInfo.participant;
                     const mentionedJid = msg.message.extendedTextMessage?.contextInfo?.mentionedJid;
-                    const caption = `┌──⌈ \`JID INFORMATION\` ⌋
+                    const caption = `┌──⌈ \`📍 JID INFORMATION 📍\` ⌋
 │ 💬 Chat JID: ${sender}
 ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `│ 👥 Mentioned: ${mentionedJid.join(', ')}\n` : ''}${msg.key.remoteJid.endsWith('@g.us') ? `│ 👥 Group JID: ${msg.key.remoteJid}\n` : ''}
 └────────────────
@@ -945,7 +960,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
 • User JID: number@s.whatsapp.net
 • Group JID: number@g.us
 
-🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
+👽 *POWERED BY JAMALI TECH EMPIRE* 👽`;
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption }, { quoted: myquoted });
                     break;
                 }
@@ -978,7 +993,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     await socket.sendMessage(sender, { text: `🎬 *Downloading:* ${video.title}\n⏱️ Please wait...` }, { quoted: myquoted });
                     try {
                         const stream = ytdl(video.url, { filter: 'audioandvideo', quality: 'highest' });
-                        await socket.sendMessage(sender, { video: { stream }, caption: `🎬 ${video.title}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                        await socket.sendMessage(sender, { video: { stream }, caption: `🎬 ${video.title}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                         await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                     } catch (error) {
                         await socket.sendMessage(sender, { text: `❌ Error: ${error.message}` }, { quoted: myquoted });
@@ -994,7 +1009,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/download/tiktok?url=${encodeURIComponent(url)}`);
                         if (response.data?.result?.video) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.video }, caption: `🎬 *TikTok Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.video }, caption: `🎬 *TikTok Video*\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ Failed to download TikTok video` }, { quoted: myquoted });
@@ -1014,10 +1029,10 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/download/facebook?url=${encodeURIComponent(url)}`);
                         if (response.data?.result?.hd) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.hd }, caption: `🎬 *Facebook Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.hd }, caption: `🎬 *Facebook Video*\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else if (response.data?.result?.sd) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.sd }, caption: `🎬 *Facebook Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.sd }, caption: `🎬 *Facebook Video*\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ Failed to download Facebook video` }, { quoted: myquoted });
@@ -1033,10 +1048,10 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     if (!quotedMsg) return await socket.sendMessage(sender, { text: '❌ *Reply to a status message with .save*' }, { quoted: myquoted });
                     if (quotedMsg.imageMessage) {
                         const buffer = await downloadAndSaveMedia(quotedMsg.imageMessage, 'image');
-                        await socket.sendMessage(sender, { image: buffer, caption: `✨ *STATUS SAVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
+                        await socket.sendMessage(sender, { image: buffer, caption: `✨ *STATUS SAVED* ✨\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` });
                     } else if (quotedMsg.videoMessage) {
                         const buffer = await downloadAndSaveMedia(quotedMsg.videoMessage, 'video');
-                        await socket.sendMessage(sender, { video: buffer, caption: `✨ *STATUS SAVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
+                        await socket.sendMessage(sender, { video: buffer, caption: `✨ *STATUS SAVED* ✨\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` });
                     }
                     break;
                 }
@@ -1051,8 +1066,8 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     else if (quotedMsg.viewOnceMessage?.message?.videoMessage) { mediaData = quotedMsg.viewOnceMessage.message.videoMessage; mediaType = 'video'; }
                     if (mediaData) {
                         const buffer = await downloadAndSaveMedia(mediaData, mediaType);
-                        if (mediaType === 'image') await socket.sendMessage(sender, { image: buffer, caption: `✨ *VIEWONCE IMAGE RETRIEVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
-                        else await socket.sendMessage(sender, { video: buffer, caption: `✨ *VIEWONCE VIDEO RETRIEVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
+                        if (mediaType === 'image') await socket.sendMessage(sender, { image: buffer, caption: `✨ *VIEWONCE IMAGE RETRIEVED* ✨\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` });
+                        else await socket.sendMessage(sender, { video: buffer, caption: `✨ *VIEWONCE VIDEO RETRIEVED* ✨\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` });
                     }
                     break;
                 }
@@ -1063,7 +1078,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     else if (msg.message.extendedTextMessage?.contextInfo?.mentionedJid?.length) { targetJid = msg.message.extendedTextMessage.contextInfo.mentionedJid[0]; profileName = "Mentioned User"; }
                     const ppUrl = await socket.profilePictureUrl(targetJid, 'image').catch(() => null);
                     if (!ppUrl) return await socket.sendMessage(sender, { text: `❌ *No profile picture for ${profileName}*` }, { quoted: myquoted });
-                    await socket.sendMessage(sender, { image: { url: ppUrl }, caption: `✨ *PROFILE PICTURE* ✨\n\n👤 *${profileName}*\n📱 *JID:* ${targetJid}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                    await socket.sendMessage(sender, { image: { url: ppUrl }, caption: `✨ *PROFILE PICTURE* ✨\n\n👤 *${profileName}*\n📱 *JID:* ${targetJid}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -1074,13 +1089,60 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(query)}`);
                         if (response.data?.result) {
-                            await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ AI service unavailable` }, { quoted: myquoted });
                         }
                     } catch (error) {
                         await socket.sendMessage(sender, { text: `❌ Error: ${error.message}` }, { quoted: myquoted });
                     }
+                    break;
+                }
+                
+                case 'truth': {
+                    const truths = [
+                        "What's your biggest fear?",
+                        "Have you ever lied to your best friend?",
+                        "What's the biggest trouble you've ever gotten into?",
+                        "What's something you're insecure about?"
+                    ];
+                    const randomTruth = truths[Math.floor(Math.random() * truths.length)];
+                    await socket.sendMessage(sender, { text: `🎲 *TRUTH*\n\n${randomTruth}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
+                    break;
+                }
+                
+                case 'dare': {
+                    const dares = [
+                        "Send a message to your crush right now!",
+                        "Share your screen with someone",
+                        "Do 10 pushups",
+                        "Send a random sticker to the last person you messaged"
+                    ];
+                    const randomDare = dares[Math.floor(Math.random() * dares.length)];
+                    await socket.sendMessage(sender, { text: `🎲 *DARE*\n\n${randomDare}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
+                    break;
+                }
+                
+                case 'quote': {
+                    const quotes = [
+                        "The only limit is your mind.",
+                        "Success is not final, failure is not fatal.",
+                        "Believe you can and you're halfway there.",
+                        "Don't watch the clock; do what it does. Keep going."
+                    ];
+                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                    await socket.sendMessage(sender, { text: `💬 *QUOTE*\n\n${randomQuote}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
+                    break;
+                }
+                
+                case 'joke': {
+                    const jokes = [
+                        "Why don't scientists trust atoms? Because they make up everything!",
+                        "What do you call a fake noodle? An impasta!",
+                        "Why did the scarecrow win an award? He was outstanding in his field!"
+                    ];
+                    const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                    await socket.sendMessage(sender, { text: `😂 *JOKE*\n\n${randomJoke}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -1091,12 +1153,30 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     break;
                 }
                 
+                case 'shutdown': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    await socket.sendMessage(sender, { text: `🛑 *Shutting down ${config.BOT_NAME}...*` }, { quoted: myquoted });
+                    setTimeout(() => { process.exit(0); }, 1000);
+                    break;
+                }
+                
+                case 'setprefix': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: `📌 *Current prefix:* ${prefix}\nUsage: .setprefix <new_prefix>` }, { quoted: myquoted });
+                    const newPrefix = args[0];
+                    const userConfig = await loadUserConfig(number);
+                    userConfig.PREFIX = newPrefix;
+                    await updateUserConfig(number, userConfig);
+                    await socket.sendMessage(sender, { text: `✅ *Prefix changed from ${prefix} to ${newPrefix}*` }, { quoted: myquoted });
+                    break;
+                }
+                
                 default: {
                     if (command && command.length > 2) {
                         try {
                             const response = await axios.get(`https://api.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(command + ' ' + args.join(' '))}`);
                             if (response.data?.result) {
-                                await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
+                                await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n👽 *POWERED BY JAMALI TECH EMPIRE* 👽` }, { quoted: myquoted });
                             }
                         } catch (error) {}
                     }
@@ -1147,11 +1227,11 @@ function setupAutoRestart(socket, number) {
     });
 }
 
-// ==================== MAIN PAIRING FUNCTION (IMEREKEBISHWA) ====================
+// ==================== MAIN PAIRING FUNCTION ====================
 async function EmpirePair(number, res) {
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     const sessionPath = path.join(config.SESSION_BASE_PATH, `session_${sanitizedNumber}`);
-    console.log(`🔄 JAMALI TECH MD - Connecting: ${sanitizedNumber}`);
+    console.log(`👽 JAMALI TECH MD - Connecting: ${sanitizedNumber} 👽`);
     
     try {
         fs.ensureDirSync(sessionPath);
@@ -1178,7 +1258,7 @@ async function EmpirePair(number, res) {
         setupAutoRestart(socket, sanitizedNumber);
         setupNewsletterHandlers(socket);
         
-        // ============ SEHEMU YA PAIRING IMEREKEBISHWA ============
+        // ============ PAIRING SECTION ============
         if (!socket.authState.creds.registered) {
             try {
                 await delay(2000);
@@ -1210,7 +1290,7 @@ async function EmpirePair(number, res) {
                 });
             }
         }
-        // ============ MWISHO WA SEHEMU YA PAIRING ============
+        // ============ END PAIRING SECTION ============
         
         socket.ev.on('creds.update', async () => {
             await saveCreds();
