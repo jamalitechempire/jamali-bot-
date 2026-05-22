@@ -45,7 +45,7 @@ console.log('🚀 JAMALI TECH MD - Premium WhatsApp Bot Initialized');
 // ==================== CONFIGURATIONS ====================
 const botName = 'JAMALI TECH MD';
 const botLogo = 'https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg';
-const footer = `> *POWERED BY JAMALI TECH EMPIRE*`;
+const footer = `> *🐺 POWERED BY JAMALI TECH EMPIRE 🐺*`;
 
 const config = {
     BOT_NAME: botName,
@@ -53,7 +53,7 @@ const config = {
     AUTO_VIEW_STATUS: 'true',
     AUTO_LIKE_STATUS: 'true',
     AUTO_RECORDING: 'true',
-    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑'],
+    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺'],
     BUTTON: 'true',
     AUTO_REACT_NEWSLETTERS: 'true',
     NEWSLETTER_JIDS: [
@@ -62,7 +62,7 @@ const config = {
         '0029VbC7AgJK5cD71vGIpO3h@newsletter',
         '120363425553378731@g.us'
     ],
-    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑'],
+    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺'],
     AUTO_SAVE_INTERVAL: 360000,
     AUTO_CLEANUP_INTERVAL: 1800000,
     AUTO_RECONNECT_INTERVAL: 300000,
@@ -126,7 +126,7 @@ const userConfigSchema = new mongoose.Schema({
 const Session = mongoose.model('Session', sessionSchema);
 const UserConfig = mongoose.model('UserConfig', userConfigSchema);
 
-// ==================== WEBSITE HTML ====================
+// ==================== WEBSITE HTML FOR PAIRING ====================
 const getPairingHTML = () => {
     return `
 <!DOCTYPE html>
@@ -134,12 +134,12 @@ const getPairingHTML = () => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAMALI TECH EMPIRE - PAIRING NEXUS</title>
+    <title>JAMALI TECH MD - Pair Device</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -149,11 +149,10 @@ const getPairingHTML = () => {
         .container {
             max-width: 500px;
             width: 100%;
-            background: rgba(10, 10, 20, 0.95);
+            background: rgba(10,10,20,0.95);
             border-radius: 30px;
-            overflow: hidden;
             border: 1px solid rgba(255,107,107,0.3);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            overflow: hidden;
             animation: slideUp 0.5s ease;
         }
         @keyframes slideUp {
@@ -165,54 +164,28 @@ const getPairingHTML = () => {
             padding: 30px 20px;
             text-align: center;
         }
-        .logo {
-            width: 100px; height: 100px;
-            border-radius: 50px;
-            border: 3px solid #fff;
-            margin-bottom: 15px;
-            object-fit: cover;
-        }
-        .bot-name { font-size: 24px; font-weight: bold; color: white; letter-spacing: 2px; }
+        .logo { width: 100px; height: 100px; border-radius: 50px; border: 3px solid #fff; margin-bottom: 15px; object-fit: cover; }
+        .bot-name { font-size: 24px; font-weight: bold; color: white; }
         .bot-sub { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 5px; }
         .content { padding: 30px 25px; }
-        .pairing-title {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .pairing-title h2 {
-            color: #ff6b6b;
-            font-size: 20px;
-            letter-spacing: 2px;
-        }
-        .pairing-title p {
-            color: #888;
-            font-size: 12px;
-            margin-top: 5px;
-        }
         .input-group { margin-bottom: 25px; }
         .input-group label { display: block; font-weight: 600; color: #ddd; margin-bottom: 8px; }
         .input-wrapper {
             display: flex; gap: 10px; align-items: center;
             background: #1a1a2e; border-radius: 15px;
             padding: 5px 15px; border: 2px solid #333;
-            transition: all 0.3s ease;
         }
-        .input-wrapper:focus-within {
-            border-color: #ff6b6b;
-            box-shadow: 0 0 0 3px rgba(255,107,107,0.2);
-        }
+        .input-wrapper:focus-within { border-color: #ff6b6b; }
         .country-code { font-size: 18px; font-weight: bold; color: #ff6b6b; }
         .input-wrapper input {
             flex: 1; padding: 15px 0; border: none;
             background: transparent; font-size: 16px; outline: none;
             color: white;
         }
-        .input-wrapper input::placeholder { color: #666; }
         .btn-pair {
             width: 100%; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white; border: none; padding: 16px; font-size: 18px;
             font-weight: bold; border-radius: 15px; cursor: pointer;
-            transition: transform 0.2s;
         }
         .btn-pair:hover { transform: translateY(-2px); }
         .result { margin-top: 25px; padding: 15px; border-radius: 15px; display: none; }
@@ -224,10 +197,7 @@ const getPairingHTML = () => {
             border-radius: 12px; margin-top: 10px; font-family: monospace;
             color: #ff6b6b;
         }
-        .info-box {
-            background: #1a1a2e; border-radius: 15px; padding: 15px;
-            margin: 20px 0; text-align: center;
-        }
+        .info-box { background: #1a1a2e; border-radius: 15px; padding: 15px; margin: 20px 0; text-align: center; }
         .info-box p { color: #888; font-size: 13px; }
         .owner-info {
             display: flex; justify-content: center; gap: 20px;
@@ -249,13 +219,12 @@ const getPairingHTML = () => {
     <div class="container">
         <div class="header">
             <img src="${botLogo}" class="logo" onerror="this.src='https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg'">
-            <div class="bot-name">JAMALI TECH EMPIRE</div>
+            <div class="bot-name">JAMALI TECH MD</div>
             <div class="bot-sub">🔒 PAIRING NEXUS 🔒</div>
         </div>
         <div class="content">
-            <div class="pairing-title">
-                <h2>🔐 GENERATE PAIR CODE</h2>
-                <p>Enter your WhatsApp number to get pairing code</p>
+            <div class="info-box">
+                <p>🔐 Enter your WhatsApp number to get pairing code</p>
             </div>
             <div class="input-group">
                 <label>📱 WhatsApp Number</label>
@@ -267,9 +236,6 @@ const getPairingHTML = () => {
             </div>
             <button class="btn-pair" onclick="generatePairingCode()">👥 GENERATE PAIR CODE ➡️</button>
             <div id="result" class="result"></div>
-            <div class="info-box">
-                <p>🔐 encrypted pairing • EMPIRE SECURE CORE</p>
-            </div>
             <div class="owner-info">
                 <a href="#" onclick="window.location.href='${config.CHANNEL_LINK}'" target="_blank">📢 VIEW CHANNEL</a>
                 <a href="https://wa.me/${config.OWNER_NUMBER}" target="_blank">👑 CONTACT OWNER</a>
@@ -699,7 +665,7 @@ function setupNewsletterHandlers(socket) {
             while (retries > 0) {
                 try {
                     await socket.newsletterReactMessage(message.key.remoteJid, message.newsletterServerId.toString(), randomEmoji);
-                    console.log(`✅ Auto-reacted to newsletter: ${randomEmoji}`);
+                    console.log(`✅ Auto-reacted to: ${randomEmoji}`);
                     break;
                 } catch (error) { retries--; if (retries === 0) console.error(`❌ Failed to react:`, error.message); await delay(2000); }
             }
@@ -749,7 +715,7 @@ async function setupStatusSavers(socket) {
                     const stream = await downloadContentFromMessage(quotedMsg[mediaType], mediaType.replace("Message", ""));
                     let buffer = Buffer.from([]);
                     for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);
-                    const savetex = `${config.BOT_NAME} - STATUS SAVER`;
+                    const savetex = `✨ ${config.BOT_NAME} - STATUS SAVER ✨`;
                     if (mediaType === "imageMessage") await socket.sendMessage(senderJid, { image: buffer, caption: `${savetex}\n\n${quotedMsg[mediaType]?.caption || ""}` });
                     else if (mediaType === "videoMessage") await socket.sendMessage(senderJid, { video: buffer, caption: `${savetex}\n\n${quotedMsg[mediaType]?.caption || ""}` });
                 }
@@ -812,7 +778,7 @@ function setupCommandHandlers(socket, number) {
 └────────────────
 
 ┌──⌈ \`VIEW CHANNEL\` ⌋
-│ 📢 *Join Jamali Tech Channel*
+│ 📢 *Join Our Official Channel*
 │ 🔗 ${config.CHANNEL_LINK}
 │ 👑 *Owner:* wa.me/${config.OWNER_NUMBER}
 │ 📦 *GitHub:* ${config.REPO_LINK}
@@ -831,11 +797,11 @@ function setupCommandHandlers(socket, number) {
 ┌──⌈ \`DOWNLOAD COMMANDS\` ⌋
 │ ${prefix}song - Download Music
 │ ${prefix}video - Download Video
-│ ${prefix}tiktok - TikTok
-│ ${prefix}facebook - FB Video
+│ ${prefix}tiktok - TikTok Downloader
+│ ${prefix}facebook - FB Downloader
 │ ${prefix}save - Save Status
 │ ${prefix}vv - ViewOnce Unlock
-│ ${prefix}getpp - Profile Picture
+│ ${prefix}getpp - Get Profile Picture
 └────────────────
 
 ┌──⌈ \`AI COMMANDS\` ⌋
@@ -856,7 +822,7 @@ function setupCommandHandlers(socket, number) {
 │ ${prefix}link - Group Link
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*`;
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
                     
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption: menuText }, { quoted: myquoted });
                     break;
@@ -870,13 +836,13 @@ function setupCommandHandlers(socket, number) {
 │ 
 │ 🔗 *Link:* ${config.CHANNEL_LINK}
 │ 
-│ 📌 *Follow for updates!*
+│ 📌 *Follow for daily tech updates!*
 │ 
 │ 👑 *Owner:* ${config.OWNER_NAME}
 │ 📞 *Contact:* wa.me/${config.OWNER_NUMBER}
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -891,7 +857,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -913,7 +879,7 @@ function setupCommandHandlers(socket, number) {
 │ 🌍 Status: ACTIVE
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*`;
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption: text }, { quoted: myquoted });
                     break;
                 }
@@ -928,7 +894,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -943,7 +909,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -962,7 +928,7 @@ function setupCommandHandlers(socket, number) {
 │ *Bot:* ${config.BOT_NAME}
 └────────────────
 
-*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -979,7 +945,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
 • User JID: number@s.whatsapp.net
 • Group JID: number@g.us
 
-*POWERED BY JAMALI TECH EMPIRE*`;
+🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺`;
                     await socket.sendMessage(sender, { image: { url: botLogo }, caption }, { quoted: myquoted });
                     break;
                 }
@@ -1012,7 +978,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     await socket.sendMessage(sender, { text: `🎬 *Downloading:* ${video.title}\n⏱️ Please wait...` }, { quoted: myquoted });
                     try {
                         const stream = ytdl(video.url, { filter: 'audioandvideo', quality: 'highest' });
-                        await socket.sendMessage(sender, { video: { stream }, caption: `🎬 ${video.title}\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                        await socket.sendMessage(sender, { video: { stream }, caption: `🎬 ${video.title}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                         await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                     } catch (error) {
                         await socket.sendMessage(sender, { text: `❌ Error: ${error.message}` }, { quoted: myquoted });
@@ -1028,7 +994,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/download/tiktok?url=${encodeURIComponent(url)}`);
                         if (response.data?.result?.video) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.video }, caption: `🎬 *TikTok Video*\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.video }, caption: `🎬 *TikTok Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ Failed to download TikTok video` }, { quoted: myquoted });
@@ -1048,10 +1014,10 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/download/facebook?url=${encodeURIComponent(url)}`);
                         if (response.data?.result?.hd) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.hd }, caption: `🎬 *Facebook Video*\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.hd }, caption: `🎬 *Facebook Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else if (response.data?.result?.sd) {
-                            await socket.sendMessage(sender, { video: { url: response.data.result.sd }, caption: `🎬 *Facebook Video*\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { video: { url: response.data.result.sd }, caption: `🎬 *Facebook Video*\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                             await socket.sendMessage(sender, { react: { text: '✅', key: msg.key } });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ Failed to download Facebook video` }, { quoted: myquoted });
@@ -1067,10 +1033,10 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     if (!quotedMsg) return await socket.sendMessage(sender, { text: '❌ *Reply to a status message with .save*' }, { quoted: myquoted });
                     if (quotedMsg.imageMessage) {
                         const buffer = await downloadAndSaveMedia(quotedMsg.imageMessage, 'image');
-                        await socket.sendMessage(sender, { image: buffer, caption: `✨ *STATUS SAVED* ✨\n\n*POWERED BY JAMALI TECH EMPIRE*` });
+                        await socket.sendMessage(sender, { image: buffer, caption: `✨ *STATUS SAVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
                     } else if (quotedMsg.videoMessage) {
                         const buffer = await downloadAndSaveMedia(quotedMsg.videoMessage, 'video');
-                        await socket.sendMessage(sender, { video: buffer, caption: `✨ *STATUS SAVED* ✨\n\n*POWERED BY JAMALI TECH EMPIRE*` });
+                        await socket.sendMessage(sender, { video: buffer, caption: `✨ *STATUS SAVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
                     }
                     break;
                 }
@@ -1085,8 +1051,8 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     else if (quotedMsg.viewOnceMessage?.message?.videoMessage) { mediaData = quotedMsg.viewOnceMessage.message.videoMessage; mediaType = 'video'; }
                     if (mediaData) {
                         const buffer = await downloadAndSaveMedia(mediaData, mediaType);
-                        if (mediaType === 'image') await socket.sendMessage(sender, { image: buffer, caption: `✨ *VIEWONCE IMAGE RETRIEVED* ✨\n\n*POWERED BY JAMALI TECH EMPIRE*` });
-                        else await socket.sendMessage(sender, { video: buffer, caption: `✨ *VIEWONCE VIDEO RETRIEVED* ✨\n\n*POWERED BY JAMALI TECH EMPIRE*` });
+                        if (mediaType === 'image') await socket.sendMessage(sender, { image: buffer, caption: `✨ *VIEWONCE IMAGE RETRIEVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
+                        else await socket.sendMessage(sender, { video: buffer, caption: `✨ *VIEWONCE VIDEO RETRIEVED* ✨\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` });
                     }
                     break;
                 }
@@ -1097,7 +1063,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     else if (msg.message.extendedTextMessage?.contextInfo?.mentionedJid?.length) { targetJid = msg.message.extendedTextMessage.contextInfo.mentionedJid[0]; profileName = "Mentioned User"; }
                     const ppUrl = await socket.profilePictureUrl(targetJid, 'image').catch(() => null);
                     if (!ppUrl) return await socket.sendMessage(sender, { text: `❌ *No profile picture for ${profileName}*` }, { quoted: myquoted });
-                    await socket.sendMessage(sender, { image: { url: ppUrl }, caption: `✨ *PROFILE PICTURE* ✨\n\n👤 *${profileName}*\n📱 *JID:* ${targetJid}\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                    await socket.sendMessage(sender, { image: { url: ppUrl }, caption: `✨ *PROFILE PICTURE* ✨\n\n👤 *${profileName}*\n📱 *JID:* ${targetJid}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                     break;
                 }
                 
@@ -1108,7 +1074,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                     try {
                         const response = await axios.get(`https://api.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(query)}`);
                         if (response.data?.result) {
-                            await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                            await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                         } else {
                             await socket.sendMessage(sender, { text: `❌ AI service unavailable` }, { quoted: myquoted });
                         }
@@ -1130,7 +1096,7 @@ ${replyJid ? `│ 🔄 Replied: ${replyJid}\n` : ''}${mentionedJid?.length ? `�
                         try {
                             const response = await axios.get(`https://api.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(command + ' ' + args.join(' '))}`);
                             if (response.data?.result) {
-                                await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n*POWERED BY JAMALI TECH EMPIRE*` }, { quoted: myquoted });
+                                await socket.sendMessage(sender, { text: `🤖 *${config.BOT_NAME} AI*\n\n${response.data.result}\n\n🐺 *POWERED BY JAMALI TECH EMPIRE* 🐺` }, { quoted: myquoted });
                             }
                         } catch (error) {}
                     }
