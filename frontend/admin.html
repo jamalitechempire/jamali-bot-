@@ -3,127 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAMALI TECH MD - Admin Dashboard</title>
+<title>JAMALI TECH MD - Admin Login</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0a0c15;
     font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  .card {
+    background: rgba(18,22,31,0.95);
+    border-radius: 2rem;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(0,255,234,0.3);
+  }
+  .bot-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #00ffea;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    background: linear-gradient(135deg, #fff, #00ffea);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+  }
+  .input-group {
+    position: relative;
+    margin: 1rem 0;
+  }
+  .input-group i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00ffea;
+  }
+  input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 3rem;
+    background: #11131f;
+    border: 1px solid #2a2f3c;
+    border-radius: 60px;
     color: #fff;
   }
-  .header {
-    background: linear-gradient(135deg, #0a0c15, #0f1220);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(0,255,234,0.2);
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .stat-card {
-    background: rgba(18,22,31,0.9);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid rgba(0,255,234,0.2);
-  }
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #00ffea;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(18,22,31,0.9);
-    border-radius: 1rem;
-    overflow: hidden;
-  }
-  th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  th {
-    background: #0f1220;
-    color: #00ffea;
+  input:focus {
+    outline: none;
+    border-color: #00ffea;
   }
   button {
-    background: #ff4444;
-    color: #fff;
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, #00ffea, #00b7ff);
     border: none;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
+    border-radius: 60px;
+    font-weight: bold;
     cursor: pointer;
+    margin-top: 1rem;
   }
-  .status-on { color: #00ffaa; }
-  .status-off { color: #ff6b6b; }
+  .error {
+    color: #ff6b6b;
+    margin-top: 1rem;
+  }
 </style>
 </head>
 <body>
-<div class="header">
-  <h2><i class="fas fa-shield-alt"></i> JAMALI TECH ADMIN</h2>
-  <a href="/" style="color: #00ffea;"><i class="fas fa-home"></i> Home</a>
-</div>
-<div class="container">
-  <div class="stats">
-    <div class="stat-card"><div class="stat-number" id="botCount">0</div><p>Active Bots</p></div>
-    <div class="stat-card"><div class="stat-number" id="mongoStatus">—</div><p>MongoDB Status</p></div>
-    <div class="stat-card"><div class="stat-number" id="uptime">0m</div><p>Bot Uptime</p></div>
+<div class="card">
+  <img src="https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg" alt="JAMALI TECH MD" class="bot-avatar">
+  <h2>ADMIN LOGIN</h2>
+  <p>Enter credentials to access dashboard</p>
+  
+  <div class="input-group">
+    <i class="fas fa-user"></i>
+    <input type="text" id="username" placeholder="Username">
+  </div>
+  <div class="input-group">
+    <i class="fas fa-key"></i>
+    <input type="password" id="password" placeholder="Password">
   </div>
   
-  <h3 style="margin-bottom: 1rem;"><i class="fas fa-mobile-alt"></i> Active Sessions</h3>
-  <table>
-    <thead><tr><th>Number</th><th>Status</th><th>Health</th><th>Actions</th></tr></thead>
-    <tbody id="sessionsTable"></tbody>
-  </table>
+  <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
+  <div id="errorMsg" class="error"></div>
 </div>
 
 <script>
-async function fetchData() {
-  const activeRes = await fetch('/api/active');
-  const activeData = await activeRes.json();
-  document.getElementById('botCount').innerText = activeData.count || 0;
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
   
-  const mongoRes = await fetch('/api/mongodb-status');
-  const mongoData = await mongoRes.json();
-  document.getElementById('mongoStatus').innerHTML = mongoData.mongodb?.connected ? '✅ Connected' : '❌ Disconnected';
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
   
-  const statusRes = await fetch('/api/status');
-  const statusData = await statusRes.json();
-  document.getElementById('uptime').innerText = statusData.uptime || '0m';
-  
-  const tbody = document.getElementById('sessionsTable');
-  tbody.innerHTML = '';
-  if (activeData.numbers && activeData.numbers.length > 0) {
-    activeData.numbers.forEach(num => {
-      tbody.innerHTML += `<tr><td>${num}</td><td class="status-on">🟢 Active</td><td>Healthy</td><td><button onclick="deleteSession('${num}')">Delete</button></td></tr>`;
-    });
+  const data = await res.json();
+  if (data.success) {
+    window.location.href = '/admin';
   } else {
-    tbody.innerHTML = '<tr><td colspan="4">No active sessions</td></tr>';
+    document.getElementById('errorMsg').textContent = '❌ Invalid credentials';
   }
-}
-
-async function deleteSession(number) {
-  if (confirm(`Delete session for ${number}?`)) {
-    await fetch(`/api/session/${number}`, { method: 'DELETE' });
-    fetchData();
-  }
-}
-
-fetchData();
-setInterval(fetchData, 10000);
+});
 </script>
 </body>
 </html>
