@@ -1,13 +1,13 @@
 {
-  "name": "⚡ JAMALI TECH MD V2 ⚡",
-  "description": "PREMIUM WHATSAPP BOT - SESSION ID GENERATOR FOR JAMALI TECH MD",
+  "name": "JAMALI TECH MD",
+  "description": "Premium WhatsApp Bot - Multi-Device Support with AI Features",
   "logo": "https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg",
   "repository": "https://github.com/jamalitechempire/Jamali-tech-bot",
-  "keywords": ["JAMALI-TECH", "JAMALI-TECH-MD", "WHATSAPP-BOT", "PREMIUM-BOT"],
+  "keywords": ["whatsapp-bot", "baileys", "nodejs", "jamali-tech", "whatsapp-md"],
   "success_url": "/",
   "buildpacks": [
     {
-      "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
     },
     {
       "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
@@ -18,12 +18,12 @@
   ],
   "env": {
     "SESSION_ID": {
-      "description": "Your WhatsApp Bot Session ID - Leave empty to generate new one",
+      "description": "WhatsApp Bot Session ID - Leave empty to generate new one",
       "value": "",
       "required": false
     },
     "PREFIX": {
-      "description": "Bot command prefix (default: .)",
+      "description": "Bot command prefix",
       "value": ".",
       "required": false
     },
@@ -38,70 +38,39 @@
       "required": false
     },
     "MONGODB_URI": {
-      "description": "MongoDB Connection URI for session storage",
+      "description": "MongoDB Connection URI",
       "value": "mongodb+srv://dinu60970_db_user:RfGn7kG6A5jLe2px@cluster0.4yb6fvp.mongodb.net/",
       "required": true
     },
     "AUTO_VIEW_STATUS": {
-      "description": "Auto view status (true/false)",
       "value": "true",
       "required": false
     },
     "AUTO_LIKE_STATUS": {
-      "description": "Auto like status (true/false)",
       "value": "true",
       "required": false
     },
     "AUTO_RECORDING": {
-      "description": "Auto recording status (true/false)",
       "value": "true",
       "required": false
     },
     "CHANNEL_LINK": {
-      "description": "Your WhatsApp Channel Link",
       "value": "https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h",
       "required": false
     },
-    "REPO_LINK": {
-      "description": "GitHub Repository Link",
-      "value": "https://github.com/jamalitechempire/Jamali-tech-bot",
-      "required": false
-    },
-    "WEBSITE_LINK": {
-      "description": "Bot Website/Pairing Link",
-      "value": "https://jamali-tech.onrender.com",
-      "required": false
-    },
-    "AUTO_REACT_NEWSLETTERS": {
-      "description": "Auto react to newsletters (true/false)",
-      "value": "true",
-      "required": false
-    },
-    "NEWSLETTER_JIDS": {
-      "description": "Newsletter JIDs to auto-follow (comma separated)",
-      "value": "255784062158@s.whatsapp.net,0029VbC7AgJK5cD71vGIpO3h@newsletter,120363425553378731@g.us",
-      "required": false
-    },
     "PAIRING_CODE_NAME": {
-      "description": "Pairing code name for device pairing",
       "value": "JAMALITZ",
-      "required": false
-    },
-    "HEROKU_API_KEY": {
-      "description": "Heroku API Key (for auto restart)",
-      "value": "",
-      "required": false
-    },
-    "HEROKU_APP_NAME": {
-      "description": "Heroku App Name (for auto restart)",
-      "value": "",
-      "required": false
-    },
-    "MESSAGE": {
-      "description": "Welcome Message Attached With Session ID",
-      "value": "🔐 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐄𝐌𝐏𝐈𝐑𝐄 🔐",
       "required": false
     }
   },
-  "stack": "heroku-22"
+  "formation": {
+    "web": {
+      "quantity": 0,
+      "size": "basic"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
 }
