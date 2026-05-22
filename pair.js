@@ -53,7 +53,7 @@ const config = {
     AUTO_VIEW_STATUS: 'true',
     AUTO_LIKE_STATUS: 'true',
     AUTO_RECORDING: 'true',
-    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺', '🚀', '💎'],
+    AUTO_LIKE_EMOJI: ['❤️', '🔥', '💪', '⚡', '✨', '👑'],
     BUTTON: 'true',
     AUTO_REACT_NEWSLETTERS: 'true',
     NEWSLETTER_JIDS: [
@@ -61,7 +61,7 @@ const config = {
         '0029VbC7AgJK5cD71vGIpO3h@newsletter',
         '120363425553378731@g.us'
     ],
-    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑', '🐺', '🚀', '💎'],
+    NEWSLETTER_REACT_EMOJIS: ['❤️', '🔥', '💪', '⚡', '✨', '👑'],
     AUTO_SAVE_INTERVAL: 360000,
     AUTO_CLEANUP_INTERVAL: 1800000,
     AUTO_RECONNECT_INTERVAL: 300000,
@@ -722,7 +722,7 @@ async function setupStatusSavers(socket) {
     });
 }
 
-// ==================== COMMAND HANDLERS ====================
+// ==================== COMMAND HANDLERS - ALL 300+ COMMANDS ====================
 function setupCommandHandlers(socket, number) {
     socket.ev.on('messages.upsert', async ({ messages }) => {
         const userConfig = await loadUserConfig(number);
@@ -747,7 +747,7 @@ function setupCommandHandlers(socket, number) {
         
         try {
             switch (command) {
-                // ==================== MAIN MENU ====================
+                // ==================== MAIN MENU WITH DASHBOARD ====================
                 case 'menu':
                 case 'allmenu': {
                     const start = Date.now();
@@ -762,410 +762,111 @@ function setupCommandHandlers(socket, number) {
                     const seconds = Math.floor(uptime % 60);
                     const ramBar = `[${'█'.repeat(Math.floor(memPercent / 10))}${'░'.repeat(10 - Math.floor(memPercent / 10))}]`;
                     
-                    const menuText = `┏▣ ◈ *JAMALI TECH MD* ◈
-┃ *ᴏᴡɴᴇʀ* : ${config.OWNER_NAME}
-┃ *ᴘʀᴇғɪx* : [ ${prefix} ]
-┃ *ʜᴏsᴛ* : ${process.env.PLATFORM || 'Heroku'}
-┃ *ᴘʟᴜɢɪɴs* : 350+
-┃ *ᴍᴏᴅᴇ* : Public
-┃ *ᴠᴇʀsɪᴏɴ* : ${config.BOT_VERSION}
-┃ *sᴘᴇᴇᴅ* : ${Date.now() - start} ms
-┃ *ᴜsᴀɢᴇ* : ${(usedMem / 1024 / 1024).toFixed(0)} MB of ${(totalMem / 1024 / 1024).toFixed(0)} MB
-┃ *ʀᴀᴍ:* ${ramBar} ${memPercent}%
+                    const menuText = `╔══════════════════════════════════════════════════════╗
+║                    JAMALI TECH MD                    ║
+║              PREMIUM WHATSAPP BOT                    ║
+╚══════════════════════════════════════════════════════╝
+
+┏▣ ◈ *📊 DASHBOARD* ◈
+┃ 👑 *Owner*      : ${config.OWNER_NAME}
+┃ 🤖 *Bot Name*   : ${config.BOT_NAME}
+┃ 📌 *Prefix*     : ${prefix}
+┃ 🔢 *Version*    : ${config.BOT_VERSION}
+┃ 🌍 *Mode*       : Public
+┃ 🖥️ *Platform*   : ${process.env.PLATFORM || 'Heroku'}
+┃ ⏱️ *Uptime*     : ${hours}h ${minutes}m ${seconds}s
+┃ ⚡ *Speed*      : ${Date.now() - start} ms
+┃ 💾 *RAM Usage*  : ${(usedMem / 1024 / 1024).toFixed(0)} MB / ${(totalMem / 1024 / 1024).toFixed(0)} MB
+┃ 📊 *RAM Bar*    : ${ramBar} ${memPercent}%
+┃ 📦 *Plugins*    : 350+
+┃ 👥 *Users*      : ${activeSockets.size}
 ┗▣ 
 
-┏▣ ◈ *AI MENU* ◈
-│➽ ${prefix}analyze
-│➽ ${prefix}blackbox
-│➽ ${prefix}code
-│➽ ${prefix}dalle
-│➽ ${prefix}deepseek
-│➽ ${prefix}doppleai
-│➽ ${prefix}gemini
-│➽ ${prefix}generate
-│➽ ${prefix}gpt
-│➽ ${prefix}programming
-│➽ ${prefix}recipe
-│➽ ${prefix}story
-│➽ ${prefix}summarize
-│➽ ${prefix}teach
-│➽ ${prefix}translate2
+┏▣ ◈ *📢 VIEW CHANNEL* ◈
+│➽ 🔗 *Channel:* ${config.CHANNEL_LINK}
+│➽ 👑 *Owner:* wa.me/${config.OWNER_NUMBER}
+│➽ 📦 *GitHub:* ${config.REPO_LINK}
 ┗▣ 
 
-┏▣ ◈ *AUDIO MENU* ◈
-│➽ ${prefix}bass
-│➽ ${prefix}blown
-│➽ ${prefix}deep
-│➽ ${prefix}earrape
-│➽ ${prefix}reverse
-│➽ ${prefix}robot
-│➽ ${prefix}tomp3
-│➽ ${prefix}toptt
-│➽ ${prefix}volaudio
+┏▣ ◈ *⚡ QUICK COMMANDS* ◈
+│➽ ${prefix}alive - Bot Status
+│➽ ${prefix}ping - Speed Test
+│➽ ${prefix}owner - Contact Owner
+│➽ ${prefix}repo - GitHub Repo
+│➽ ${prefix}channel - View Channel
+│➽ ${prefix}runtime - Bot Uptime
+│➽ ${prefix}jid - Your JID
 ┗▣ 
 
-┏▣ ◈ *DOWNLOAD MENU* ◈
-│➽ ${prefix}apk
-│➽ ${prefix}download
-│➽ ${prefix}facebook
-│➽ ${prefix}gdrive
-│➽ ${prefix}gitclone
-│➽ ${prefix}image
-│➽ ${prefix}instagram
-│➽ ${prefix}itunes
-│➽ ${prefix}mediafire
-│➽ ${prefix}pin
-│➽ ${prefix}savestatus
-│➽ ${prefix}song
-│➽ ${prefix}song2
-│➽ ${prefix}telesticker
-│➽ ${prefix}tiktok
-│➽ ${prefix}tiktokaudio
-│➽ ${prefix}twitter
-│➽ ${prefix}video
-│➽ ${prefix}videodoc
-│➽ ${prefix}xvideo
+┏▣ ◈ *📥 DOWNLOAD COMMANDS* ◈
+│➽ ${prefix}song - Download Music
+│➽ ${prefix}video - Download Video
+│➽ ${prefix}tiktok - TikTok Downloader
+│➽ ${prefix}facebook - FB Downloader
+│➽ ${prefix}instagram - IG Downloader
+│➽ ${prefix}twitter - Twitter Downloader
+│➽ ${prefix}save - Save Status
+│➽ ${prefix}vv - ViewOnce Unlock
+│➽ ${prefix}getpp - Get Profile Picture
 ┗▣ 
 
-┏▣ ◈ *EPHOTO360 MENU* ◈
-│➽ ${prefix}1917style
-│➽ ${prefix}advancedglow
-│➽ ${prefix}blackpinklogo
-│➽ ${prefix}blackpinkstyle
-│➽ ${prefix}cartoonstyle
-│➽ ${prefix}deletingtext
-│➽ ${prefix}dragonball
-│➽ ${prefix}effectclouds
-│➽ ${prefix}flag3dtext
-│➽ ${prefix}flagtext
-│➽ ${prefix}freecreate
-│➽ ${prefix}galaxystyle
-│➽ ${prefix}galaxywallpaper
-│➽ ${prefix}glitchtext
-│➽ ${prefix}glowingtext
-│➽ ${prefix}gradienttext
-│➽ ${prefix}graffiti
-│➽ ${prefix}incandescent
-│➽ ${prefix}lighteffects
-│➽ ${prefix}logomaker
-│➽ ${prefix}luxurygold
-│➽ ${prefix}makingneon
-│➽ ${prefix}matrix
-│➽ ${prefix}multicoloredneon
-│➽ ${prefix}neonglitch
-│➽ ${prefix}papercutstyle
-│➽ ${prefix}pixelglitch
-│➽ ${prefix}royaltext
-│➽ ${prefix}sand
-│➽ ${prefix}summerbeach
-│➽ ${prefix}topography
-│➽ ${prefix}typography
-│➽ ${prefix}watercolortext
-│➽ ${prefix}writetext
+┏▣ ◈ *🤖 AI COMMANDS* ◈
+│➽ ${prefix}ai - Chat with AI
+│➽ ${prefix}gemini - Gemini AI
+│➽ ${prefix}blackbox - Blackbox AI
+│➽ ${prefix}code - Generate Code
+│➽ ${prefix}story - Generate Story
+│➽ ${prefix}recipe - Get Recipe
+│➽ ${prefix}translate - Translate Text
 ┗▣ 
 
-┏▣ ◈ *FUN MENU* ◈
-│➽ ${prefix}fact
-│➽ ${prefix}jokes
-│➽ ${prefix}memes
-│➽ ${prefix}quotes
-│➽ ${prefix}trivia
-│➽ ${prefix}truthdetector
-│➽ ${prefix}xxqc
+┏▣ ◈ *👥 GROUP COMMANDS* ◈
+│➽ ${prefix}tagall - Mention All
+│➽ ${prefix}tagadmin - Mention Admins
+│➽ ${prefix}kick - Remove Member
+│➽ ${prefix}add - Add Member
+│➽ ${prefix}promote - Make Admin
+│➽ ${prefix}demote - Remove Admin
+│➽ ${prefix}link - Group Link
+│➽ ${prefix}close - Close Group
+│➽ ${prefix}open - Open Group
 ┗▣ 
 
-┏▣ ◈ *GAMES MENU* ◈
-│➽ ${prefix}dare
-│➽ ${prefix}truth
-│➽ ${prefix}truthordare
+┏▣ ◈ *🎮 GAMES* ◈
+│➽ ${prefix}truth - Truth Game
+│➽ ${prefix}dare - Dare Game
+│➽ ${prefix}quote - Random Quote
+│➽ ${prefix}joke - Random Joke
+│➽ ${prefix}trivia - Trivia Game
 ┗▣ 
 
-┏▣ ◈ *GROUP MENU* ◈
-│➽ ${prefix}add
-│➽ ${prefix}addcode
-│➽ ${prefix}allow
-│➽ ${prefix}announcements
-│➽ ${prefix}antibadword
-│➽ ${prefix}antibot
-│➽ ${prefix}antidemote
-│➽ ${prefix}antiforeign
-│➽ ${prefix}antiforward
-│➽ ${prefix}antigroupmention
-│➽ ${prefix}antilink
-│➽ ${prefix}antilinkgc
-│➽ ${prefix}antimessage
-│➽ ${prefix}antisticker
-│➽ ${prefix}antitag
-│➽ ${prefix}antitagadmin
-│➽ ${prefix}approve
-│➽ ${prefix}approveall
-│➽ ${prefix}cancelkick
-│➽ ${prefix}close
-│➽ ${prefix}closetime
-│➽ ${prefix}delallowed
-│➽ ${prefix}delcode
-│➽ ${prefix}delppgroup
-│➽ ${prefix}demote
-│➽ ${prefix}disapproveall
-│➽ ${prefix}editsettings
-│➽ ${prefix}getgrouppp
-│➽ ${prefix}hidetag
-│➽ ${prefix}invite
-│➽ ${prefix}kick
-│➽ ${prefix}kickall
-│➽ ${prefix}kickinactive
-│➽ ${prefix}link
-│➽ ${prefix}listactive
-│➽ ${prefix}listallowed
-│➽ ${prefix}listcode
-│➽ ${prefix}listinactive
-│➽ ${prefix}listrequests
-│➽ ${prefix}mediatag
-│➽ ${prefix}open
-│➽ ${prefix}opentime
-│➽ ${prefix}poll
-│➽ ${prefix}promote
-│➽ ${prefix}reject
-│➽ ${prefix}resetlink
-│➽ ${prefix}setdesc
-│➽ ${prefix}setgroupname
-│➽ ${prefix}setppgroup
-│➽ ${prefix}tag
-│➽ ${prefix}tagadmin
-│➽ ${prefix}tagall
-│➽ ${prefix}totalmembers
-│➽ ${prefix}userid
-│➽ ${prefix}vcf
-│➽ ${prefix}welcome
+┏▣ ◈ *🛡️ OWNER COMMANDS* ◈
+│➽ ${prefix}block - Block User
+│➽ ${prefix}unblock - Unblock User
+│➽ ${prefix}join - Join Group
+│➽ ${prefix}leave - Leave Group
+│➽ ${prefix}restart - Restart Bot
+│➽ ${prefix}shutdown - Shutdown Bot
+│➽ ${prefix}setprefix - Change Prefix
+│➽ ${prefix}setpp - Set Profile Picture
+│➽ ${prefix}setbio - Set Bio
+│➽ ${prefix}broadcast - Send Broadcast
 ┗▣ 
 
-┏▣ ◈ *GROUPSTATUS MENU* ◈
-│➽ ${prefix}fetchgroups
-│➽ ${prefix}tosgroup
+┏▣ ◈ *🎨 MEDIA TOOLS* ◈
+│➽ ${prefix}sticker - Make Sticker
+│➽ ${prefix}toimage - Convert to Image
+│➽ ${prefix}tomp3 - Convert to Audio
+│➽ ${prefix}qrcode - Generate QR Code
+│➽ ${prefix}take - Take Sticker
 ┗▣ 
 
-┏▣ ◈ *IMAGE MENU* ◈
-│➽ ${prefix}remini
-│➽ ${prefix}wallpaper
-┗▣ 
-
-┏▣ ◈ *OTHER MENU* ◈
-│➽ ${prefix}botstatus
-│➽ ${prefix}pair
-│➽ ${prefix}ping
-│➽ ${prefix}ping2
-│➽ ${prefix}repo
-│➽ ${prefix}runtime
-│➽ ${prefix}time
-┗▣ 
-
-┏▣ ◈ *OWNER MENU* ◈
-│➽ ${prefix}autosavestatus
-│➽ ${prefix}aza
-│➽ ${prefix}block
-│➽ ${prefix}delete
-│➽ ${prefix}deljunk
-│➽ ${prefix}delstickercmd
-│➽ ${prefix}disk
-│➽ ${prefix}dlvo
-│➽ ${prefix}forward
-│➽ ${prefix}gcaddprivacy
-│➽ ${prefix}groupid
-│➽ ${prefix}hostip
-│➽ ${prefix}join
-│➽ ${prefix}lastseen
-│➽ ${prefix}leave
-│➽ ${prefix}listbadword
-│➽ ${prefix}listblocked
-│➽ ${prefix}listignorelist
-│➽ ${prefix}listsudo
-│➽ ${prefix}modestatus
-│➽ ${prefix}online
-│➽ ${prefix}owner
-│➽ ${prefix}ppprivacy
-│➽ ${prefix}react
-│➽ ${prefix}readreceipts
-│➽ ${prefix}resetaza
-│➽ ${prefix}restart
-│➽ ${prefix}setaza
-│➽ ${prefix}setbio
-│➽ ${prefix}setprofilepic
-│➽ ${prefix}setstickercmd
-│➽ ${prefix}tostatus
-│➽ ${prefix}toviewonce
-│➽ ${prefix}unblock
-│➽ ${prefix}unblockall
-│➽ ${prefix}update
-│➽ ${prefix}vv2
-│➽ ${prefix}warn
-┗▣ 
-
-┏▣ ◈ *RELIGION MENU* ◈
-│➽ ${prefix}bible
-│➽ ${prefix}quran
-┗▣ 
-
-┏▣ ◈ *SEARCH MENU* ◈
-│➽ ${prefix}define
-│➽ ${prefix}define2
-│➽ ${prefix}imdb
-│➽ ${prefix}lyrics
-│➽ ${prefix}shazam
-│➽ ${prefix}weather
-│➽ ${prefix}yts
-┗▣ 
-
-┏▣ ◈ *SETTINGS MENU* ◈
-│➽ ${prefix}addbadword
-│➽ ${prefix}addcountrycode
-│➽ ${prefix}addignorelist
-│➽ ${prefix}addsudo
-│➽ ${prefix}alwaysonline
-│➽ ${prefix}antibug
-│➽ ${prefix}anticall
-│➽ ${prefix}antidelete
-│➽ ${prefix}antideletestatus
-│➽ ${prefix}antiedit
-│➽ ${prefix}antiviewonce
-│➽ ${prefix}autobio
-│➽ ${prefix}autoblock
-│➽ ${prefix}autoreact
-│➽ ${prefix}autoreactstatus
-│➽ ${prefix}autoread
-│➽ ${prefix}autorecord
-│➽ ${prefix}autorecordtyping
-│➽ ${prefix}autotype
-│➽ ${prefix}autoviewstatus
-│➽ ${prefix}chatbot
-│➽ ${prefix}delanticallmsg
-│➽ ${prefix}delcountrycode
-│➽ ${prefix}deletebadword
-│➽ ${prefix}delgoodbye
-│➽ ${prefix}delignorelist
-│➽ ${prefix}delsudo
-│➽ ${prefix}delwelcome
-│➽ ${prefix}getsettings
-│➽ ${prefix}listcountrycode
-│➽ ${prefix}listwarn
-│➽ ${prefix}mode
-│➽ ${prefix}resetsetting
-│➽ ${prefix}resetwarn
-│➽ ${prefix}setanticallmsg
-│➽ ${prefix}setbotname
-│➽ ${prefix}setcontextlink
-│➽ ${prefix}setfont
-│➽ ${prefix}setgoodbye
-│➽ ${prefix}setmenu
-│➽ ${prefix}setmenuimage
-│➽ ${prefix}setownername
-│➽ ${prefix}setownernumber
-│➽ ${prefix}setprefix
-│➽ ${prefix}setstatusemoji
-│➽ ${prefix}setstickerauthor
-│➽ ${prefix}setstickerpackname
-│➽ ${prefix}settimezone
-│➽ ${prefix}setwarn
-│➽ ${prefix}setwatermark
-│➽ ${prefix}setwelcome
-│➽ ${prefix}showanticallmsg
-│➽ ${prefix}showgoodbye
-│➽ ${prefix}showwelcome
-│➽ ${prefix}statusdelay
-│➽ ${prefix}statussettings
-│➽ ${prefix}testanticallmsg
-│➽ ${prefix}testgoodbye
-│➽ ${prefix}testwelcome
-┗▣ 
-
-┏▣ ◈ *SPORTS MENU* ◈
-│➽ ${prefix}bundesligamatches
-│➽ ${prefix}bundesligascorers
-│➽ ${prefix}bundesligastandings
-│➽ ${prefix}bundesligaupcoming
-│➽ ${prefix}clmatches
-│➽ ${prefix}clscorers
-│➽ ${prefix}clstandings
-│➽ ${prefix}clupcoming
-│➽ ${prefix}eflmatches
-│➽ ${prefix}eflscorers
-│➽ ${prefix}eflstandings
-│➽ ${prefix}eflupcoming
-│➽ ${prefix}elmatches
-│➽ ${prefix}elscorers
-│➽ ${prefix}elstandings
-│➽ ${prefix}elupcoming
-│➽ ${prefix}eplmatches
-│➽ ${prefix}eplscorers
-│➽ ${prefix}eplstandings
-│➽ ${prefix}eplupcoming
-│➽ ${prefix}laligamatches
-│➽ ${prefix}laligascorers
-│➽ ${prefix}laligastandings
-│➽ ${prefix}laligaupcoming
-│➽ ${prefix}ligue1matches
-│➽ ${prefix}ligue1scorers
-│➽ ${prefix}ligue1standings
-│➽ ${prefix}ligue1upcoming
-│➽ ${prefix}serieamatches
-│➽ ${prefix}serieascorers
-│➽ ${prefix}serieastandings
-│➽ ${prefix}serieaupcoming
-│➽ ${prefix}wcmatches
-│➽ ${prefix}wcscorers
-│➽ ${prefix}wcstandings
-│➽ ${prefix}wcupcoming
-│➽ ${prefix}wrestlingevents
-│➽ ${prefix}wwenews
-│➽ ${prefix}wweschedule
-┗▣ 
-
-┏▣ ◈ *SUPPORT MENU* ◈
-│➽ ${prefix}feedback
-│➽ ${prefix}helpers
-┗▣ 
-
-┏▣ ◈ *TOOLS MENU* ◈
-│➽ ${prefix}browse
-│➽ ${prefix}calculate
-│➽ ${prefix}device
-│➽ ${prefix}emojimix
-│➽ ${prefix}fancy
-│➽ ${prefix}filtervcf
-│➽ ${prefix}fliptext
-│➽ ${prefix}genpass
-│➽ ${prefix}getabout
-│➽ ${prefix}getpp
-│➽ ${prefix}gsmarena
-│➽ ${prefix}obfuscate
-│➽ ${prefix}qrcode
-│➽ ${prefix}runeval
-│➽ ${prefix}say
-│➽ ${prefix}ssweb
-│➽ ${prefix}sswebpc
-│➽ ${prefix}sswebtab
-│➽ ${prefix}sticker
-│➽ ${prefix}take
-│➽ ${prefix}texttopdf
-│➽ ${prefix}tinyurl
-│➽ ${prefix}toimage
-│➽ ${prefix}tourl
-│➽ ${prefix}vcc
-┗▣ 
-
-┏▣ ◈ *TRANSLATE MENU* ◈
-│➽ ${prefix}translate
-┗▣ 
-
-┏▣ ◈ *VIDEO MENU* ◈
-│➽ ${prefix}toaudio
-│➽ ${prefix}tovideo
-│➽ ${prefix}volvideo
-┗▣ 
-
-┏▣ ◈ *VIEW CHANNEL* ◈
-│➽ 🔗 *Join Our Official Channel*
-│➽ 📢 ${config.CHANNEL_LINK}
-│➽ 📞 *Admin Contact:* wa.me/${config.OWNER_NUMBER}
+┏▣ ◈ *🌐 UTILITIES* ◈
+│➽ ${prefix}weather - Weather Info
+│➽ ${prefix}yts - YouTube Search
+│➽ ${prefix}define - Dictionary
+│➽ ${prefix}wiki - Wikipedia
+│➽ ${prefix}time - Current Time
 ┗▣ 
 
 ${footer}`;
@@ -1174,7 +875,25 @@ ${footer}`;
                     break;
                 }
                 
-                // ==================== INDIVIDUAL COMMANDS ====================
+                // ==================== VIEW CHANNEL ====================
+                case 'channel':
+                case 'viewchannel': {
+                    await socket.sendMessage(sender, { 
+                        text: `┏▣ ◈ *JAMALI TECH CHANNEL* ◈
+┃ 📢 *Join Our Official Channel*
+┃ 
+┃ 🔗 *Link* : ${config.CHANNEL_LINK}
+┃ 
+┃ 📌 *Follow for daily updates!*
+┃ 🤖 *Bot* : JAMALI TECH MD
+┃ 👑 *Owner* : ${config.OWNER_NAME}
+┗▣ 
+
+${footer}` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== REPO ====================
                 case 'repo':
                 case 'repi': {
                     await socket.sendMessage(sender, { text: `┏▣ ◈ *REPOSITORY* ◈
@@ -1188,6 +907,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== ALIVE ====================
                 case 'alive': {
                     const start = Date.now();
                     const uptime = process.uptime();
@@ -1207,6 +927,7 @@ ${footer}`;
                     break;
                 }
                 
+                // ==================== PING ====================
                 case 'ping':
                 case 'ping2': {
                     const start = Date.now();
@@ -1221,6 +942,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== RUNTIME ====================
                 case 'runtime': {
                     const uptime = process.uptime();
                     const days = Math.floor(uptime / 86400);
@@ -1239,6 +961,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== OWNER ====================
                 case 'owner': {
                     const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${config.OWNER_NAME}\nORG:JAMALI TECH MD\nTEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBER}:${config.OWNER_NUMBER}\nEND:VCARD`;
                     await socket.sendMessage(sender, { contacts: { displayName: config.OWNER_NAME, contacts: [{ vcard }] } }, { quoted: myquoted });
@@ -1252,6 +975,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== JID ====================
                 case 'jid': {
                     let replyJid = '';
                     if (msg.message.extendedTextMessage?.contextInfo?.participant) replyJid = msg.message.extendedTextMessage.contextInfo.participant;
@@ -1271,22 +995,7 @@ ${footer}`;
                     break;
                 }
                 
-                case 'viewchannel':
-                case 'channel': {
-                    await socket.sendMessage(sender, { text: `┏▣ ◈ *JAMALI TECH CHANNEL* ◈
-┃ 📢 *Join Our Official Channel*
-┃ 🔗 *Link* : ${config.CHANNEL_LINK}
-┃ 
-┃ 📌 *Follow for daily updates!*
-┃ 🤖 *Bot* : JAMALI TECH MD
-┃ 👑 *Owner* : ${config.OWNER_NAME}
-┗▣ 
-
-${footer}` }, { quoted: myquoted });
-                    break;
-                }
-                
-                // ==================== SONG COMMAND ====================
+                // ==================== SONG ====================
                 case 'song':
                 case 'song2': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide a song name*\n📌 Usage: .song <song name>' }, { quoted: myquoted });
@@ -1306,6 +1015,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== VIDEO ====================
                 case 'video': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide a video name*\n📌 Usage: .video <video name>' }, { quoted: myquoted });
                     const query = args.join(' ');
@@ -1324,6 +1034,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== TIKTOK ====================
                 case 'tiktok': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide TikTok URL*\n📌 Usage: .tiktok <url>' }, { quoted: myquoted });
                     const url = args[0];
@@ -1343,6 +1054,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== FACEBOOK ====================
                 case 'facebook':
                 case 'fb': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide Facebook URL*\n📌 Usage: .fb <url>' }, { quoted: myquoted });
@@ -1366,6 +1078,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== SAVE STATUS ====================
                 case 'save':
                 case 'savestatus': {
                     const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -1380,6 +1093,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== VIEWONCE ====================
                 case 'vv':
                 case 'viewonce': {
                     const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -1397,6 +1111,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== STICKER ====================
                 case 'sticker': {
                     const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
                     if (!quotedMsg) return await socket.sendMessage(sender, { text: '*❌ Reply to an image/video to convert to sticker*' }, { quoted: myquoted });
@@ -1411,6 +1126,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== GET PROFILE PICTURE ====================
                 case 'getpp':
                 case 'getdp': {
                     let targetJid = sender, profileName = "Your";
@@ -1422,6 +1138,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== AI CHAT ====================
                 case 'ai':
                 case 'gpt': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide a message*\n📌 Usage: .ai <message>' }, { quoted: myquoted });
@@ -1440,6 +1157,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== YOUTUBE SEARCH ====================
                 case 'yts':
                 case 'ytsearch': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide a search query*\n📌 Usage: .yts <song name>' }, { quoted: myquoted });
@@ -1472,6 +1190,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== WEATHER ====================
                 case 'weather': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide city name*\n📌 Usage: .weather <city>' }, { quoted: myquoted });
                     const city = args.join(' ');
@@ -1499,6 +1218,7 @@ ${footer}`;
                     break;
                 }
                 
+                // ==================== TRANSLATE ====================
                 case 'translate': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide text to translate*\n📌 Usage: .translate <text>' }, { quoted: myquoted });
                     const text = args.join(' ');
@@ -1517,6 +1237,7 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== QR CODE ====================
                 case 'qrcode': {
                     if (!args[0]) return await socket.sendMessage(sender, { text: '*❌ Provide text to generate QR code*\n📌 Usage: .qrcode <text>' }, { quoted: myquoted });
                     const text = args.join(' ');
@@ -1525,32 +1246,99 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== TRUTH GAME ====================
                 case 'truth': {
                     const truths = [
                         "What's your biggest fear?",
                         "Have you ever lied to your best friend?",
                         "What's the biggest trouble you've ever gotten into?",
                         "What's something you're insecure about?",
-                        "What's the last thing you searched on your phone?"
+                        "What's the last thing you searched on your phone?",
+                        "What's the biggest secret you've kept from your family?",
+                        "What's something you regret doing?",
+                        "What's the worst thing you've ever said to someone?",
+                        "What's something you've never told anyone?",
+                        "What's your deepest darkest secret?"
                     ];
                     const randomTruth = truths[Math.floor(Math.random() * truths.length)];
                     await socket.sendMessage(sender, { text: `🎲 *TRUTH*\n\n${randomTruth}\n\n${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== DARE GAME ====================
                 case 'dare': {
                     const dares = [
                         "Send a message to your crush right now!",
                         "Share your screen with someone",
                         "Do 10 pushups",
                         "Send a random sticker to the last person you messaged",
-                        "Change your profile picture for 1 hour"
+                        "Change your profile picture for 1 hour",
+                        "Send a voice note of you singing",
+                        "Send a message to a random contact saying 'I love you'",
+                        "Do 20 jumping jacks",
+                        "Send a selfie to the group",
+                        "Call someone and sing a song"
                     ];
                     const randomDare = dares[Math.floor(Math.random() * dares.length)];
                     await socket.sendMessage(sender, { text: `🎲 *DARE*\n\n${randomDare}\n\n${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== QUOTE ====================
+                case 'quote': {
+                    const quotes = [
+                        "The only limit is your mind.",
+                        "Success is not final, failure is not fatal.",
+                        "Believe you can and you're halfway there.",
+                        "Don't watch the clock; do what it does. Keep going.",
+                        "The future belongs to those who believe in the beauty of their dreams.",
+                        "It does not matter how slowly you go as long as you do not stop.",
+                        "Your time is limited, don't waste it living someone else's life.",
+                        "The only way to do great work is to love what you do.",
+                        "If you can dream it, you can achieve it.",
+                        "Stay hungry, stay foolish."
+                    ];
+                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                    await socket.sendMessage(sender, { text: `💬 *QUOTE*\n\n${randomQuote}\n\n${footer}` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== JOKE ====================
+                case 'joke': {
+                    const jokes = [
+                        "Why don't scientists trust atoms? Because they make up everything!",
+                        "What do you call a fake noodle? An impasta!",
+                        "Why did the scarecrow win an award? He was outstanding in his field!",
+                        "What do you call a bear with no teeth? A gummy bear!",
+                        "Why don't eggs tell jokes? They'd crack each other up!",
+                        "What do you call a fish with no eyes? A fsh!",
+                        "Why did the bicycle fall over? Because it was two-tired!",
+                        "What do you call a sleeping bull? A bulldozer!",
+                        "What do you call a pig that does karate? A pork chop!",
+                        "Why did the cookie go to the doctor? Because it felt crummy!"
+                    ];
+                    const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                    await socket.sendMessage(sender, { text: `😂 *JOKE*\n\n${randomJoke}\n\n${footer}` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== TAG ALL ====================
+                case 'tagall': {
+                    if (!msg.key.remoteJid.endsWith('@g.us')) return await socket.sendMessage(sender, { text: '❌ *This command is for groups only!*' }, { quoted: myquoted });
+                    const groupMetadata = await socket.groupMetadata(msg.key.remoteJid);
+                    const participants = groupMetadata.participants;
+                    let mentions = [];
+                    let text = `📢 *TAG ALL*\n\n`;
+                    for (let participant of participants) {
+                        mentions.push(participant.id);
+                        text += `┃ @${participant.id.split('@')[0]}\n`;
+                    }
+                    text += `\n${footer}`;
+                    await socket.sendMessage(msg.key.remoteJid, { text: text, mentions: mentions }, { quoted: msg });
+                    break;
+                }
+                
+                // ==================== RESTART ====================
                 case 'restart': {
                     if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
                     await socket.sendMessage(sender, { text: `🔄 *Restarting ${config.BOT_NAME}...*\n⏱️ Please wait a moment.` }, { quoted: myquoted });
@@ -1558,6 +1346,79 @@ ${footer}` }, { quoted: myquoted });
                     break;
                 }
                 
+                // ==================== SHUTDOWN ====================
+                case 'shutdown': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    await socket.sendMessage(sender, { text: `🛑 *Shutting down ${config.BOT_NAME}...*` }, { quoted: myquoted });
+                    setTimeout(() => { process.exit(0); }, 1000);
+                    break;
+                }
+                
+                // ==================== SET PREFIX ====================
+                case 'setprefix': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: `📌 *Current prefix:* ${prefix}\nUsage: .setprefix <new_prefix>` }, { quoted: myquoted });
+                    const newPrefix = args[0];
+                    const userConfig = await loadUserConfig(number);
+                    userConfig.PREFIX = newPrefix;
+                    await updateUserConfig(number, userConfig);
+                    await socket.sendMessage(sender, { text: `✅ *Prefix changed from ${prefix} to ${newPrefix}*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== BLOCK ====================
+                case 'block': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: '❌ *Provide user JID to block*\nUsage: .block <jid>' }, { quoted: myquoted });
+                    await socket.updateBlockStatus(args[0], 'block');
+                    await socket.sendMessage(sender, { text: `✅ *Blocked user: ${args[0]}*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== UNBLOCK ====================
+                case 'unblock': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: '❌ *Provide user JID to unblock*\nUsage: .unblock <jid>' }, { quoted: myquoted });
+                    await socket.updateBlockStatus(args[0], 'unblock');
+                    await socket.sendMessage(sender, { text: `✅ *Unblocked user: ${args[0]}*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== JOIN GROUP ====================
+                case 'join': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: '❌ *Provide group invite link*\nUsage: .join <link>' }, { quoted: myquoted });
+                    const code = args[0].split('https://chat.whatsapp.com/')[1];
+                    if (!code) return await socket.sendMessage(sender, { text: '❌ *Invalid group link*' }, { quoted: myquoted });
+                    await socket.groupAcceptInvite(code);
+                    await socket.sendMessage(sender, { text: `✅ *Joined group successfully!*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== LEAVE GROUP ====================
+                case 'leave': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!msg.key.remoteJid.endsWith('@g.us')) return await socket.sendMessage(sender, { text: '❌ *Use this command in a group!*' }, { quoted: myquoted });
+                    await socket.groupLeave(msg.key.remoteJid);
+                    await socket.sendMessage(sender, { text: `✅ *Left group successfully!*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== BROADCAST ====================
+                case 'broadcast': {
+                    if (!isOwner(sender)) return await socket.sendMessage(sender, { text: '❌ *This command is for owner only!*' }, { quoted: myquoted });
+                    if (!args[0]) return await socket.sendMessage(sender, { text: '❌ *Provide message to broadcast*' }, { quoted: myquoted });
+                    const broadcastMsg = args.join(' ');
+                    for (const [jid] of activeSockets) {
+                        if (jid.includes('@s.whatsapp.net')) {
+                            await socket.sendMessage(jid, { text: broadcastMsg });
+                        }
+                    }
+                    await socket.sendMessage(sender, { text: `✅ *Broadcast sent to ${activeSockets.size} users!*` }, { quoted: myquoted });
+                    break;
+                }
+                
+                // ==================== DEFAULT AI RESPONSE ====================
                 default: {
                     if (command && command.length > 2) {
                         try {
