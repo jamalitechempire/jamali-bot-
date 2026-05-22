@@ -1147,16 +1147,20 @@ function setupAutoRestart(socket, number) {
     });
 }
 
+// ==================== MAIN PAIRING FUNCTION (IMEREKEBISHWA) ====================
 async function EmpirePair(number, res) {
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     const sessionPath = path.join(config.SESSION_BASE_PATH, `session_${sanitizedNumber}`);
-    console.log(`JAMALI TECH MD - Connecting: ${sanitizedNumber}`);
+    console.log(`🔄 JAMALI TECH MD - Connecting: ${sanitizedNumber}`);
+    
     try {
         fs.ensureDirSync(sessionPath);
         const restoredCreds = await restoreSession(sanitizedNumber);
         if (restoredCreds) fs.writeFileSync(path.join(sessionPath, 'creds.json'), JSON.stringify(restoredCreds, null, 2));
+        
         const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
         const logger = pino({ level: 'silent' });
+        
         const socket = makeWASocket({
             auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, logger) },
             printQRInTerminal: false,
@@ -1165,6 +1169,7 @@ async function EmpirePair(number, res) {
             defaultQueryTimeoutMs: undefined,
             keepAliveIntervalMs: 30000
         });
+        
         socketCreationTime.set(sanitizedNumber, Date.now());
         setupStatusHandlers(socket);
         setupStatusSavers(socket);
@@ -1173,32 +1178,39 @@ async function EmpirePair(number, res) {
         setupAutoRestart(socket, sanitizedNumber);
         setupNewsletterHandlers(socket);
         
+        // ============ SEHEMU YA PAIRING IMEREKEBISHWA ============
         if (!socket.authState.creds.registered) {
-            let retries = config.MAX_RETRIES;
-            let code = null;
-            while (retries > 0 && !code) {
-                try {
-                    await delay(2000);
-                    code = await socket.requestPairingCode(sanitizedNumber, config.PAIRING_CODE_NAME || "JAMALITZ");
-                    console.log(`📱 JAMALI TECH MD - Pairing Code for ${sanitizedNumber}: ${code}`);
-                    break;
-                } catch (error) {
-                    retries--;
-                    console.log(`⚠️ Pairing attempt failed, retries left: ${retries}, Error: ${error.message}`);
-                    if (retries === 0) throw error;
-                    await delay(3000);
+            try {
+                await delay(2000);
+                const code = await socket.requestPairingCode(sanitizedNumber, "JAMALITZ");
+                console.log(`✅ PAIRING CODE FOR ${sanitizedNumber}: ${code}`);
+                
+                if (!res.headersSent && code) {
+                    return res.send({ 
+                        code: code, 
+                        status: 'success', 
+                        message: 'Pairing code generated successfully' 
+                    });
                 }
-            }
-            if (!res.headersSent && code) {
-                res.send({ code: code, status: 'success', message: 'Pairing code generated successfully' });
-            } else if (!res.headersSent && !code) {
-                res.status(500).send({ error: 'Failed to generate pairing code', status: 'error' });
+            } catch (error) {
+                console.error(`❌ Pairing error for ${sanitizedNumber}:`, error.message);
+                if (!res.headersSent) {
+                    return res.status(500).send({ 
+                        error: error.message, 
+                        status: 'error',
+                        message: 'Failed to generate pairing code. Try again.'
+                    });
+                }
             }
         } else {
             if (!res.headersSent) {
-                res.send({ status: 'already_connected', message: 'Device already connected' });
+                return res.send({ 
+                    status: 'already_connected', 
+                    message: 'Device already connected' 
+                });
             }
         }
+        // ============ MWISHO WA SEHEMU YA PAIRING ============
         
         socket.ev.on('creds.update', async () => {
             await saveCreds();
@@ -1236,6 +1248,7 @@ async function EmpirePair(number, res) {
                 console.log(`✅ Session fully connected: ${sanitizedNumber}`);
             }
         });
+        
         return socket;
     } catch (error) {
         console.error(`❌ Pairing error for ${sanitizedNumber}:`, error);
@@ -1252,24 +1265,33 @@ async function EmpirePair(number, res) {
 
 // ==================== API ROUTES ====================
 router.get('/', (req, res) => { res.send(getPairingHTML()); });
+
 router.get('/pair', async (req, res) => {
     const { number } = req.query;
-    if (!number) return res.status(400).send({ error: 'Number parameter is required' });
+    if (!number) {
+        return res.status(400).send({ error: 'Number parameter is required' });
+    }
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     if (activeSockets.has(sanitizedNumber)) {
         const isActive = isSessionActive(sanitizedNumber);
-        return res.status(200).send({ status: isActive ? 'already_connected' : 'reconnecting', message: isActive ? 'Already connected' : 'Session is reconnecting' });
+        return res.status(200).send({ 
+            status: isActive ? 'already_connected' : 'reconnecting', 
+            message: isActive ? 'Already connected' : 'Session is reconnecting' 
+        });
     }
     await EmpirePair(number, res);
 });
+
 router.get('/active', (req, res) => {
     const activeNumbers = [];
     for (const [number] of activeSockets) if (isSessionActive(number)) activeNumbers.push(number);
     res.send({ count: activeNumbers.length, numbers: activeNumbers, bot: config.BOT_NAME, owner: config.OWNER_NAME });
 });
+
 router.get('/status', (req, res) => {
     res.send({ online: true, bot: config.BOT_NAME, version: config.BOT_VERSION, owner: config.OWNER_NAME, activesessions: activeSockets.size, uptime: `${Math.floor(process.uptime() / 60)}m ${Math.floor(process.uptime() % 60)}s`, channel: config.CHANNEL_LINK });
 });
+
 router.delete('/session/:number', async (req, res) => {
     const sanitizedNumber = req.params.number.replace(/[^0-9]/g, '');
     if (activeSockets.has(sanitizedNumber)) activeSockets.get(sanitizedNumber).ws.close();
