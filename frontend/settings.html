@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<title>JAMALI TECH EMPIRE · Bot Configuration</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAMALI TECH MD - Bot Settings</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0a0c15;
     font-family: 'Poppins', sans-serif;
@@ -20,690 +14,110 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    position: relative;
+    padding: 1rem;
   }
-
-  /* Animated Background */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 30% 40%, rgba(0, 255, 234, 0.08), transparent 70%),
-                radial-gradient(circle at 85% 70%, rgba(0, 234, 255, 0.05), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.04"><path fill="none" stroke="%2300ffea" stroke-width="1.2" d="M150 200 L250 150 L350 200 L400 280 L350 350 L250 400 L150 350 L100 280 L150 200Z M500 500 L580 470 L650 520 L630 610 L540 620 L480 580 L500 500Z"/></svg>') repeat;
-    background-size: 180px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Main Card */
   .card {
-    background: rgba(18, 22, 31, 0.92);
-    backdrop-filter: blur(12px);
+    background: rgba(18,22,31,0.95);
+    border-radius: 2rem;
     padding: 2rem;
-    border-radius: 32px;
-    max-width: 550px;
+    max-width: 500px;
     width: 100%;
-    box-shadow: 0 20px 35px -12px rgba(0, 255, 234, 0.25), 0 0 0 1px rgba(0, 255, 234, 0.15);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    z-index: 2;
+    border: 1px solid rgba(0,255,234,0.3);
   }
-
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 28px 40px -16px rgba(0, 255, 234, 0.4), 0 0 0 1px #00ffea;
-  }
-
-  /* Bot Avatar */
   .bot-avatar {
     width: 70px;
     height: 70px;
     border-radius: 50%;
     border: 2px solid #00ffea;
-    box-shadow: 0 0 20px rgba(0, 255, 234, 0.4);
-    object-fit: cover;
     margin: 0 auto 1rem;
     display: block;
-    transition: all 0.3s ease;
   }
-
-  .bot-avatar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(0, 255, 234, 0.7);
-  }
-
   h2 {
     text-align: center;
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: 1.8rem;
-    background: linear-gradient(130deg, #ffffff, #00ffea, #00b7ff);
+    background: linear-gradient(135deg, #fff, #00ffea);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 0.3rem;
-    letter-spacing: 1px;
+    margin-bottom: 1rem;
   }
-
-  .sub-brand {
-    text-align: center;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #8a9bb5;
-    border-bottom: 1px dashed rgba(0, 255, 234, 0.4);
-    display: inline-block;
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 6px;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Contact Bar */
-  .support-contact {
-    background: rgba(14, 18, 25, 0.8);
-    border-radius: 60px;
-    padding: 8px 16px;
-    margin-bottom: 1.8rem;
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    border: 0.5px solid rgba(0, 255, 234, 0.3);
-  }
-
-  .support-contact a {
-    color: #00ffea;
-    text-decoration: none;
-    transition: 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .support-contact a:hover {
-    text-shadow: 0 0 6px #00ffea;
-  }
-
-  /* Labels */
   label {
     display: block;
-    margin-bottom: 0.4rem;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.3px;
-    color: #c0d0e0;
+    margin: 1rem 0 0.3rem;
+    font-weight: bold;
   }
-
-  label i {
-    color: #00ffea;
-    margin-right: 6px;
-  }
-
-  /* Inputs & Selects */
   input, select {
     width: 100%;
-    padding: 12px 14px;
-    margin-bottom: 18px;
+    padding: 0.8rem;
+    background: #11131f;
     border: 1px solid #2a2f3c;
-    border-radius: 20px;
-    background: #0b0f16;
-    color: #f0f5ff;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  input:focus, select:focus {
-    outline: none;
-    border-color: #00ffea;
-    box-shadow: 0 0 0 3px rgba(0, 255, 234, 0.2);
-  }
-
-  input::placeholder {
-    color: #6a6f7a;
-  }
-
-  select {
-    cursor: pointer;
-  }
-
-  /* Emoji Picker */
-  .section-sub {
-    font-size: 0.75rem;
-    margin: 8px 0 6px;
-    font-weight: 600;
-    color: #8a9bb5;
-  }
-
-  .emoji-picker {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 8px;
-    background: #0b0f16;
-    padding: 12px;
-    border-radius: 28px;
-    margin-bottom: 14px;
-    border: 1px solid #2a2f3c;
-  }
-
-  .emoji-picker span {
-    font-size: 26px;
-    text-align: center;
-    padding: 6px;
-    border-radius: 18px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    background: #10141e;
-  }
-
-  .emoji-picker span.selected {
-    background: #00ffea;
-    color: #0a0c10;
-    box-shadow: 0 0 8px cyan;
-    transform: scale(1.05);
-  }
-
-  .emoji-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 16px;
-    background: #0c1018;
-    padding: 12px;
-    border-radius: 28px;
-    min-height: 65px;
-  }
-
-  .emoji-item {
-    background: #1e2533;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    border: 1px solid #2d3546;
-  }
-
-  .emoji-item:hover {
-    background: #00ffea;
-    color: #121212;
-    transform: scale(1.05);
-    border-color: #00ffea;
-  }
-
-  /* Add Emoji Row */
-  .add-emoji-row {
-    display: flex;
-    gap: 10px;
-    margin: 5px 0 10px;
-  }
-
-  .add-emoji-row input {
-    flex: 1;
-    margin-bottom: 0;
-  }
-
-  .add-emoji-row button {
-    width: auto;
-    padding: 0 20px;
-    margin-top: 0;
-    font-size: 0.85rem;
-    background: #1e2533;
-    border-color: #00ffea;
-    color: #00ffea;
-  }
-
-  .add-emoji-row button:hover {
-    background: #00ffea;
-    color: #0a0c10;
-    box-shadow: 0 0 12px #00ffea;
-  }
-
-  /* Save Button */
-  .save-btn {
-    width: 100%;
-    padding: 13px;
-    margin-top: 12px;
-    background: transparent;
-    border: 2px solid #00ffea;
-    border-radius: 40px;
-    color: #00ffea;
-    font-weight: 800;
-    font-size: 1rem;
-    font-family: 'Orbitron', monospace;
-    cursor: pointer;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.7rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 8px rgba(0, 255, 234, 0.3);
-  }
-
-  .save-btn:hover {
-    background: #00ffea;
-    color: #0a0c10;
-    box-shadow: 0 0 24px #00ffea;
-    transform: scale(1.01);
-  }
-
-  /* Message */
-  #saveMsg {
-    text-align: center;
-    margin-top: 16px;
-    font-weight: 700;
-    color: #00ffea;
-    font-size: 0.85rem;
-    background: rgba(14, 18, 27, 0.8);
-    padding: 10px;
     border-radius: 60px;
+    color: #fff;
   }
-
-  /* Footer */
-  .footer-note {
+  button {
+    width: 100%;
+    padding: 0.9rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, #00ffea, #00b7ff);
+    border: none;
+    border-radius: 60px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .message {
     text-align: center;
-    margin-top: 20px;
-    font-size: 0.7rem;
-    color: #5c687c;
-    border-top: 1px solid #202632;
-    padding-top: 18px;
-  }
-
-  .footer-note a {
+    margin-top: 1rem;
     color: #00ffea;
-    text-decoration: none;
-  }
-
-  /* Responsive */
-  @media (max-width: 550px) {
-    body {
-      padding: 1rem;
-    }
-    .card {
-      padding: 1.5rem;
-    }
-    .emoji-picker {
-      grid-template-columns: repeat(6, 1fr);
-    }
-    .emoji-picker span {
-      font-size: 22px;
-    }
-    h2 {
-      font-size: 1.4rem;
-    }
-    .bot-avatar {
-      width: 55px;
-      height: 55px;
-    }
   }
 </style>
 </head>
 <body>
-
-<div class="card" id="settingsCard">
-  <!-- Bot Avatar -->
+<div class="card">
   <img src="https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg" alt="JAMALI TECH MD" class="bot-avatar">
+  <h2>Bot Settings</h2>
   
-  <h2>JAMALI TECH EMPIRE</h2>
-  <div style="text-align:center;">
-    <div class="sub-brand">⚡ BOT CONFIGURATION ⚡</div>
-  </div>
-  
-  <!-- Contact Info -->
-  <div class="support-contact">
-    <span><i class="fab fa-whatsapp"></i> 📞 OFFICIAL:</span>
-    <a href="https://wa.me/255784062158" target="_blank"><strong>+255 784 062 158</strong></a>
-    <span><i class="fas fa-broadcast-tower"></i> CHANNEL</span>
-    <a href="https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h" target="_blank">JAMALI TECH CHANNEL</a>
-  </div>
-
-  <!-- Bot Prefix -->
   <label><i class="fas fa-hashtag"></i> Bot Prefix</label>
-  <input id="prefix" type="text" placeholder="Default prefix: ." value=".">
-
-  <!-- Interactive Buttons -->
-  <label><i class="fas fa-square"></i> Interactive Buttons</label>
-  <select id="button">
-    <option value="true">✅ Enabled</option>
-    <option value="false">❌ Disabled</option>
-  </select>
-
-  <!-- Auto View Status -->
+  <input type="text" id="prefix" value=".">
+  
   <label><i class="fas fa-eye"></i> Auto View Status</label>
   <select id="autoView">
     <option value="true">✅ Enabled</option>
     <option value="false">❌ Disabled</option>
   </select>
-
-  <!-- Auto Like Status -->
+  
   <label><i class="fas fa-heart"></i> Auto Like Status</label>
-  <select id="autoLikeStatus">
+  <select id="autoLike">
     <option value="true">✅ Enabled</option>
     <option value="false">❌ Disabled</option>
   </select>
-
-  <!-- Auto Recording -->
-  <label><i class="fas fa-microphone"></i> Auto Recording (voice)</label>
-  <select id="autoRecording">
-    <option value="true">✅ Enabled</option>
-    <option value="false">❌ Disabled</option>
-  </select>
-
-  <!-- Auto Like Emojis -->
-  <label><i class="fas fa-smile-wink"></i> Auto Like Emojis (click to select)</label>
-  <div class="emoji-picker" id="emojiPicker">😀 💚 😂 😍 😎 🤔 🥳 🔥 👍 🙏 ❤️ 😁 🖤 🥰 🍕 🎉 🌟 😭 🤯 🤍 🤖 💗 🧡 🚀 💎 ✨ 👑</div>
   
-  <div class="section-sub">📌 Selected emojis (click to remove)</div>
-  <div class="emoji-list" id="emojiList"></div>
-  
-  <!-- Add Custom Emoji -->
-  <div class="add-emoji-row">
-    <input id="newEmoji" type="text" placeholder="➕ Add custom emoji (ex: 🎯)">
-    <button onclick="addEmoji()">Add</button>
-  </div>
-
-  <!-- Save Button -->
-  <button class="save-btn" onclick="saveSettings()">
-    <i class="fas fa-save"></i> SAVE CONFIGURATION
-  </button>
-  
-  <div id="saveMsg"></div>
-  
-  <div class="footer-note">
-    <i class="fab fa-whatsapp"></i> Powered by <strong>JAMALI TECH EMPIRE</strong> · 
-    <a href="https://wa.me/255784062158" target="_blank">Support 24/7</a> · 
-    <span>Pairing Code: JAMALITZ</span>
-  </div>
+  <button id="saveBtn"><i class="fas fa-save"></i> Save Settings</button>
+  <div id="message" class="message"></div>
 </div>
 
 <script>
-// JAMALI TECH EMPIRE - Settings Manager
-const params = new URLSearchParams(window.location.search);
-const number = params.get('number');
-
-let originalConfig = {};
-let isEditing = false;
-let selectedEmojis = [];
-
-// DOM Elements
-const prefixInput = document.getElementById('prefix');
-const buttonSelect = document.getElementById('button');
-const autoViewSelect = document.getElementById('autoView');
-const autoLikeStatusSelect = document.getElementById('autoLikeStatus');
-const autoRecordingSelect = document.getElementById('autoRecording');
-const emojiPickerEl = document.getElementById('emojiPicker');
-const emojiListEl = document.getElementById('emojiList');
-const newEmojiInput = document.getElementById('newEmoji');
-
-// Mark editing on any change
-document.querySelectorAll('input, select').forEach(el => {
-  el.addEventListener('input', () => isEditing = true);
-});
-
-// Initialize Emoji Picker
-const initialEmojis = emojiPickerEl.innerText.trim().split(/\s+/);
-emojiPickerEl.innerHTML = '';
-initialEmojis.forEach(emoji => {
-  const span = document.createElement('span');
-  span.textContent = emoji;
-  span.setAttribute('data-emoji', emoji);
-  emojiPickerEl.appendChild(span);
-});
-
-// Toggle selection on emoji picker click
-emojiPickerEl.addEventListener('click', (e) => {
-  if (e.target.tagName === 'SPAN' && e.target.parentNode === emojiPickerEl) {
-    const emoji = e.target.textContent;
-    if (selectedEmojis.includes(emoji)) {
-      selectedEmojis = selectedEmojis.filter(em => em !== emoji);
-      e.target.classList.remove('selected');
-    } else {
-      selectedEmojis.push(emoji);
-      e.target.classList.add('selected');
-    }
-    renderEmojiList();
-    isEditing = true;
-  }
-});
-
-// Render selected emoji chips
-function renderEmojiList() {
-  if (!emojiListEl) return;
-  emojiListEl.innerHTML = '';
-  
-  if (selectedEmojis.length === 0) {
-    const emptyHint = document.createElement('div');
-    emptyHint.style.fontSize = '0.7rem';
-    emptyHint.style.color = '#6c7a8e';
-    emptyHint.innerText = 'no emojis selected → click any from above 👆';
-    emptyHint.style.padding = '6px';
-    emojiListEl.appendChild(emptyHint);
-    return;
-  }
-  
-  selectedEmojis.forEach((emoji, idx) => {
-    const chip = document.createElement('span');
-    chip.className = 'emoji-item';
-    chip.innerHTML = `${emoji} ✕`;
-    chip.title = "Click to remove";
-    chip.onclick = (e) => {
-      e.stopPropagation();
-      selectedEmojis = selectedEmojis.filter((_, i) => i !== idx);
-      const allSpans = document.querySelectorAll('#emojiPicker span');
-      allSpans.forEach(span => {
-        if (span.textContent === emoji) span.classList.remove('selected');
-      });
-      renderEmojiList();
-      isEditing = true;
-    };
-    emojiListEl.appendChild(chip);
-  });
-}
-
-// Sync picker selection based on selectedEmojis
-function syncPickerSelection() {
-  const allSpans = document.querySelectorAll('#emojiPicker span');
-  allSpans.forEach(span => {
-    if (selectedEmojis.includes(span.textContent)) {
-      span.classList.add('selected');
-    } else {
-      span.classList.remove('selected');
-    }
-  });
-}
-
-// Add custom emoji
-function addEmoji() {
-  const newEmoji = newEmojiInput.value.trim();
-  if (!newEmoji) return;
-  
-  if (selectedEmojis.includes(newEmoji)) {
-    document.getElementById('saveMsg').innerText = '⚠️ Emoji already in list';
-    setTimeout(() => document.getElementById('saveMsg').innerText = '', 1500);
-    return;
-  }
-  
-  selectedEmojis.push(newEmoji);
-  renderEmojiList();
-  
-  // Add to picker if not exists
-  const existingSpan = Array.from(document.querySelectorAll('#emojiPicker span')).find(s => s.textContent === newEmoji);
-  if (existingSpan) {
-    existingSpan.classList.add('selected');
-  } else {
-    const newSpan = document.createElement('span');
-    newSpan.textContent = newEmoji;
-    emojiPickerEl.appendChild(newSpan);
-    newSpan.classList.add('selected');
-    newSpan.addEventListener('click', (e) => {
-      if (selectedEmojis.includes(newEmoji)) {
-        selectedEmojis = selectedEmojis.filter(em => em !== newEmoji);
-        newSpan.classList.remove('selected');
-      } else {
-        selectedEmojis.push(newEmoji);
-        newSpan.classList.add('selected');
-      }
-      renderEmojiList();
-      isEditing = true;
-    });
-  }
-  
-  newEmojiInput.value = '';
-  isEditing = true;
-  document.getElementById('saveMsg').innerText = '✨ Emoji added successfully';
-  setTimeout(() => document.getElementById('saveMsg').innerText = '', 1500);
-}
-
-// Apply configuration to UI
-function applyConfigToUI(config) {
-  if (config.PREFIX !== undefined) prefixInput.value = config.PREFIX;
-  if (config.BUTTON !== undefined) buttonSelect.value = config.BUTTON;
-  if (config.AUTO_VIEW_STATUS !== undefined) autoViewSelect.value = config.AUTO_VIEW_STATUS;
-  if (config.AUTO_LIKE_STATUS !== undefined) autoLikeStatusSelect.value = config.AUTO_LIKE_STATUS;
-  if (config.AUTO_RECORDING !== undefined) autoRecordingSelect.value = config.AUTO_RECORDING;
-  
-  if (config.AUTO_LIKE_EMOJI && Array.isArray(config.AUTO_LIKE_EMOJI)) {
-    selectedEmojis = [...config.AUTO_LIKE_EMOJI];
-  } else {
-    selectedEmojis = config.AUTO_LIKE_EMOJI ? [config.AUTO_LIKE_EMOJI] : ['💎', '✨', '👑'];
-  }
-  
-  renderEmojiList();
-  syncPickerSelection();
-  isEditing = false;
-}
-
-// Load settings from backend
-async function loadSettings() {
+const number = new URLSearchParams(window.location.search).get('number');
+document.getElementById('saveBtn').addEventListener('click', async () => {
   if (!number) {
-    originalConfig = {
-      PREFIX: '.',
-      BUTTON: 'true',
-      AUTO_VIEW_STATUS: 'true',
-      AUTO_LIKE_STATUS: 'true',
-      AUTO_RECORDING: 'true',
-      AUTO_LIKE_EMOJI: ['💎', '✨', '👑', '🔥', '⚡']
-    };
-    applyConfigToUI(originalConfig);
+    document.getElementById('message').textContent = '❌ No bot number specified';
     return;
   }
   
-  try {
-    const res = await fetch(`/api/settings/${number}`);
-    if (res.ok) {
-      const data = await res.json();
-      if (data && !isEditing) {
-        originalConfig = data;
-        applyConfigToUI(data);
-      }
-    } else {
-      originalConfig = {
-        PREFIX: '.',
-        BUTTON: 'true',
-        AUTO_VIEW_STATUS: 'true',
-        AUTO_LIKE_STATUS: 'true',
-        AUTO_RECORDING: 'true',
-        AUTO_LIKE_EMOJI: ['💎', '✨', '👑', '🔥', '⚡']
-      };
-      applyConfigToUI(originalConfig);
-    }
-  } catch (err) {
-    console.error("Load error:", err);
-    originalConfig = {
-      PREFIX: '.',
-      BUTTON: 'true',
-      AUTO_VIEW_STATUS: 'true',
-      AUTO_LIKE_STATUS: 'true',
-      AUTO_RECORDING: 'true',
-      AUTO_LIKE_EMOJI: ['💎', '✨', '👑', '🔥', '⚡']
-    };
-    applyConfigToUI(originalConfig);
-  }
-}
-
-// Save settings to backend
-async function saveSettings() {
-  if (!number) {
-    document.getElementById('saveMsg').innerText = "⚠️ No bot number in URL. Use /settings?number=XXXXX";
-    setTimeout(() => document.getElementById('saveMsg').innerText = '', 3000);
-    return;
-  }
+  const settings = {
+    PREFIX: document.getElementById('prefix').value,
+    AUTO_VIEW_STATUS: document.getElementById('autoView').value,
+    AUTO_LIKE_STATUS: document.getElementById('autoLike').value
+  };
   
-  const currentPrefix = prefixInput.value;
-  const currentButton = buttonSelect.value;
-  const currentAutoView = autoViewSelect.value;
-  const currentAutoLikeStatus = autoLikeStatusSelect.value;
-  const currentAutoRecording = autoRecordingSelect.value;
-  const currentEmojis = [...selectedEmojis];
+  const res = await fetch(`/api/settings/${number}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(settings)
+  });
   
-  const updatedConfig = {};
-  
-  if (currentPrefix !== originalConfig.PREFIX) updatedConfig.PREFIX = currentPrefix;
-  if (currentButton !== originalConfig.BUTTON) updatedConfig.BUTTON = currentButton;
-  if (currentAutoView !== originalConfig.AUTO_VIEW_STATUS) updatedConfig.AUTO_VIEW_STATUS = currentAutoView;
-  if (currentAutoLikeStatus !== originalConfig.AUTO_LIKE_STATUS) updatedConfig.AUTO_LIKE_STATUS = currentAutoLikeStatus;
-  if (currentAutoRecording !== originalConfig.AUTO_RECORDING) updatedConfig.AUTO_RECORDING = currentAutoRecording;
-  
-  const oldEmojis = originalConfig.AUTO_LIKE_EMOJI || [];
-  if (JSON.stringify(currentEmojis) !== JSON.stringify(oldEmojis)) {
-    updatedConfig.AUTO_LIKE_EMOJI = currentEmojis;
-  }
-  
-  if (Object.keys(updatedConfig).length === 0) {
-    document.getElementById('saveMsg').innerHTML = '✅ No changes detected · Configuration is up to date';
-    setTimeout(() => document.getElementById('saveMsg').innerHTML = '', 2000);
-    return;
-  }
-  
-  try {
-    const response = await fetch(`/api/settings/${number}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedConfig)
-    });
-    
-    const result = await response.json();
-    document.getElementById('saveMsg').innerHTML = `🚀 ${result.message || 'Settings saved successfully!'} · JAMALI TECH EMPIRE`;
-    setTimeout(() => document.getElementById('saveMsg').innerHTML = '', 3000);
-    
-    originalConfig = { ...originalConfig, ...updatedConfig };
-    isEditing = false;
-  } catch (err) {
-    console.error(err);
-    document.getElementById('saveMsg').innerHTML = '⚠️ Network error. Please check your connection.';
-    setTimeout(() => document.getElementById('saveMsg').innerHTML = '', 2500);
-  }
-}
-
-// Expose functions globally
-window.addEmoji = addEmoji;
-window.saveSettings = saveSettings;
-
-// Load configuration on page load
-loadSettings();
+  const data = await res.json();
+  document.getElementById('message').textContent = data.message || '✅ Settings saved!';
+  setTimeout(() => document.getElementById('message').textContent = '', 3000);
+});
 </script>
 </body>
 </html>
