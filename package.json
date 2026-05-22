@@ -1,34 +1,33 @@
 {
-  "name": "matrix-mini",
-  "version": "1.0.0",
-  "description": "matrix-mini WhatsApp Bot with Multi-Number Support",
+  "name": "jamali-tech-md",
+  "version": "2.0.0",
+  "description": "JAMALI TECH MD - Premium WhatsApp Bot with Multi-Device Support",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "worker": "node index.js"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["whatsapp-bot", "baileys", "nodejs", "jamali-tech", "whatsapp-md", "bot"],
+  "author": "JAMALI TECH EMPIRE",
+  "license": "MIT",
   "dependencies": {
-    "@octokit/rest": "^20.0.2",
-    "@whiskeysockets/baileys": "github:Jeliostarr/DEV-Baileys",
-    "express-session": "^1.18.2",
-    "adm-zip": "^0.5.16",
-    "axios": "^1.2.5",
-    "child_process": "^1.0.2",
-    "denethdev-ytmp3": "1.0.3",
-    "dotenv": "^17.2.1",
+    "@whiskeysockets/baileys": "^6.7.5",
     "express": "^4.18.2",
-    "file-type": "21.0.0",
-    "fs-extra": "^11.2.0",
-    "jimp": "latest",
-    "limiter": "^x.x.x",
-    "lru-cache": "^7.14.1",
-    "moment-timezone": "^0.6.0",
-    "mongoose": "8.15.0",
-    "node-fetch": "^3.3.2",
-    "p-queue": "^7.3.4",
-    "path": "^0.12.7",
-    "pino": "^8.17.0",
-    "ruhend-scraper": "^9.0.8",
-    "yt-search": "2.12.1",
-    "ytdl-core": "^4.11.5"
+    "mongoose": "^8.0.0",
+    "axios": "^1.6.0",
+    "fs-extra": "^11.1.1",
+    "moment-timezone": "^0.5.43",
+    "pino": "^8.15.0",
+    "ytdl-core": "^4.11.5",
+    "yt-search": "^2.10.5",
+    "jimp": "^0.22.10",
+    "qrcode-terminal": "^0.12.0",
+    "dotenv": "^16.3.1",
+    "file-type": "^18.5.0",
+    "adm-zip": "^0.5.10",
+    "crypto": "^1.0.1"
   }
 }
