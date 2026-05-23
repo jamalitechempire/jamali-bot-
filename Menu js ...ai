@@ -1,0 +1,124 @@
+module.exports = {
+    command: ['menu', 'allmenu', 'help'],
+    description: 'Show all commands',
+    usage: '.menu',
+    category: 'General',
+    async execute(sock, msg, args, sender, prefix, { config, logo, footer, isOwner, moment }) {
+        const start = Date.now();
+        const uptime = process.uptime();
+        const usage = process.memoryUsage();
+        const totalMem = require('os').totalmem();
+        const freeMem = require('os').freemem();
+        const usedMem = totalMem - freeMem;
+        const memPercent = (usedMem / totalMem * 100).toFixed(1);
+        const ramBar = `[${'█'.repeat(Math.floor(memPercent / 10))}${'░'.repeat(10 - Math.floor(memPercent / 10))}]`;
+        
+        const menuText = `╔══════════════════════════════════════════════════════╗
+║                 ✨ 𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟐 ✨                 ║
+╚══════════════════════════════════════════════════════╝
+
+╭─────────────────────────────────────────────────────╮
+│  💎 *BOT STATUS*                                     │
+├─────────────────────────────────────────────────────┤
+│  👑 *Owner*      : JAMALI TECH EMPIRE
+│  📌 *Prefix*     : ${prefix}
+│  🖥️ *Host*       : ${process.env.PLATFORM || 'Heroku'}
+│  📦 *Plugins*    : 350+
+│  🌍 *Mode*       : Public
+│  🔢 *Version*    : ${config.BOT_VERSION}
+│  ⚡ *Speed*      : ${Date.now() - start} ms
+│  💾 *Usage*      : ${(usedMem / 1024 / 1024).toFixed(0)} MB / ${(totalMem / 1024 / 1024).toFixed(0)} MB
+│  📊 *RAM*        : ${ramBar} ${memPercent}%
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  🤖 *AI & CHATBOT COMMANDS*                         │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}ai       - Chat with AI
+│  • ${prefix}gemini   - Google Gemini AI
+│  • ${prefix}blackbox - Blackbox AI
+│  • ${prefix}code     - Generate Code
+│  • ${prefix}story    - Generate Story
+│  • ${prefix}recipe   - Get Recipe
+│  • ${prefix}summarize - Summarize Text
+│  • ${prefix}teach    - Teach AI
+│  • ${prefix}translate - Translate Text
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  📥 *DOWNLOAD COMMANDS*                              │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}song      - Download Music
+│  • ${prefix}video     - Download Video
+│  • ${prefix}tiktok    - TikTok Downloader
+│  • ${prefix}facebook  - Facebook Downloader
+│  • ${prefix}instagram - Instagram Downloader
+│  • ${prefix}twitter   - Twitter Downloader
+│  • ${prefix}ytsearch  - YouTube Search
+│  • ${prefix}save      - Save Status
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  🛠️ *GROUP MANAGEMENT*                               │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}tagall    - Mention All Members
+│  • ${prefix}tagadmin  - Mention Admins
+│  • ${prefix}kick      - Remove Member
+│  • ${prefix}add       - Add Member
+│  • ${prefix}promote   - Make Admin
+│  • ${prefix}demote    - Remove Admin
+│  • ${prefix}link      - Get Group Link
+│  • ${prefix}resetlink - Reset Group Link
+│  • ${prefix}close     - Close Group
+│  • ${prefix}open      - Open Group
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  🎨 *MEDIA TOOLS*                                    │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}sticker   - Convert to Sticker
+│  • ${prefix}toimage   - Convert to Image
+│  • ${prefix}tomp3     - Convert to Audio
+│  • ${prefix}take      - Take Sticker
+│  • ${prefix}getpp     - Get Profile Picture
+│  • ${prefix}vv        - ViewOnce Unlock
+│  • ${prefix}qrcode    - Generate QR Code
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  👑 *OWNER COMMANDS*                                 │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}block     - Block User
+│  • ${prefix}unblock   - Unblock User
+│  • ${prefix}join      - Join Group via Link
+│  • ${prefix}leave     - Leave Group
+│  • ${prefix}setbio    - Update Bio
+│  • ${prefix}setpp     - Update Profile Picture
+│  • ${prefix}restart   - Restart Bot
+│  • ${prefix}update    - Update Bot
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  🔧 *SETTINGS COMMANDS*                              │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}setprefix - Change Prefix
+│  • ${prefix}autoview  - Auto View Status
+│  • ${prefix}autolike  - Auto Like Status
+│  • ${prefix}autoreact - Auto React Messages
+│  • ${prefix}mode      - Change Bot Mode
+│  • ${prefix}settings  - View Settings
+╰─────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────╮
+│  🌐 *CHANNEL INFO*                                   │
+├─────────────────────────────────────────────────────┤
+│  📢 *Join Our Channel:*                              │
+│  🔗 ${config.CHANNEL_LINK}
+│  📞 *Admin Contact:* wa.me/${config.OWNER_NUMBER}
+╰─────────────────────────────────────────────────────╯
+
+${footer}`;
+        
+        await sock.sendMessage(sender, { image: { url: logo }, caption: menuText, footer: footer, headerType: 4 }, { quoted: msg });
+    }
+};
