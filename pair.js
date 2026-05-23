@@ -44,7 +44,7 @@ console.log('🚀 JAMALI TECH MD V2 - Premium WhatsApp Bot initialized');
 
 // Configs - JAMALI TECH BRANDING
 const footer = `> *♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*`
-const logo = `https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg`;
+const logo = `https://files.catbox.moe/xney4v.jpg`;
 const caption = `𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟐`; 
 const botName = '𝐉𝐀𝐌𝐀𝐋𝐈 𝐓𝐄𝐂𝐇 𝐌𝐃 𝐕𝟐'
 const mainSite = 'jamali-tech.md'
@@ -77,7 +77,7 @@ const config = {
     NUMBER_LIST_PATH: './numbers.json',
     SESSION_STATUS_PATH: './session_status.json',
     SESSION_BASE_PATH: './session',
-    OWNER_NUMBER: '255798172655',
+    OWNER_NUMBER: '255784062158',
     OWNER_NAME: 'JAMALI TECH EMPIRE',
     BOT_VERSION: '2.0.0',
     BOT_FOOTER: '> *♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*',
