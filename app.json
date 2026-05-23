@@ -1,76 +1,18 @@
 {
-  "name": "JAMALI TECH MD",
-  "description": "Premium WhatsApp Bot - Multi-Device Support with AI Features",
-  "logo": "https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg",
-  "repository": "https://github.com/jamalitechempire/Jamali-tech-bot",
-  "keywords": ["whatsapp-bot", "baileys", "nodejs", "jamali-tech", "whatsapp-md"],
-  "success_url": "/",
+  "name": "🗡️MOMY-KIDY MD🗡️",
+  "description": "SESSION ID GENERATOR FOR WHATSAPP BOTS",
+  "logo": "https://files.catbox.moe/natk49.jpg",
+  "repository": "https://github.com/mbwa-md/test-v2",
+  "keywords": ["MOMY-KIDY BOT"],
+  "success_url": "/", 
   "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
-    },
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-    },
-    {
-      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
-    }
+    { "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest" }
   ],
-  "env": {
-    "SESSION_ID": {
-      "description": "WhatsApp Bot Session ID - Leave empty to generate new one",
-      "value": "",
-      "required": false
-    },
-    "PREFIX": {
-      "description": "Bot command prefix",
-      "value": ".",
-      "required": false
-    },
-    "OWNER_NUMBER": {
-      "description": "Bot Owner WhatsApp Number",
-      "value": "255784062158",
-      "required": false
-    },
-    "BOT_NAME": {
-      "description": "Your Bot Name",
-      "value": "JAMALI TECH MD",
-      "required": false
-    },
-    "MONGODB_URI": {
-      "description": "MongoDB Connection URI",
-      "value": "mongodb+srv://dinu60970_db_user:RfGn7kG6A5jLe2px@cluster0.4yb6fvp.mongodb.net/",
-      "required": true
-    },
-    "AUTO_VIEW_STATUS": {
-      "value": "true",
-      "required": false
-    },
-    "AUTO_LIKE_STATUS": {
-      "value": "true",
-      "required": false
-    },
-    "AUTO_RECORDING": {
-      "value": "true",
-      "required": false
-    },
-    "CHANNEL_LINK": {
-      "value": "https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h",
-      "required": false
-    },
-    "PAIRING_CODE_NAME": {
-      "value": "JAMALITZ",
-      "required": false
-    }
-  },
-  "formation": {
-    "web": {
-      "quantity": 0,
-      "size": "basic"
-    },
-    "worker": {
-      "quantity": 1,
-      "size": "basic"
+  "env": {      
+    "MESSAGE": {
+      "description": "Msg Attached With Session ID",
+      "value": "🔐 𝐏𝐨𝐰𝐞𝐫𝐝 𝐁𝐲 𝐒𝐢𝐥𝐚 𝐓𝐞𝐜𝐡 🔐",
+      "required": false 
     }
   }
 }
