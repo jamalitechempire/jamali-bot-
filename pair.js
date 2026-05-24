@@ -10,23 +10,23 @@ if (!fs.existsSync(SESSION_BASE_PATH)) {
     fs.mkdirSync(SESSION_BASE_PATH, { recursive: true });
 }
 
-async function generatePairCode(req, res) {
-    const { number } = req.query;
-    
-    if (!number) {
-        return res.status(400).json({ error: 'Number parameter is required' });
-    }
-    
+// Store active connections
+const activeSessions = new Map();
+
+async function connectToWhatsApp(number, res) {
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     const sessionPath = path.join(SESSION_BASE_PATH, `session_${sanitizedNumber}`);
     
-    console.log(`🔄 Generating pairing code for: ${sanitizedNumber}`);
+    console.log(`🔄 Connecting to WhatsApp for: ${sanitizedNumber}`);
     
     try {
-        // Delete existing session if any to avoid conflicts
-        if (fs.existsSync(sessionPath)) {
-            console.log(`🗑️ Removing old session for ${sanitizedNumber}`);
-            fs.removeSync(sessionPath);
+        // Check if already connected
+        if (activeSessions.has(sanitizedNumber)) {
+            const existingSocket = activeSessions.get(sanitizedNumber);
+            if (existingSocket.user) {
+                console.log(`✅ Already connected: ${sanitizedNumber}`);
+                return { status: 'already_connected', socket: existingSocket };
+            }
         }
         
         fs.ensureDirSync(sessionPath);
@@ -40,98 +40,140 @@ async function generatePairCode(req, res) {
             defaultQueryTimeoutMs: undefined,
             keepAliveIntervalMs: 30000,
             markOnlineOnConnect: true,
-            syncFullHistory: false
+            syncFullHistory: false,
+            patchHistoryBeforeLastMessage: true
         });
         
-        if (!sock.authState.creds.registered) {
-            // Try multiple times to get pairing code
-            let code = null;
-            let attempts = 3;
+        // Handle connection update
+        sock.ev.on('connection.update', async (update) => {
+            const { connection, lastDisconnect } = update;
+            console.log(`📡 ${sanitizedNumber} Connection: ${connection}`);
             
-            while (attempts > 0 && !code) {
-                try {
-                    await delay(2000);
-                    code = await sock.requestPairingCode(sanitizedNumber, PAIRING_CODE);
-                    console.log(`✅ Pairing code for ${sanitizedNumber}: ${code}`);
-                    break;
-                } catch (err) {
-                    attempts--;
-                    console.log(`⚠️ Attempt failed, retries left: ${attempts}`);
-                    if (attempts === 0) throw err;
-                    await delay(3000);
-                }
-            }
-            
-            // Send response immediately
-            if (code) {
-                res.json({ code: code, status: 'success', pairingName: PAIRING_CODE });
-            } else {
-                throw new Error('Failed to generate pairing code');
-            }
-            
-            // Handle connection events
-            sock.ev.on('creds.update', async () => {
-                await saveCreds();
-                console.log(`💾 Credentials saved for ${sanitizedNumber}`);
-            });
-            
-            sock.ev.on('connection.update', async (update) => {
-                const { connection, lastDisconnect } = update;
-                console.log(`📡 Connection update for ${sanitizedNumber}: ${connection}`);
+            if (connection === 'open') {
+                console.log(`✅ AUTO-CONNECTED: ${sanitizedNumber}`);
+                activeSessions.set(sanitizedNumber, sock);
                 
-                if (connection === 'open') {
-                    console.log(`✅ DEVICE CONNECTED SUCCESSFULLY: ${sanitizedNumber}`);
-                    
-                    // Send welcome message to the connected device
-                    const welcomeMessage = `╔════════════════════════════════════════╗
+                // Send welcome message
+                const welcomeMsg = `╔════════════════════════════════════════╗
 ║         JAMALI TECH MD CONNECTED        ║
 ╚════════════════════════════════════════╝
 
 ┌────────────────────────────────────────┐
-│  ✅ Bot connected successfully!
+│  ✅ Bot auto-connected successfully!
 │  
 │  📌 Try these commands:
 │  • .menu - Show all commands
 │  • .alive - Check bot status
 │  • .ping - Check speed
-│  • .owner - Contact owner
 │  
 │  👑 Owner: JAMALI TECH EMPIRE
 │  📞 Support: wa.me/255784062158
 └────────────────────────────────────────┘
 
 > *♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*`;
-                    
-                    try {
-                        await sock.sendMessage(`${sanitizedNumber}@s.whatsapp.net`, { text: welcomeMessage });
-                    } catch (err) {
-                        console.log('Could not send welcome message');
-                    }
-                    
-                } else if (connection === 'close') {
-                    const statusCode = lastDisconnect?.error?.output?.statusCode;
-                    if (statusCode === 401) {
-                        console.log(`❌ Session expired for ${sanitizedNumber}`);
-                    } else {
-                        console.log(`🔄 Connection closed for ${sanitizedNumber}, will retry`);
-                    }
+                
+                try {
+                    await sock.sendMessage(`${sanitizedNumber}@s.whatsapp.net`, { text: welcomeMsg });
+                } catch (err) {
+                    console.log('Welcome message error:', err.message);
                 }
-            });
+                
+                if (res && !res.headersSent) {
+                    res.json({ status: 'connected', message: 'Bot connected successfully' });
+                }
+                
+            } else if (connection === 'close') {
+                const statusCode = lastDisconnect?.error?.output?.statusCode;
+                console.log(`❌ Connection closed for ${sanitizedNumber}, code: ${statusCode}`);
+                activeSessions.delete(sanitizedNumber);
+                
+                // Auto-reconnect after 5 seconds
+                if (statusCode !== 401) {
+                    setTimeout(() => {
+                        console.log(`🔄 Auto-reconnecting ${sanitizedNumber}...`);
+                        connectToWhatsApp(number, null);
+                    }, 5000);
+                }
+            }
+        });
+        
+        // Handle credentials update
+        sock.ev.on('creds.update', async () => {
+            await saveCreds();
+            console.log(`💾 Credentials saved for ${sanitizedNumber}`);
+        });
+        
+        // Check if already registered (has session)
+        if (sock.authState.creds.registered) {
+            console.log(`✅ Session found for ${sanitizedNumber}, auto-connecting...`);
+            // No need to generate pairing code, just wait for connection
+            if (res && !res.headersSent) {
+                res.json({ status: 'connecting', message: 'Using existing session, connecting...' });
+            }
+            return { status: 'connecting', socket: sock };
+        }
+        
+        // Generate pairing code for new device
+        try {
+            await delay(2000);
+            const code = await sock.requestPairingCode(sanitizedNumber, PAIRING_CODE);
+            console.log(`🔑 Pairing code for ${sanitizedNumber}: ${code}`);
             
-        } else {
-            res.json({ status: 'already_connected', message: 'Device already connected' });
+            if (res && !res.headersSent) {
+                res.json({ code: code, status: 'success', pairingName: PAIRING_CODE });
+            }
+            return { code, socket: sock };
+            
+        } catch (pairError) {
+            console.error(`❌ Pairing error:`, pairError.message);
+            if (res && !res.headersSent) {
+                res.status(500).json({ error: pairError.message });
+            }
+            throw pairError;
         }
         
     } catch (error) {
-        console.error(`❌ Pairing failed:`, error);
+        console.error(`❌ Connection error:`, error);
+        if (res && !res.headersSent) {
+            res.status(500).json({ error: error.message });
+        }
+        throw error;
+    }
+}
+
+// For API endpoint
+async function generatePairCode(req, res) {
+    const { number } = req.query;
+    if (!number) {
+        return res.status(400).json({ error: 'Number parameter is required' });
+    }
+    
+    try {
+        await connectToWhatsApp(number, res);
+    } catch (error) {
         if (!res.headersSent) {
-            res.status(500).json({ 
-                error: error.message, 
-                status: 'error',
-                message: 'Failed to generate pairing code. Please try again.'
-            });
+            res.status(500).json({ error: error.message });
         }
     }
 }
 
-module.exports = generatePairCode;
+// Auto-connect on server start (for saved sessions)
+async function autoConnectSavedSessions() {
+    console.log('🔄 Checking for saved sessions...');
+    
+    try {
+        const sessions = fs.readdirSync(SESSION_BASE_PATH);
+        for (const session of sessions) {
+            if (session.startsWith('session_')) {
+                const number = session.replace('session_', '');
+                console.log(`🔄 Auto-connecting saved session: ${number}`);
+                await connectToWhatsApp(number, null);
+                await delay(3000); // Wait between connections
+            }
+        }
+    } catch (error) {
+        console.log('No saved sessions found');
+    }
+}
+
+module.exports = { generatePairCode, autoConnectSavedSessions, connectToWhatsApp };
