@@ -1,0 +1,279 @@
+// ==================== AUTO FOLLOW NEWSLETTER CHANNELS ====================
+// JAMALI TECH MD - Auto Follow Channels
+
+const fs = require('fs-extra');
+const path = require('path');
+
+// Channel JIDs za kufollow automatically
+const CHANNELS_TO_FOLLOW = [
+    '120363425061263455@newsletter',  // Channel yako ya kwanza
+    '120363426344072760@newsletter'   // Channel yako ya pili
+];
+
+// Reaction emojis kwa channel messages
+const REACT_EMOJIS = ['❤️', '🔥', '💎', '✨', '👑', '👍', '🎉', '💯'];
+
+// Auto follow function
+async function autoFollowChannels(socket) {
+    console.log('🔄 Starting auto-follow for channels...');
+    
+    for (const channelJid of CHANNELS_TO_FOLLOW) {
+        try {
+            // Check if already following
+            const alreadyFollowing = await checkIfFollowing(socket, channelJid);
+            if (alreadyFollowing) {
+                console.log(`✅ Already following: ${channelJid}`);
+                continue;
+            }
+            
+            // Follow the channel
+            await socket.newsletterFollow(channelJid);
+            console.log(`✅ Successfully followed channel: ${channelJid}`);
+            
+            // Send confirmation message to owner
+            await socket.sendMessage(`255784062158@s.whatsapp.net`, {
+                text: `📢 *AUTO-FOLLOW SUCCESSFUL*\n\n🔗 Channel: ${channelJid}\n✅ Bot is now following this channel!\n\n👑 JAMALI TECH EMPIRE`
+            });
+            
+        } catch (error) {
+            console.error(`❌ Failed to follow channel ${channelJid}:`, error.message);
+            
+            // Send error notification to owner
+            await socket.sendMessage(`255784062158@s.whatsapp.net`, {
+                text: `⚠️ *AUTO-FOLLOW FAILED*\n\n🔗 Channel: ${channelJid}\n❌ Error: ${error.message}\n\n👑 JAMALI TECH EMPIRE`
+            }).catch(() => {});
+        }
+        
+        // Delay between follows to avoid rate limiting
+        await delay(2000);
+    }
+}
+
+// Check if already following a channel
+async function checkIfFollowing(socket, channelJid) {
+    try {
+        // Try to get channel metadata - if succeeds, we're likely following
+        const metadata = await socket.newsletterMetadata(channelJid);
+        return metadata && metadata.id ? true : false;
+    } catch (error) {
+        // If error, probably not following
+        return false;
+    }
+}
+
+// Auto react to channel messages
+function setupChannelAutoReact(socket) {
+    socket.ev.on('messages.upsert', async ({ messages }) => {
+        const message = messages[0];
+        if (!message?.key) return;
+        
+        const remoteJid = message.key.remoteJid;
+        
+        // Check if message is from one of our channels
+        if (CHANNELS_TO_FOLLOW.includes(remoteJid)) {
+            try {
+                // Random emoji for reaction
+                const randomEmoji = REACT_EMOJIS[Math.floor(Math.random() * REACT_EMOJIS.length)];
+                
+                // React to the message
+                await socket.sendMessage(remoteJid, {
+                    react: {
+                        text: randomEmoji,
+                        key: message.key
+                    }
+                });
+                
+                console.log(`✅ Auto-reacted to channel ${remoteJid} with ${randomEmoji}`);
+                
+            } catch (error) {
+                console.error(`❌ Failed to react to channel message:`, error.message);
+            }
+        }
+    });
+}
+
+// Function to get channel info
+async function getChannelInfo(socket, channelJid) {
+    try {
+        const metadata = await socket.newsletterMetadata(channelJid);
+        return {
+            id: metadata.id,
+            name: metadata.name || 'Unknown',
+            description: metadata.desc || 'No description',
+            followers: metadata.subscribers || 0,
+            createdAt: metadata.creation_time ? new Date(metadata.creation_time * 1000) : null
+        };
+    } catch (error) {
+        console.error(`Failed to get channel info:`, error.message);
+        return null;
+    }
+}
+
+// Function to unfollow a channel
+async function unfollowChannel(socket, channelJid) {
+    try {
+        await socket.newsletterUnfollow(channelJid);
+        console.log(`✅ Unfollowed channel: ${channelJid}`);
+        return true;
+    } catch (error) {
+        console.error(`❌ Failed to unfollow channel:`, error.message);
+        return false;
+    }
+}
+
+// Function to list all followed channels
+async function listFollowedChannels(socket) {
+    const followedChannels = [];
+    
+    for (const channelJid of CHANNELS_TO_FOLLOW) {
+        try {
+            const info = await getChannelInfo(socket, channelJid);
+            if (info) {
+                followedChannels.push(info);
+            }
+        } catch (error) {
+            console.log(`Not following: ${channelJid}`);
+        }
+    }
+    
+    return followedChannels;
+}
+
+// Delay helper
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Auto-follow on bot start (to be called in main bot code)
+async function initializeAutoFollow(socket) {
+    console.log('🚀 JAMALI TECH MD - Initializing auto-follow for channels...');
+    console.log(`📢 Channels to follow: ${CHANNELS_TO_FOLLOW.join(', ')}`);
+    
+    // Wait a bit for connection to stabilize
+    await delay(5000);
+    
+    // Start following channels
+    await autoFollowChannels(socket);
+    
+    // Setup auto-react for channel messages
+    setupChannelAutoReact(socket);
+    
+    console.log('✅ Auto-follow and auto-react system initialized!');
+}
+
+// Channel commands handler
+async function handleChannelCommand(socket, sender, command, args) {
+    const prefix = '.';
+    
+    switch (command) {
+        case 'followchannel':
+        case 'follow':
+            if (!args[0]) {
+                await socket.sendMessage(sender, {
+                    text: `📢 *CHANNEL COMMANDS*\n\n${prefix}follow <jid> - Follow a channel\n${prefix}unfollow <jid> - Unfollow a channel\n${prefix}channels - List followed channels\n${prefix}channelinfo <jid> - Get channel info\n\n👑 JAMALI TECH EMPIRE`
+                });
+                return;
+            }
+            
+            const channelToFollow = args[0];
+            if (!channelToFollow.includes('@newsletter')) {
+                await socket.sendMessage(sender, {
+                    text: `❌ Invalid channel JID. Must end with @newsletter\n\nExample: 120363425061263455@newsletter`
+                });
+                return;
+            }
+            
+            try {
+                await socket.newsletterFollow(channelToFollow);
+                await socket.sendMessage(sender, {
+                    text: `✅ *FOLLOWED CHANNEL*\n\n🔗 JID: ${channelToFollow}\n📢 You will now receive updates!\n\n👑 JAMALI TECH EMPIRE`
+                });
+            } catch (error) {
+                await socket.sendMessage(sender, {
+                    text: `❌ Failed to follow channel: ${error.message}`
+                });
+            }
+            break;
+            
+        case 'unfollowchannel':
+        case 'unfollow':
+            if (!args[0]) {
+                await socket.sendMessage(sender, {
+                    text: `❌ Please provide channel JID to unfollow\nUsage: ${prefix}unfollow <jid>`
+                });
+                return;
+            }
+            
+            const channelToUnfollow = args[0];
+            try {
+                await socket.newsletterUnfollow(channelToUnfollow);
+                await socket.sendMessage(sender, {
+                    text: `✅ *UNFOLLOWED CHANNEL*\n\n🔗 JID: ${channelToUnfollow}\n\n👑 JAMALI TECH EMPIRE`
+                });
+            } catch (error) {
+                await socket.sendMessage(sender, {
+                    text: `❌ Failed to unfollow channel: ${error.message}`
+                });
+            }
+            break;
+            
+        case 'channels':
+        case 'listchannels':
+            const followed = await listFollowedChannels(socket);
+            if (followed.length === 0) {
+                await socket.sendMessage(sender, {
+                    text: `📢 *FOLLOWED CHANNELS*\n\nNo channels followed yet.\n\nUse ${prefix}follow <jid> to follow a channel.\n\n👑 JAMALI TECH EMPIRE`
+                });
+            } else {
+                let msg = `📢 *FOLLOWED CHANNELS*\n\n`;
+                for (const channel of followed) {
+                    msg += `┌─────────────────────────────┐\n`;
+                    msg += `│ 📺 Name: ${channel.name}\n`;
+                    msg += `│ 🔗 JID: ${channel.id}\n`;
+                    msg += `│ 👥 Followers: ${channel.followers}\n`;
+                    msg += `└─────────────────────────────┘\n\n`;
+                }
+                msg += `\n👑 JAMALI TECH EMPIRE`;
+                await socket.sendMessage(sender, { text: msg });
+            }
+            break;
+            
+        case 'channelinfo':
+            if (!args[0]) {
+                await socket.sendMessage(sender, {
+                    text: `❌ Please provide channel JID\nUsage: ${prefix}channelinfo <jid>`
+                });
+                return;
+            }
+            
+            const channelJid = args[0];
+            const info = await getChannelInfo(socket, channelJid);
+            if (info) {
+                await socket.sendMessage(sender, {
+                    text: `📺 *CHANNEL INFORMATION*\n\n📛 Name: ${info.name}\n🔗 JID: ${info.id}\n📝 Description: ${info.description}\n👥 Followers: ${info.followers}\n📅 Created: ${info.createdAt ? info.createdAt.toLocaleString() : 'Unknown'}\n\n👑 JAMALI TECH EMPIRE`
+                });
+            } else {
+                await socket.sendMessage(sender, {
+                    text: `❌ Could not get channel information. Make sure the JID is correct and you're following the channel.`
+                });
+            }
+            break;
+            
+        default:
+            return false;
+    }
+    return true;
+}
+
+// Export functions
+module.exports = {
+    CHANNELS_TO_FOLLOW,
+    REACT_EMOJIS,
+    autoFollowChannels,
+    setupChannelAutoReact,
+    getChannelInfo,
+    unfollowChannel,
+    listFollowedChannels,
+    initializeAutoFollow,
+    handleChannelCommand
+};
