@@ -1,83 +1,29 @@
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require("body-parser");
-const path = require('path');
-const app = express();
-__path = process.cwd();
-const code = require('./pair'); 
-const router = require('./pair');
-
-require('events').EventEmitter.defaultMaxListeners = 500;
-
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    secret: 'dew-md-secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // set to true if using HTTPS
-}));
-
-// Routes
-app.use('/freebot', code);
-app.use('/api', router);
-
-// Serve login page
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__path, '/frontend/login.html'));
-});
-
-// Multiple users
-const ADMINS = [
-  { username: 'jamali1234', password: 'jamalitech1' },
-];
-
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = ADMINS.find(u => u.username === username && u.password === password);
-  if(user){
-    req.session.loggedIn = true;
-    req.session.user = username; // store username in session
-    res.json({ success: true });
-  } else {
-    res.json({ success: false, message: 'Invalid credentials' });
-  }
-});
-
-// Middleware to protect admin
-function authMiddleware(req, res, next) {
-    if(req.session.loggedIn){
-        next();
-    } else {
-        res.redirect('/login');
+// API Routes - Pairing
+app.get('/api/pair', async (req, res) => {
+    const { number } = req.query;
+    console.log(`📱 Pairing request for number: ${number}`);
+    
+    if (!number) {
+        return res.status(400).json({ error: 'Number parameter is required' });
     }
-}
-
-app.get('/api/check-session', (req, res) => {
-  if(req.session && req.session.user) {
-    res.json({ loggedIn: true });
-  } else {
-    res.json({ loggedIn: false });
-  }
+    
+    const sanitizedNumber = number.replace(/[^0-9]/g, '');
+    console.log(`🔍 Sanitized number: ${sanitizedNumber}`);
+    
+    if (activeSockets.has(sanitizedNumber)) {
+        const isActive = isSessionActive(sanitizedNumber);
+        return res.status(200).json({ 
+            status: isActive ? 'already_connected' : 'reconnecting',
+            message: isActive ? 'Already connected' : 'Session is reconnecting'
+        });
+    }
+    
+    try {
+        await EmpirePair(sanitizedNumber, res);
+    } catch (error) {
+        console.error('❌ Pairing error:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: error.message || 'Failed to generate pairing code' });
+        }
+    }
 });
-
-app.get('/admin', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__path, '/frontend/admin.html'));
-});
-app.use('/pair', async (req, res, next) => {
-    res.sendFile(path.join(__path, '/frontend/pair.html'));
-});
-app.use('/setting', async (req, res, next) => {
-    res.sendFile(path.join(__path, '/frontend/settings.html'));
-});
-app.use('/', async (req, res, next) => {
-    res.sendFile(path.join(__path, '/frontend/index.html'));
-});
-
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
-
-module.exports = app;
