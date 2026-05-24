@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAMALI TECH MD - Pair Code</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>JAMALI TECH EMPIRE · Pair Code</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,26 +18,36 @@
   }
   .card {
     background: rgba(18,22,31,0.95);
+    backdrop-filter: blur(12px);
     border-radius: 2rem;
     padding: 2rem;
     max-width: 450px;
     width: 100%;
     text-align: center;
     border: 1px solid rgba(0,255,234,0.3);
+    box-shadow: 0 0 30px rgba(0,255,234,0.1);
   }
   .bot-avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    border: 2px solid #00ffea;
+    border: 3px solid #00ffea;
+    box-shadow: 0 0 20px rgba(0,255,234,0.4);
     margin-bottom: 1rem;
+    object-fit: cover;
   }
   h2 {
     background: linear-gradient(135deg, #fff, #00ffea);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .sub {
+    font-size: 0.7rem;
+    color: #8a9bb5;
+    margin-bottom: 1.5rem;
   }
   .input-group {
     position: relative;
@@ -49,6 +59,7 @@
     top: 50%;
     transform: translateY(-50%);
     color: #00ffea;
+    font-size: 1.1rem;
   }
   input {
     width: 100%;
@@ -62,6 +73,7 @@
   input:focus {
     outline: none;
     border-color: #00ffea;
+    box-shadow: 0 0 0 3px rgba(0,255,234,0.2);
   }
   button {
     width: 100%;
@@ -73,10 +85,16 @@
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s;
+    margin-top: 0.5rem;
   }
   button:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 20px rgba(0,255,234,0.5);
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
   .code-area {
     margin-top: 1.5rem;
@@ -84,33 +102,51 @@
     background: #0d0f18;
     border-radius: 1rem;
     display: none;
+    border: 1px solid rgba(0,255,234,0.3);
   }
   .code-value {
     font-size: 1.8rem;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: #00ffea;
+    font-family: monospace;
   }
   .error {
     color: #ff6b6b;
     margin-top: 1rem;
+    font-size: 0.85rem;
   }
   .footer {
     margin-top: 1.5rem;
     font-size: 0.7rem;
-    color: #6c7a8e;
+    color: #5e6f8d;
+    border-top: 1px solid rgba(0,255,234,0.15);
+    padding-top: 1rem;
+  }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 </style>
 </head>
 <body>
 <div class="card">
-  <img src="https://i.ibb.co/XfYqpkmm/be2de0bd1b96.jpg" alt="JAMALI TECH MD" class="bot-avatar">
+  <img src="https://files.catbox.moe/xney4v.jpg" alt="JAMALI TECH MD" class="bot-avatar">
   <h2>JAMALI TECH EMPIRE</h2>
-  <p>Enter your WhatsApp number to get pairing code</p>
+  <div class="sub">⚡ PAIRING NEXUS ⚡</div>
   
   <div class="input-group">
     <i class="fas fa-phone-alt"></i>
-    <input type="tel" id="phoneNumber" placeholder="255784062158">
+    <input type="tel" id="phoneNumber" placeholder="Enter WhatsApp number (e.g., 255784062158)">
   </div>
   
   <button id="generateBtn"><i class="fas fa-link"></i> GENERATE PAIR CODE</button>
@@ -118,12 +154,13 @@
   <div id="codeArea" class="code-area">
     <p>✅ PAIRING CODE GENERATED!</p>
     <div class="code-value" id="codeValue"></div>
-    <p style="font-size: 0.7rem; margin-top: 0.5rem;">Use this code within 2 minutes</p>
+    <p style="font-size: 0.7rem; margin-top: 0.8rem;">Use this code within 2 minutes</p>
+    <p style="font-size: 0.7rem;"><i class="fas fa-mobile-alt"></i> WhatsApp → Settings → Linked Devices → Link with Phone Number</p>
   </div>
   <div id="errorMsg" class="error"></div>
   
   <div class="footer">
-    <i class="fas fa-lock"></i> Pairing Code: JAMALITZ
+    <i class="fas fa-lock"></i> Pairing Code: <strong>JAMALITZ</strong>
   </div>
 </div>
 
@@ -134,34 +171,63 @@ const codeArea = document.getElementById('codeArea');
 const codeValue = document.getElementById('codeValue');
 const errorMsg = document.getElementById('errorMsg');
 
-generateBtn.addEventListener('click', async () => {
+async function generatePairCode() {
   let number = phoneInput.value.trim().replace(/[^0-9]/g, '');
+  
   if (!number || number.length < 9) {
-    errorMsg.textContent = '❌ Enter a valid WhatsApp number';
+    errorMsg.textContent = '❌ Enter a valid WhatsApp number (min 9 digits)';
+    errorMsg.style.display = 'block';
     return;
   }
   
-  errorMsg.textContent = '';
+  // Remove leading zero if present
+  if (number.startsWith('0')) {
+    number = number.substring(1);
+  }
+  
+  errorMsg.style.display = 'none';
   codeArea.style.display = 'none';
   generateBtn.disabled = true;
-  generateBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> GENERATING...';
+  generateBtn.innerHTML = '<span class="spinner"></span> GENERATING PAIR CODE...';
   
   try {
-    const res = await fetch(`/api/pair?number=${number}`);
-    const data = await res.json();
+    const response = await fetch(`/api/pair?number=${number}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    const data = await response.json();
+    console.log('Response:', data);
+    
     if (data.code) {
       codeValue.textContent = data.code;
       codeArea.style.display = 'block';
+      errorMsg.style.display = 'none';
+    } else if (data.status === 'already_connected') {
+      errorMsg.textContent = '⚠️ This number is already connected to the bot!';
+      errorMsg.style.display = 'block';
     } else {
-      errorMsg.textContent = '❌ Pair code not generated. Try again.';
+      errorMsg.textContent = data.error || '❌ Pair code not generated. Ensure backend is active.';
+      errorMsg.style.display = 'block';
     }
   } catch (err) {
+    console.error('Pairing error:', err);
     errorMsg.textContent = '❌ Server error. Please try again.';
+    errorMsg.style.display = 'block';
   } finally {
     generateBtn.disabled = false;
     generateBtn.innerHTML = '<i class="fas fa-link"></i> GENERATE PAIR CODE';
   }
+}
+
+generateBtn.addEventListener('click', generatePairCode);
+
+phoneInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') generatePairCode();
 });
+
+// Set default placeholder
+phoneInput.placeholder = "255784062158";
 </script>
 </body>
 </html>
