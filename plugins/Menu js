@@ -1,4 +1,4 @@
-// ==================== JAMALI TECH MD - MENU SYSTEM ====================
+// ==================== JAMALI TECH MD - COMPLETE MENU SYSTEM ====================
 
 const fs = require('fs-extra');
 const os = require('os');
@@ -16,7 +16,7 @@ const config = {
 };
 
 const botLogo = 'https://files.catbox.moe/xney4v.jpg';
-const footer = `> *♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*`;
+const footer = `> *♱♱♱♱♱ POWERED BY JAMALI TECH ♱♱♱♱♱*`;
 
 // Get bot statistics
 function getBotStats() {
@@ -43,7 +43,7 @@ function getBotStats() {
     };
 }
 
-// Main Menu
+// ==================== MAIN MENU ====================
 function getMainMenu(prefix = '.', pushName = 'User') {
     const stats = getBotStats();
     
@@ -65,87 +65,29 @@ function getMainMenu(prefix = '.', pushName = 'User') {
 │  📊 RAM         : ${stats.ramBar} ${stats.memPercent}%
 └─────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────┐
-│  🔰 BASIC COMMANDS                                   │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}alive    - Check Bot Status
-│  • ${prefix}ping     - Check Bot Speed
-│  • ${prefix}owner    - Contact Owner
-│  • ${prefix}repo     - Get Repository
-│  • ${prefix}runtime  - Bot Uptime
-│  • ${prefix}jid      - Get Your JID
-│  • ${prefix}time     - Current Time
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  📥 DOWNLOAD COMMANDS                                │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}song     - Download Music
-│  • ${prefix}video    - Download Video
-│  • ${prefix}tiktok   - TikTok Downloader
-│  • ${prefix}facebook - Facebook Downloader
-│  • ${prefix}instagram- Instagram Downloader
-│  • ${prefix}twitter  - Twitter Downloader
-│  • ${prefix}save     - Save Status
-│  • ${prefix}vv       - ViewOnce Unlock
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  🎨 MEDIA TOOLS                                      │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}sticker  - Make Sticker
-│  • ${prefix}toimage  - Convert to Image
-│  • ${prefix}tomp3    - Convert to Audio
-│  • ${prefix}getpp    - Get Profile Picture
-│  • ${prefix}qrcode   - Generate QR Code
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  🤖 AI COMMANDS                                      │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}ai       - Chat with AI
-│  • ${prefix}gemini   - Google Gemini AI
-│  • ${prefix}blackbox - Blackbox AI
-│  • ${prefix}code     - Generate Code
-│  • ${prefix}story    - Generate Story
-│  • ${prefix}recipe   - Get Recipe
-│  • ${prefix}translate- Translate Text
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  👥 GROUP COMMANDS                                   │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}tagall   - Mention All Members
-│  • ${prefix}tagadmin - Mention Admins
-│  • ${prefix}kick     - Remove Member
-│  • ${prefix}add      - Add Member
-│  • ${prefix}promote  - Make Admin
-│  • ${prefix}demote   - Remove Admin
-│  • ${prefix}link     - Get Group Link
-│  • ${prefix}close    - Close Group
-│  • ${prefix}open     - Open Group
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  🎮 GAMES & FUN                                      │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}truth    - Truth Game
-│  • ${prefix}dare     - Dare Game
-│  • ${prefix}quote    - Random Quote
-│  • ${prefix}joke     - Random Joke
-│  • ${prefix}trivia   - Trivia Game
-└─────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────┐
-│  🔧 UTILITIES                                        │
-├─────────────────────────────────────────────────────┤
-│  • ${prefix}weather  - Weather Info
-│  • ${prefix}yts      - YouTube Search
-│  • ${prefix}define   - Dictionary
-│  • ${prefix}wiki     - Wikipedia
-│  • ${prefix}calc     - Calculator
-│  • ${prefix}shorturl - Shorten URL
-└─────────────────────────────────────────────────────┘
+╔══════════════════════════════════════════════════════╗
+║                    📋 MENU LIST                      ║
+╠══════════════════════════════════════════════════════╣
+║  ${prefix}menu ai       - AI Menu                    ║
+║  ${prefix}menu audio    - Audio Menu                 ║
+║  ${prefix}menu download - Download Menu              ║
+║  ${prefix}menu ephoto   - Ephoto360 Menu             ║
+║  ${prefix}menu fun      - Fun Menu                   ║
+║  ${prefix}menu games    - Games Menu                 ║
+║  ${prefix}menu group    - Group Menu                 ║
+║  ${prefix}menu groupstatus - Group Status Menu       ║
+║  ${prefix}menu image    - Image Menu                 ║
+║  ${prefix}menu other    - Other Menu                 ║
+║  ${prefix}menu owner    - Owner Menu                 ║
+║  ${prefix}menu religion - Religion Menu              ║
+║  ${prefix}menu search   - Search Menu                ║
+║  ${prefix}menu settings - Settings Menu              ║
+║  ${prefix}menu sports   - Sports Menu                ║
+║  ${prefix}menu support  - Support Menu               ║
+║  ${prefix}menu tools    - Tools Menu                 ║
+║  ${prefix}menu translate- Translate Menu             ║
+║  ${prefix}menu video    - Video Menu                 ║
+╚══════════════════════════════════════════════════════╝
 
 ┌─────────────────────────────────────────────────────┐
 │  📢 CHANNEL & SUPPORT                                │
@@ -159,324 +101,712 @@ function getMainMenu(prefix = '.', pushName = 'User') {
 ${footer}`;
 }
 
-// AI Menu
+// ==================== AI MENU ====================
 function getAIMenu(prefix = '.') {
-    return `┏▣ ◈ *🤖 AI MENU* ◈
-│➽ ${prefix}analyze
-│➽ ${prefix}blackbox
-│➽ ${prefix}code
-│➽ ${prefix}dalle
-│➽ ${prefix}deepseek
-│➽ ${prefix}doppleai
-│➽ ${prefix}gemini
-│➽ ${prefix}generate
-│➽ ${prefix}gpt
-│➽ ${prefix}programming
-│➽ ${prefix}recipe
-│➽ ${prefix}story
-│➽ ${prefix}summarize
-│➽ ${prefix}teach
-│➽ ${prefix}translate2
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    🤖 AI MENU 🤖                       ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}analyze     - Analyze Text
+│  • ${prefix}blackbox    - Blackbox AI
+│  • ${prefix}code        - Generate Code
+│  • ${prefix}dalle       - DALL-E Image Gen
+│  • ${prefix}deepseek    - DeepSeek AI
+│  • ${prefix}doppleai    - Dopple AI
+│  • ${prefix}gemini      - Google Gemini
+│  • ${prefix}generate    - Generate Text
+│  • ${prefix}gpt         - ChatGPT
+│  • ${prefix}programming - Programming Help
+│  • ${prefix}recipe      - Get Recipe
+│  • ${prefix}story       - Generate Story
+│  • ${prefix}summarize   - Summarize Text
+│  • ${prefix}teach       - Teach AI
+│  • ${prefix}translate2  - Advanced Translate
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Audio Menu
+// ==================== AUDIO MENU ====================
 function getAudioMenu(prefix = '.') {
-    return `┏▣ ◈ *🎵 AUDIO MENU* ◈
-│➽ ${prefix}bass
-│➽ ${prefix}blown
-│➽ ${prefix}deep
-│➽ ${prefix}earrape
-│➽ ${prefix}reverse
-│➽ ${prefix}robot
-│➽ ${prefix}tomp3
-│➽ ${prefix}toptt
-│➽ ${prefix}volaudio
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    🎵 AUDIO MENU 🎵                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}bass       - Add Bass Effect
+│  • ${prefix}blown      - Blown Effect
+│  • ${prefix}deep       - Deep Effect
+│  • ${prefix}earrape    - Earrape Effect
+│  • ${prefix}reverse    - Reverse Audio
+│  • ${prefix}robot      - Robot Voice
+│  • ${prefix}tomp3      - Convert to MP3
+│  • ${prefix}toptt      - Text to Speech
+│  • ${prefix}volaudio   - Change Volume
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Download Menu
+// ==================== DOWNLOAD MENU ====================
 function getDownloadMenu(prefix = '.') {
-    return `┏▣ ◈ *📥 DOWNLOAD MENU* ◈
-│➽ ${prefix}apk
-│➽ ${prefix}download
-│➽ ${prefix}facebook
-│➽ ${prefix}gdrive
-│➽ ${prefix}gitclone
-│➽ ${prefix}image
-│➽ ${prefix}instagram
-│➽ ${prefix}itunes
-│➽ ${prefix}mediafire
-│➽ ${prefix}pin
-│➽ ${prefix}savestatus
-│➽ ${prefix}song
-│➽ ${prefix}song2
-│➽ ${prefix}telesticker
-│➽ ${prefix}tiktok
-│➽ ${prefix}tiktokaudio
-│➽ ${prefix}twitter
-│➽ ${prefix}video
-│➽ ${prefix}videodoc
-│➽ ${prefix}xvideo
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    📥 DOWNLOAD MENU 📥                  ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}apk        - Download APK
+│  • ${prefix}download   - Download from URL
+│  • ${prefix}facebook   - FB Video Downloader
+│  • ${prefix}gdrive     - Google Drive Downloader
+│  • ${prefix}gitclone   - Clone GitHub Repo
+│  • ${prefix}image      - Download Image
+│  • ${prefix}instagram  - IG Downloader
+│  • ${prefix}itunes     - iTunes Music
+│  • ${prefix}mediafire  - MediaFire Downloader
+│  • ${prefix}pin        - Pinterest Downloader
+│  • ${prefix}savestatus - Save Status
+│  • ${prefix}song       - Download Music
+│  • ${prefix}song2      - Alternative Music
+│  • ${prefix}telesticker- Telegram Sticker
+│  • ${prefix}tiktok     - TikTok Downloader
+│  • ${prefix}tiktokaudio- TikTok Audio
+│  • ${prefix}twitter    - Twitter/X Downloader
+│  • ${prefix}video      - Download Video
+│  • ${prefix}videodoc   - Video as Document
+│  • ${prefix}xvideo     - Xvideo Downloader
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Group Menu
+// ==================== EPHOTO360 MENU ====================
+function getEphotoMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                  🎨 EPHOTO360 MENU 🎨                    ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}1917style    - 1917 Style
+│  • ${prefix}advancedglow - Advanced Glow
+│  • ${prefix}blackpinklogo- Blackpink Logo
+│  • ${prefix}blackpinkstyle- Blackpink Style
+│  • ${prefix}cartoonstyle - Cartoon Style
+│  • ${prefix}deletingtext - Deleting Text
+│  • ${prefix}dragonball   - Dragon Ball Style
+│  • ${prefix}effectclouds - Effect Clouds
+│  • ${prefix}flag3dtext   - 3D Flag Text
+│  • ${prefix}flagtext     - Flag Text
+│  • ${prefix}freecreate   - Free Create
+│  • ${prefix}galaxystyle  - Galaxy Style
+│  • ${prefix}galaxywallpaper- Galaxy Wallpaper
+│  • ${prefix}glitchtext   - Glitch Text
+│  • ${prefix}glowingtext  - Glowing Text
+│  • ${prefix}gradienttext - Gradient Text
+│  • ${prefix}graffiti     - Graffiti Style
+│  • ${prefix}incandescent - Incandescent
+│  • ${prefix}lighteffects - Light Effects
+│  • ${prefix}logomaker    - Logo Maker
+│  • ${prefix}luxurygold   - Luxury Gold
+│  • ${prefix}makingneon   - Making Neon
+│  • ${prefix}matrix       - Matrix Style
+│  • ${prefix}multicoloredneon- Multicolored Neon
+│  • ${prefix}neonglitch   - Neon Glitch
+│  • ${prefix}papercutstyle- Paper Cut Style
+│  • ${prefix}pixelglitch  - Pixel Glitch
+│  • ${prefix}royaltext    - Royal Text
+│  • ${prefix}sand         - Sand Style
+│  • ${prefix}summerbeach  - Summer Beach
+│  • ${prefix}topography   - Topography
+│  • ${prefix}typography   - Typography
+│  • ${prefix}watercolortext- Watercolor Text
+│  • ${prefix}writetext    - Write Text
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== FUN MENU ====================
+function getFunMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🎉 FUN MENU 🎉                        ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}fact       - Random Fact
+│  • ${prefix}jokes      - Random Joke
+│  • ${prefix}memes      - Random Meme
+│  • ${prefix}quotes     - Random Quote
+│  • ${prefix}trivia     - Trivia Game
+│  • ${prefix}truthdetector- Truth Detector
+│  • ${prefix}xxqc       - XXQC Quotes
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== GAMES MENU ====================
+function getGamesMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🎮 GAMES MENU 🎮                      ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}dare       - Dare Game
+│  • ${prefix}truth      - Truth Game
+│  • ${prefix}truthordare- Truth or Dare
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== GROUP MENU ====================
 function getGroupMenu(prefix = '.') {
-    return `┏▣ ◈ *👥 GROUP MENU* ◈
-│➽ ${prefix}add
-│➽ ${prefix}addcode
-│➽ ${prefix}allow
-│➽ ${prefix}announcements
-│➽ ${prefix}antibadword
-│➽ ${prefix}antibot
-│➽ ${prefix}antidemote
-│➽ ${prefix}antiforeign
-│➽ ${prefix}antiforward
-│➽ ${prefix}antigroupmention
-│➽ ${prefix}antilink
-│➽ ${prefix}antilinkgc
-│➽ ${prefix}antimessage
-│➽ ${prefix}antisticker
-│➽ ${prefix}antitag
-│➽ ${prefix}antitagadmin
-│➽ ${prefix}approve
-│➽ ${prefix}approveall
-│➽ ${prefix}cancelkick
-│➽ ${prefix}close
-│➽ ${prefix}closetime
-│➽ ${prefix}delallowed
-│➽ ${prefix}delcode
-│➽ ${prefix}delppgroup
-│➽ ${prefix}demote
-│➽ ${prefix}disapproveall
-│➽ ${prefix}editsettings
-│➽ ${prefix}getgrouppp
-│➽ ${prefix}hidetag
-│➽ ${prefix}invite
-│➽ ${prefix}kick
-│➽ ${prefix}kickall
-│➽ ${prefix}kickinactive
-│➽ ${prefix}link
-│➽ ${prefix}listactive
-│➽ ${prefix}listallowed
-│➽ ${prefix}listcode
-│➽ ${prefix}listinactive
-│➽ ${prefix}listrequests
-│➽ ${prefix}mediatag
-│➽ ${prefix}open
-│➽ ${prefix}opentime
-│➽ ${prefix}poll
-│➽ ${prefix}promote
-│➽ ${prefix}reject
-│➽ ${prefix}resetlink
-│➽ ${prefix}setdesc
-│➽ ${prefix}setgroupname
-│➽ ${prefix}setppgroup
-│➽ ${prefix}tag
-│➽ ${prefix}tagadmin
-│➽ ${prefix}tagall
-│➽ ${prefix}totalmembers
-│➽ ${prefix}userid
-│➽ ${prefix}vcf
-│➽ ${prefix}welcome
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    👥 GROUP MENU 👥                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}add         - Add Member
+│  • ${prefix}addcode     - Add Code
+│  • ${prefix}allow       - Allow User
+│  • ${prefix}announcements- Group Announcements
+│  • ${prefix}antibadword - Anti Bad Word
+│  • ${prefix}antibot     - Anti Bot
+│  • ${prefix}antidemote  - Anti Demote
+│  • ${prefix}antiforeign - Anti Foreign
+│  • ${prefix}antiforward - Anti Forward
+│  • ${prefix}antigroupmention- Anti Group Mention
+│  • ${prefix}antilink    - Anti Link
+│  • ${prefix}antilinkgc  - Anti Link GC
+│  • ${prefix}antimessage - Anti Message
+│  • ${prefix}antisticker - Anti Sticker
+│  • ${prefix}antitag     - Anti Tag
+│  • ${prefix}antitagadmin- Anti Tag Admin
+│  • ${prefix}approve     - Approve Request
+│  • ${prefix}approveall  - Approve All
+│  • ${prefix}cancelkick  - Cancel Kick
+│  • ${prefix}close       - Close Group
+│  • ${prefix}closetime   - Close Time
+│  • ${prefix}delallowed  - Delete Allowed
+│  • ${prefix}delcode     - Delete Code
+│  • ${prefix}delppgroup  - Delete Group PP
+│  • ${prefix}demote      - Demote Admin
+│  • ${prefix}disapproveall- Disapprove All
+│  • ${prefix}editsettings- Edit Settings
+│  • ${prefix}getgrouppp  - Get Group PP
+│  • ${prefix}hidetag     - Hide Tag
+│  • ${prefix}invite      - Invite Link
+│  • ${prefix}kick        - Kick Member
+│  • ${prefix}kickall     - Kick All
+│  • ${prefix}kickinactive- Kick Inactive
+│  • ${prefix}link        - Group Link
+│  • ${prefix}listactive  - List Active
+│  • ${prefix}listallowed - List Allowed
+│  • ${prefix}listcode    - List Code
+│  • ${prefix}listinactive- List Inactive
+│  • ${prefix}listrequests- List Requests
+│  • ${prefix}mediatag    - Media Tag
+│  • ${prefix}open        - Open Group
+│  • ${prefix}opentime    - Open Time
+│  • ${prefix}poll        - Create Poll
+│  • ${prefix}promote     - Promote Admin
+│  • ${prefix}reject      - Reject Request
+│  • ${prefix}resetlink   - Reset Link
+│  • ${prefix}setdesc     - Set Description
+│  • ${prefix}setgroupname- Set Group Name
+│  • ${prefix}setppgroup  - Set Group PP
+│  • ${prefix}tag         - Tag User
+│  • ${prefix}tagadmin    - Tag Admins
+│  • ${prefix}tagall      - Tag All
+│  • ${prefix}totalmembers- Total Members
+│  • ${prefix}userid      - Get User ID
+│  • ${prefix}vcf         - Create VCF
+│  • ${prefix}welcome     - Welcome Message
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Owner Menu
+// ==================== GROUP STATUS MENU ====================
+function getGroupStatusMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                 📊 GROUP STATUS MENU 📊                  ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}fetchgroups - Fetch All Groups
+│  • ${prefix}tosgroup    - TOS Group
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== IMAGE MENU ====================
+function getImageMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🖼️ IMAGE MENU 🖼️                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}remini     - Enhance Image
+│  • ${prefix}wallpaper  - HD Wallpaper
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== OTHER MENU ====================
+function getOtherMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    📌 OTHER MENU 📌                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}botstatus  - Bot Status
+│  • ${prefix}pair       - Pairing Info
+│  • ${prefix}ping       - Ping Test
+│  • ${prefix}ping2      - Alternative Ping
+│  • ${prefix}repo       - GitHub Repo
+│  • ${prefix}runtime    - Bot Runtime
+│  • ${prefix}time       - Current Time
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== OWNER MENU ====================
 function getOwnerMenu(prefix = '.') {
-    return `┏▣ ◈ *👑 OWNER MENU* ◈
-│➽ ${prefix}autosavestatus
-│➽ ${prefix}aza
-│➽ ${prefix}block
-│➽ ${prefix}delete
-│➽ ${prefix}deljunk
-│➽ ${prefix}delstickercmd
-│➽ ${prefix}disk
-│➽ ${prefix}dlvo
-│➽ ${prefix}forward
-│➽ ${prefix}gcaddprivacy
-│➽ ${prefix}groupid
-│➽ ${prefix}hostip
-│➽ ${prefix}join
-│➽ ${prefix}lastseen
-│➽ ${prefix}leave
-│➽ ${prefix}listbadword
-│➽ ${prefix}listblocked
-│➽ ${prefix}listignorelist
-│➽ ${prefix}listsudo
-│➽ ${prefix}modestatus
-│➽ ${prefix}online
-│➽ ${prefix}owner
-│➽ ${prefix}ppprivacy
-│➽ ${prefix}react
-│➽ ${prefix}readreceipts
-│➽ ${prefix}resetaza
-│➽ ${prefix}restart
-│➽ ${prefix}setaza
-│➽ ${prefix}setbio
-│➽ ${prefix}setprofilepic
-│➽ ${prefix}setstickercmd
-│➽ ${prefix}tostatus
-│➽ ${prefix}toviewonce
-│➽ ${prefix}unblock
-│➽ ${prefix}unblockall
-│➽ ${prefix}update
-│➽ ${prefix}vv2
-│➽ ${prefix}warn
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    👑 OWNER MENU 👑                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}autosavestatus - Auto Save Status
+│  • ${prefix}aza        - AZA Feature
+│  • ${prefix}block      - Block User
+│  • ${prefix}delete     - Delete Message
+│  • ${prefix}deljunk    - Delete Junk
+│  • ${prefix}delstickercmd- Delete Sticker Cmd
+│  • ${prefix}disk       - Disk Usage
+│  • ${prefix}dlvo       - Download VO
+│  • ${prefix}forward    - Forward Message
+│  • ${prefix}gcaddprivacy- Group Add Privacy
+│  • ${prefix}groupid    - Get Group ID
+│  • ${prefix}hostip     - Host IP
+│  • ${prefix}join       - Join Group
+│  • ${prefix}lastseen   - Last Seen
+│  • ${prefix}leave      - Leave Group
+│  • ${prefix}listbadword- List Bad Words
+│  • ${prefix}listblocked- List Blocked
+│  • ${prefix}listignorelist- List Ignore
+│  • ${prefix}listsudo   - List Sudo
+│  • ${prefix}modestatus - Mode Status
+│  • ${prefix}online     - Online Status
+│  • ${prefix}owner      - Owner Info
+│  • ${prefix}ppprivacy  - PP Privacy
+│  • ${prefix}react      - React Message
+│  • ${prefix}readreceipts- Read Receipts
+│  • ${prefix}resetaza   - Reset AZA
+│  • ${prefix}restart    - Restart Bot
+│  • ${prefix}setaza     - Set AZA
+│  • ${prefix}setbio     - Set Bio
+│  • ${prefix}setprofilepic- Set Profile Pic
+│  • ${prefix}setstickercmd- Set Sticker Cmd
+│  • ${prefix}tostatus   - To Status
+│  • ${prefix}toviewonce - To ViewOnce
+│  • ${prefix}unblock    - Unblock User
+│  • ${prefix}unblockall - Unblock All
+│  • ${prefix}update     - Update Bot
+│  • ${prefix}vv2        - ViewOnce V2
+│  • ${prefix}warn       - Warn User
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Settings Menu
+// ==================== RELIGION MENU ====================
+function getReligionMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                  🕋 RELIGION MENU 🕋                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}bible     - Bible Verses
+│  • ${prefix}quran     - Quran Verses
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== SEARCH MENU ====================
+function getSearchMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🔍 SEARCH MENU 🔍                    ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}define    - Dictionary
+│  • ${prefix}define2   - Alternative Dictionary
+│  • ${prefix}imdb      - IMDb Search
+│  • ${prefix}lyrics    - Song Lyrics
+│  • ${prefix}shazam    - Shazam Music
+│  • ${prefix}weather   - Weather Info
+│  • ${prefix}yts       - YouTube Search
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== SETTINGS MENU ====================
 function getSettingsMenu(prefix = '.') {
-    return `┏▣ ◈ *⚙️ SETTINGS MENU* ◈
-│➽ ${prefix}addbadword
-│➽ ${prefix}addcountrycode
-│➽ ${prefix}addignorelist
-│➽ ${prefix}addsudo
-│➽ ${prefix}alwaysonline
-│➽ ${prefix}antibug
-│➽ ${prefix}anticall
-│➽ ${prefix}antidelete
-│➽ ${prefix}antideletestatus
-│➽ ${prefix}antiedit
-│➽ ${prefix}antiviewonce
-│➽ ${prefix}autobio
-│➽ ${prefix}autoblock
-│➽ ${prefix}autoreact
-│➽ ${prefix}autoreactstatus
-│➽ ${prefix}autoread
-│➽ ${prefix}autorecord
-│➽ ${prefix}autorecordtyping
-│➽ ${prefix}autotype
-│➽ ${prefix}autoviewstatus
-│➽ ${prefix}chatbot
-│➽ ${prefix}delanticallmsg
-│➽ ${prefix}delcountrycode
-│➽ ${prefix}deletebadword
-│➽ ${prefix}delgoodbye
-│➽ ${prefix}delignorelist
-│➽ ${prefix}delsudo
-│➽ ${prefix}delwelcome
-│➽ ${prefix}getsettings
-│➽ ${prefix}listcountrycode
-│➽ ${prefix}listwarn
-│➽ ${prefix}mode
-│➽ ${prefix}resetsetting
-│➽ ${prefix}resetwarn
-│➽ ${prefix}setanticallmsg
-│➽ ${prefix}setbotname
-│➽ ${prefix}setcontextlink
-│➽ ${prefix}setfont
-│➽ ${prefix}setgoodbye
-│➽ ${prefix}setmenu
-│➽ ${prefix}setmenuimage
-│➽ ${prefix}setownername
-│➽ ${prefix}setownernumber
-│➽ ${prefix}setprefix
-│➽ ${prefix}setstatusemoji
-│➽ ${prefix}setstickerauthor
-│➽ ${prefix}setstickerpackname
-│➽ ${prefix}settimezone
-│➽ ${prefix}setwarn
-│➽ ${prefix}setwatermark
-│➽ ${prefix}setwelcome
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    ⚙️ SETTINGS MENU ⚙️                   ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}addbadword - Add Bad Word
+│  • ${prefix}addcountrycode- Add Country Code
+│  • ${prefix}addignorelist- Add Ignore List
+│  • ${prefix}addsudo    - Add Sudo User
+│  • ${prefix}alwaysonline- Always Online
+│  • ${prefix}antibug    - Anti Bug
+│  • ${prefix}anticall   - Anti Call
+│  • ${prefix}antidelete - Anti Delete
+│  • ${prefix}antideletestatus- Anti Delete Status
+│  • ${prefix}antiedit   - Anti Edit
+│  • ${prefix}antiviewonce- Anti ViewOnce
+│  • ${prefix}autobio    - Auto Bio
+│  • ${prefix}autoblock  - Auto Block
+│  • ${prefix}autoreact  - Auto React
+│  • ${prefix}autoreactstatus- Auto React Status
+│  • ${prefix}autoread   - Auto Read
+│  • ${prefix}autorecord - Auto Record
+│  • ${prefix}autorecordtyping- Auto Record Typing
+│  • ${prefix}autotype   - Auto Type
+│  • ${prefix}autoviewstatus- Auto View Status
+│  • ${prefix}chatbot    - Chatbot
+│  • ${prefix}delanticallmsg- Delete Anti Call Msg
+│  • ${prefix}delcountrycode- Delete Country Code
+│  • ${prefix}deletebadword- Delete Bad Word
+│  • ${prefix}delgoodbye - Delete Goodbye
+│  • ${prefix}delignorelist- Delete Ignore List
+│  • ${prefix}delsudo    - Delete Sudo
+│  • ${prefix}delwelcome - Delete Welcome
+│  • ${prefix}getsettings- Get Settings
+│  • ${prefix}listcountrycode- List Country Codes
+│  • ${prefix}listwarn   - List Warnings
+│  • ${prefix}mode       - Change Mode
+│  • ${prefix}resetsetting- Reset Settings
+│  • ${prefix}resetwarn  - Reset Warnings
+│  • ${prefix}setanticallmsg- Set Anti Call Msg
+│  • ${prefix}setbotname - Set Bot Name
+│  • ${prefix}setcontextlink- Set Context Link
+│  • ${prefix}setfont    - Set Font
+│  • ${prefix}setgoodbye - Set Goodbye
+│  • ${prefix}setmenu    - Set Menu
+│  • ${prefix}setmenuimage- Set Menu Image
+│  • ${prefix}setownername- Set Owner Name
+│  • ${prefix}setownernumber- Set Owner Number
+│  • ${prefix}setprefix  - Set Prefix
+│  • ${prefix}setstatusemoji- Set Status Emoji
+│  • ${prefix}setstickerauthor- Set Sticker Author
+│  • ${prefix}setstickerpackname- Set Sticker Pack
+│  • ${prefix}settimezone- Set Timezone
+│  • ${prefix}setwarn    - Set Warn
+│  • ${prefix}setwatermark- Set Watermark
+│  • ${prefix}setwelcome - Set Welcome
+│  • ${prefix}showanticallmsg- Show Anti Call Msg
+│  • ${prefix}showgoodbye- Show Goodbye
+│  • ${prefix}showwelcome- Show Welcome
+│  • ${prefix}statusdelay- Status Delay
+│  • ${prefix}statussettings- Status Settings
+│  • ${prefix}testanticallmsg- Test Anti Call Msg
+│  • ${prefix}testgoodbye- Test Goodbye
+│  • ${prefix}testwelcome- Test Welcome
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Tools Menu
+// ==================== SPORTS MENU ====================
+function getSportsMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    ⚽ SPORTS MENU ⚽                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}bundesligamatches - Bundesliga Matches
+│  • ${prefix}bundesligascorers - Bundesliga Scorers
+│  • ${prefix}bundesligastandings - Bundesliga Standings
+│  • ${prefix}bundesligaupcoming - Bundesliga Upcoming
+│  • ${prefix}clmatches   - Champions League Matches
+│  • ${prefix}clscorers   - CL Scorers
+│  • ${prefix}clstandings - CL Standings
+│  • ${prefix}clupcoming  - CL Upcoming
+│  • ${prefix}eflmatches  - EFL Matches
+│  • ${prefix}eflscorers  - EFL Scorers
+│  • ${prefix}eflstandings- EFL Standings
+│  • ${prefix}eflupcoming - EFL Upcoming
+│  • ${prefix}elmatches   - Europa League Matches
+│  • ${prefix}elscorers   - EL Scorers
+│  • ${prefix}elstandings - EL Standings
+│  • ${prefix}elupcoming  - EL Upcoming
+│  • ${prefix}eplmatches  - EPL Matches
+│  • ${prefix}eplscorers  - EPL Scorers
+│  • ${prefix}eplstandings- EPL Standings
+│  • ${prefix}eplupcoming - EPL Upcoming
+│  • ${prefix}laligamatches- La Liga Matches
+│  • ${prefix}laligascorers- La Liga Scorers
+│  • ${prefix}laligastandings- La Liga Standings
+│  • ${prefix}laligaupcoming- La Liga Upcoming
+│  • ${prefix}ligue1matches- Ligue 1 Matches
+│  • ${prefix}ligue1scorers- Ligue 1 Scorers
+│  • ${prefix}ligue1standings- Ligue 1 Standings
+│  • ${prefix}ligue1upcoming- Ligue 1 Upcoming
+│  • ${prefix}serieamatches- Serie A Matches
+│  • ${prefix}serieascorers- Serie A Scorers
+│  • ${prefix}serieastandings- Serie A Standings
+│  • ${prefix}serieaupcoming- Serie A Upcoming
+│  • ${prefix}wcmatches   - World Cup Matches
+│  • ${prefix}wcscorers   - World Cup Scorers
+│  • ${prefix}wcstandings - World Cup Standings
+│  • ${prefix}wcupcoming  - World Cup Upcoming
+│  • ${prefix}wrestlingevents- WWE Events
+│  • ${prefix}wwenews     - WWE News
+│  • ${prefix}wweschedule - WWE Schedule
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== SUPPORT MENU ====================
+function getSupportMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🆘 SUPPORT MENU 🆘                    ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}feedback   - Send Feedback
+│  • ${prefix}helpers    - Helper List
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== TOOLS MENU ====================
 function getToolsMenu(prefix = '.') {
-    return `┏▣ ◈ *🛠️ TOOLS MENU* ◈
-│➽ ${prefix}browse
-│➽ ${prefix}calculate
-│➽ ${prefix}device
-│➽ ${prefix}emojimix
-│➽ ${prefix}fancy
-│➽ ${prefix}filtervcf
-│➽ ${prefix}fliptext
-│➽ ${prefix}genpass
-│➽ ${prefix}getabout
-│➽ ${prefix}getpp
-│➽ ${prefix}gsmarena
-│➽ ${prefix}obfuscate
-│➽ ${prefix}qrcode
-│➽ ${prefix}runeval
-│➽ ${prefix}say
-│➽ ${prefix}ssweb
-│➽ ${prefix}sswebpc
-│➽ ${prefix}sswebtab
-│➽ ${prefix}sticker
-│➽ ${prefix}take
-│➽ ${prefix}texttopdf
-│➽ ${prefix}tinyurl
-│➽ ${prefix}toimage
-│➽ ${prefix}tourl
-│➽ ${prefix}vcc
-┗▣ 
+    return `╔══════════════════════════════════════════════════════╗
+║                    🛠️ TOOLS MENU 🛠️                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}browse     - Browse URL
+│  • ${prefix}calculate  - Calculator
+│  • ${prefix}device     - Device Info
+│  • ${prefix}emojimix   - Mix Emojis
+│  • ${prefix}fancy      - Fancy Text
+│  • ${prefix}filtervcf  - Filter VCF
+│  • ${prefix}fliptext   - Flip Text
+│  • ${prefix}genpass    - Generate Password
+│  • ${prefix}getabout   - Get About
+│  • ${prefix}getpp      - Get Profile Pic
+│  • ${prefix}gsmarena   - GSM Arena
+│  • ${prefix}obfuscate  - Obfuscate Text
+│  • ${prefix}qrcode     - Generate QR Code
+│  • ${prefix}runeval    - Run JavaScript
+│  • ${prefix}say        - Text to Speech
+│  • ${prefix}ssweb      - Website Screenshot
+│  • ${prefix}sswebpc    - PC Screenshot
+│  • ${prefix}sswebtab   - Tab Screenshot
+│  • ${prefix}sticker    - Make Sticker
+│  • ${prefix}take       - Take Sticker
+│  • ${prefix}texttopdf  - Text to PDF
+│  • ${prefix}tinyurl    - Shorten URL
+│  • ${prefix}toimage    - Convert to Image
+│  • ${prefix}tourl      - Upload to URL
+│  • ${prefix}vcc        - VCC Generator
+└─────────────────────────────────────────────────────┘
 
 ${footer}`;
 }
 
-// Function to handle menu command
+// ==================== TRANSLATE MENU ====================
+function getTranslateMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🌐 TRANSLATE MENU 🌐                  ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}translate  - Translate Text
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== VIDEO MENU ====================
+function getVideoMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    🎬 VIDEO MENU 🎬                     ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  • ${prefix}toaudio    - Video to Audio
+│  • ${prefix}tovideo    - Audio to Video
+│  • ${prefix}volvideo   - Change Video Volume
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== VIEW CHANNEL MENU ====================
+function getViewChannelMenu(prefix = '.') {
+    return `╔══════════════════════════════════════════════════════╗
+║                    📢 VIEW CHANNEL 📢                    ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  🔗 Official Channel: ${config.CHANNEL_LINK}
+│  
+│  👑 Owner Contact: wa.me/${config.OWNER_NUMBER}
+│  📦 GitHub: ${config.REPO_LINK}
+│  🔑 Pairing Code: JAMALITZ
+│  
+│  📌 Follow for updates and support!
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// ==================== HANDLE MENU COMMAND ====================
 async function handleMenuCommand(socket, sender, args, prefix, pushName) {
     const subCommand = args[0] ? args[0].toLowerCase() : 'main';
     
     let menuText = '';
+    let menuType = 'image';
     
     switch (subCommand) {
         case 'ai':
             menuText = getAIMenu(prefix);
+            menuType = 'text';
             break;
         case 'audio':
             menuText = getAudioMenu(prefix);
+            menuType = 'text';
             break;
         case 'download':
             menuText = getDownloadMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'ephoto':
+        case 'ephoto360':
+            menuText = getEphotoMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'fun':
+            menuText = getFunMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'games':
+            menuText = getGamesMenu(prefix);
+            menuType = 'text';
             break;
         case 'group':
             menuText = getGroupMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'groupstatus':
+            menuText = getGroupStatusMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'image':
+            menuText = getImageMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'other':
+            menuText = getOtherMenu(prefix);
+            menuType = 'text';
             break;
         case 'owner':
             menuText = getOwnerMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'religion':
+            menuText = getReligionMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'search':
+            menuText = getSearchMenu(prefix);
+            menuType = 'text';
             break;
         case 'settings':
             menuText = getSettingsMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'sports':
+            menuText = getSportsMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'support':
+            menuText = getSupportMenu(prefix);
+            menuType = 'text';
             break;
         case 'tools':
             menuText = getToolsMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'translate':
+            menuText = getTranslateMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'video':
+            menuText = getVideoMenu(prefix);
+            menuType = 'text';
+            break;
+        case 'channel':
+        case 'viewchannel':
+            menuText = getViewChannelMenu(prefix);
+            menuType = 'text';
             break;
         default:
             menuText = getMainMenu(prefix, pushName);
+            menuType = 'image';
     }
     
-    await socket.sendMessage(sender, { 
-        image: { url: botLogo }, 
-        caption: menuText 
-    });
+    if (menuType === 'image') {
+        await socket.sendMessage(sender, { 
+            image: { url: botLogo }, 
+            caption: menuText 
+        });
+    } else {
+        await socket.sendMessage(sender, { text: menuText });
+    }
 }
 
-// Export functions
+// Export all functions
 module.exports = {
     getMainMenu,
     getAIMenu,
     getAudioMenu,
     getDownloadMenu,
+    getEphotoMenu,
+    getFunMenu,
+    getGamesMenu,
     getGroupMenu,
+    getGroupStatusMenu,
+    getImageMenu,
+    getOtherMenu,
     getOwnerMenu,
+    getReligionMenu,
+    getSearchMenu,
     getSettingsMenu,
+    getSportsMenu,
+    getSupportMenu,
     getToolsMenu,
+    getTranslateMenu,
+    getVideoMenu,
+    getViewChannelMenu,
     handleMenuCommand,
     config,
     footer,
