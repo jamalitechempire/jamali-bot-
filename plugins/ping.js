@@ -5,6 +5,19 @@ module.exports = {
     usage: '.ping',
     category: 'Utility',
     async execute(sock, msg, args, sender, prefix, { config, logo, footer }) {
+        const getContextInfo = (m) => {
+            return {
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363425061263455@newsletter',
+                    newsletterName: 'JAMALI TECH MD V2', // Changed to bot name
+                    serverMessageId: 143,
+                },
+            };
+        };
+
         const start = Date.now();
         const tempMsg = await sock.sendMessage(sender, { text: '⚡ \`\`\`Testing...\`\`\`' });
         const ping = Date.now() - start;
@@ -20,7 +33,8 @@ module.exports = {
 └────────────────────────────┘
 
 ${footer}`,
-            edit: tempMsg.key
+            edit: tempMsg.key,
+            contextInfo: getContextInfo(msg)
         });
     }
 };
