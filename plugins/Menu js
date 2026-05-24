@@ -1,0 +1,484 @@
+// ==================== JAMALI TECH MD - MENU SYSTEM ====================
+
+const fs = require('fs-extra');
+const os = require('os');
+const moment = require('moment-timezone');
+
+// Bot configuration
+const config = {
+    PREFIX: process.env.PREFIX || '.',
+    OWNER_NUMBER: process.env.OWNER_NUMBER || '255784062158',
+    OWNER_NAME: 'JAMALI TECH EMPIRE',
+    BOT_NAME: process.env.BOT_NAME || 'JAMALI TECH MD',
+    BOT_VERSION: '2.0.0',
+    CHANNEL_LINK: process.env.CHANNEL_LINK || 'https://whatsapp.com/channel/0029VbC7AgJK5cD71vGIpO3h',
+    REPO_LINK: 'https://github.com/jamalitechempire/Jamali-tech-bot'
+};
+
+const botLogo = 'https://files.catbox.moe/xney4v.jpg';
+const footer = `> *♱♱♱♱♱ POWERED BY JAMALI TECH EMPIRE ♱♱♱♱♱*`;
+
+// Get bot statistics
+function getBotStats() {
+    const uptime = process.uptime();
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime % 3600) / 60);
+    const seconds = Math.floor(uptime % 60);
+    
+    const usage = process.memoryUsage();
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+    const usedMem = totalMem - freeMem;
+    const memPercent = (usedMem / totalMem * 100).toFixed(1);
+    const ramBar = `[${'█'.repeat(Math.floor(memPercent / 10))}${'░'.repeat(10 - Math.floor(memPercent / 10))}]`;
+    
+    return {
+        uptime: `${hours}h ${minutes}m ${seconds}s`,
+        memory: `${(usedMem / 1024 / 1024).toFixed(1)}MB / ${(totalMem / 1024 / 1024).toFixed(1)}MB`,
+        ramBar: ramBar,
+        memPercent: memPercent,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+    };
+}
+
+// Main Menu
+function getMainMenu(prefix = '.', pushName = 'User') {
+    const stats = getBotStats();
+    
+    return `╔══════════════════════════════════════════════════════╗
+║                    JAMALI TECH MD                    ║
+║              PREMIUM WHATSAPP BOT                    ║
+╚══════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────┐
+│  📊 BOT STATISTICS                                   │
+├─────────────────────────────────────────────────────┤
+│  👤 User        : ${pushName}
+│  👑 Owner       : ${config.OWNER_NAME}
+│  🤖 Bot Name    : ${config.BOT_NAME}
+│  🔢 Version     : ${config.BOT_VERSION}
+│  📌 Prefix      : ${prefix}
+│  ⏱️ Uptime      : ${stats.uptime}
+│  💾 Memory      : ${stats.memory}
+│  📊 RAM         : ${stats.ramBar} ${stats.memPercent}%
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  🔰 BASIC COMMANDS                                   │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}alive    - Check Bot Status
+│  • ${prefix}ping     - Check Bot Speed
+│  • ${prefix}owner    - Contact Owner
+│  • ${prefix}repo     - Get Repository
+│  • ${prefix}runtime  - Bot Uptime
+│  • ${prefix}jid      - Get Your JID
+│  • ${prefix}time     - Current Time
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  📥 DOWNLOAD COMMANDS                                │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}song     - Download Music
+│  • ${prefix}video    - Download Video
+│  • ${prefix}tiktok   - TikTok Downloader
+│  • ${prefix}facebook - Facebook Downloader
+│  • ${prefix}instagram- Instagram Downloader
+│  • ${prefix}twitter  - Twitter Downloader
+│  • ${prefix}save     - Save Status
+│  • ${prefix}vv       - ViewOnce Unlock
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  🎨 MEDIA TOOLS                                      │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}sticker  - Make Sticker
+│  • ${prefix}toimage  - Convert to Image
+│  • ${prefix}tomp3    - Convert to Audio
+│  • ${prefix}getpp    - Get Profile Picture
+│  • ${prefix}qrcode   - Generate QR Code
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  🤖 AI COMMANDS                                      │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}ai       - Chat with AI
+│  • ${prefix}gemini   - Google Gemini AI
+│  • ${prefix}blackbox - Blackbox AI
+│  • ${prefix}code     - Generate Code
+│  • ${prefix}story    - Generate Story
+│  • ${prefix}recipe   - Get Recipe
+│  • ${prefix}translate- Translate Text
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  👥 GROUP COMMANDS                                   │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}tagall   - Mention All Members
+│  • ${prefix}tagadmin - Mention Admins
+│  • ${prefix}kick     - Remove Member
+│  • ${prefix}add      - Add Member
+│  • ${prefix}promote  - Make Admin
+│  • ${prefix}demote   - Remove Admin
+│  • ${prefix}link     - Get Group Link
+│  • ${prefix}close    - Close Group
+│  • ${prefix}open     - Open Group
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  🎮 GAMES & FUN                                      │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}truth    - Truth Game
+│  • ${prefix}dare     - Dare Game
+│  • ${prefix}quote    - Random Quote
+│  • ${prefix}joke     - Random Joke
+│  • ${prefix}trivia   - Trivia Game
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  🔧 UTILITIES                                        │
+├─────────────────────────────────────────────────────┤
+│  • ${prefix}weather  - Weather Info
+│  • ${prefix}yts      - YouTube Search
+│  • ${prefix}define   - Dictionary
+│  • ${prefix}wiki     - Wikipedia
+│  • ${prefix}calc     - Calculator
+│  • ${prefix}shorturl - Shorten URL
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  📢 CHANNEL & SUPPORT                                │
+├─────────────────────────────────────────────────────┤
+│  🔗 Channel   : ${config.CHANNEL_LINK}
+│  📞 Owner     : wa.me/${config.OWNER_NUMBER}
+│  📦 GitHub    : ${config.REPO_LINK}
+│  🔑 Pair Code : JAMALITZ
+└─────────────────────────────────────────────────────┘
+
+${footer}`;
+}
+
+// AI Menu
+function getAIMenu(prefix = '.') {
+    return `┏▣ ◈ *🤖 AI MENU* ◈
+│➽ ${prefix}analyze
+│➽ ${prefix}blackbox
+│➽ ${prefix}code
+│➽ ${prefix}dalle
+│➽ ${prefix}deepseek
+│➽ ${prefix}doppleai
+│➽ ${prefix}gemini
+│➽ ${prefix}generate
+│➽ ${prefix}gpt
+│➽ ${prefix}programming
+│➽ ${prefix}recipe
+│➽ ${prefix}story
+│➽ ${prefix}summarize
+│➽ ${prefix}teach
+│➽ ${prefix}translate2
+┗▣ 
+
+${footer}`;
+}
+
+// Audio Menu
+function getAudioMenu(prefix = '.') {
+    return `┏▣ ◈ *🎵 AUDIO MENU* ◈
+│➽ ${prefix}bass
+│➽ ${prefix}blown
+│➽ ${prefix}deep
+│➽ ${prefix}earrape
+│➽ ${prefix}reverse
+│➽ ${prefix}robot
+│➽ ${prefix}tomp3
+│➽ ${prefix}toptt
+│➽ ${prefix}volaudio
+┗▣ 
+
+${footer}`;
+}
+
+// Download Menu
+function getDownloadMenu(prefix = '.') {
+    return `┏▣ ◈ *📥 DOWNLOAD MENU* ◈
+│➽ ${prefix}apk
+│➽ ${prefix}download
+│➽ ${prefix}facebook
+│➽ ${prefix}gdrive
+│➽ ${prefix}gitclone
+│➽ ${prefix}image
+│➽ ${prefix}instagram
+│➽ ${prefix}itunes
+│➽ ${prefix}mediafire
+│➽ ${prefix}pin
+│➽ ${prefix}savestatus
+│➽ ${prefix}song
+│➽ ${prefix}song2
+│➽ ${prefix}telesticker
+│➽ ${prefix}tiktok
+│➽ ${prefix}tiktokaudio
+│➽ ${prefix}twitter
+│➽ ${prefix}video
+│➽ ${prefix}videodoc
+│➽ ${prefix}xvideo
+┗▣ 
+
+${footer}`;
+}
+
+// Group Menu
+function getGroupMenu(prefix = '.') {
+    return `┏▣ ◈ *👥 GROUP MENU* ◈
+│➽ ${prefix}add
+│➽ ${prefix}addcode
+│➽ ${prefix}allow
+│➽ ${prefix}announcements
+│➽ ${prefix}antibadword
+│➽ ${prefix}antibot
+│➽ ${prefix}antidemote
+│➽ ${prefix}antiforeign
+│➽ ${prefix}antiforward
+│➽ ${prefix}antigroupmention
+│➽ ${prefix}antilink
+│➽ ${prefix}antilinkgc
+│➽ ${prefix}antimessage
+│➽ ${prefix}antisticker
+│➽ ${prefix}antitag
+│➽ ${prefix}antitagadmin
+│➽ ${prefix}approve
+│➽ ${prefix}approveall
+│➽ ${prefix}cancelkick
+│➽ ${prefix}close
+│➽ ${prefix}closetime
+│➽ ${prefix}delallowed
+│➽ ${prefix}delcode
+│➽ ${prefix}delppgroup
+│➽ ${prefix}demote
+│➽ ${prefix}disapproveall
+│➽ ${prefix}editsettings
+│➽ ${prefix}getgrouppp
+│➽ ${prefix}hidetag
+│➽ ${prefix}invite
+│➽ ${prefix}kick
+│➽ ${prefix}kickall
+│➽ ${prefix}kickinactive
+│➽ ${prefix}link
+│➽ ${prefix}listactive
+│➽ ${prefix}listallowed
+│➽ ${prefix}listcode
+│➽ ${prefix}listinactive
+│➽ ${prefix}listrequests
+│➽ ${prefix}mediatag
+│➽ ${prefix}open
+│➽ ${prefix}opentime
+│➽ ${prefix}poll
+│➽ ${prefix}promote
+│➽ ${prefix}reject
+│➽ ${prefix}resetlink
+│➽ ${prefix}setdesc
+│➽ ${prefix}setgroupname
+│➽ ${prefix}setppgroup
+│➽ ${prefix}tag
+│➽ ${prefix}tagadmin
+│➽ ${prefix}tagall
+│➽ ${prefix}totalmembers
+│➽ ${prefix}userid
+│➽ ${prefix}vcf
+│➽ ${prefix}welcome
+┗▣ 
+
+${footer}`;
+}
+
+// Owner Menu
+function getOwnerMenu(prefix = '.') {
+    return `┏▣ ◈ *👑 OWNER MENU* ◈
+│➽ ${prefix}autosavestatus
+│➽ ${prefix}aza
+│➽ ${prefix}block
+│➽ ${prefix}delete
+│➽ ${prefix}deljunk
+│➽ ${prefix}delstickercmd
+│➽ ${prefix}disk
+│➽ ${prefix}dlvo
+│➽ ${prefix}forward
+│➽ ${prefix}gcaddprivacy
+│➽ ${prefix}groupid
+│➽ ${prefix}hostip
+│➽ ${prefix}join
+│➽ ${prefix}lastseen
+│➽ ${prefix}leave
+│➽ ${prefix}listbadword
+│➽ ${prefix}listblocked
+│➽ ${prefix}listignorelist
+│➽ ${prefix}listsudo
+│➽ ${prefix}modestatus
+│➽ ${prefix}online
+│➽ ${prefix}owner
+│➽ ${prefix}ppprivacy
+│➽ ${prefix}react
+│➽ ${prefix}readreceipts
+│➽ ${prefix}resetaza
+│➽ ${prefix}restart
+│➽ ${prefix}setaza
+│➽ ${prefix}setbio
+│➽ ${prefix}setprofilepic
+│➽ ${prefix}setstickercmd
+│➽ ${prefix}tostatus
+│➽ ${prefix}toviewonce
+│➽ ${prefix}unblock
+│➽ ${prefix}unblockall
+│➽ ${prefix}update
+│➽ ${prefix}vv2
+│➽ ${prefix}warn
+┗▣ 
+
+${footer}`;
+}
+
+// Settings Menu
+function getSettingsMenu(prefix = '.') {
+    return `┏▣ ◈ *⚙️ SETTINGS MENU* ◈
+│➽ ${prefix}addbadword
+│➽ ${prefix}addcountrycode
+│➽ ${prefix}addignorelist
+│➽ ${prefix}addsudo
+│➽ ${prefix}alwaysonline
+│➽ ${prefix}antibug
+│➽ ${prefix}anticall
+│➽ ${prefix}antidelete
+│➽ ${prefix}antideletestatus
+│➽ ${prefix}antiedit
+│➽ ${prefix}antiviewonce
+│➽ ${prefix}autobio
+│➽ ${prefix}autoblock
+│➽ ${prefix}autoreact
+│➽ ${prefix}autoreactstatus
+│➽ ${prefix}autoread
+│➽ ${prefix}autorecord
+│➽ ${prefix}autorecordtyping
+│➽ ${prefix}autotype
+│➽ ${prefix}autoviewstatus
+│➽ ${prefix}chatbot
+│➽ ${prefix}delanticallmsg
+│➽ ${prefix}delcountrycode
+│➽ ${prefix}deletebadword
+│➽ ${prefix}delgoodbye
+│➽ ${prefix}delignorelist
+│➽ ${prefix}delsudo
+│➽ ${prefix}delwelcome
+│➽ ${prefix}getsettings
+│➽ ${prefix}listcountrycode
+│➽ ${prefix}listwarn
+│➽ ${prefix}mode
+│➽ ${prefix}resetsetting
+│➽ ${prefix}resetwarn
+│➽ ${prefix}setanticallmsg
+│➽ ${prefix}setbotname
+│➽ ${prefix}setcontextlink
+│➽ ${prefix}setfont
+│➽ ${prefix}setgoodbye
+│➽ ${prefix}setmenu
+│➽ ${prefix}setmenuimage
+│➽ ${prefix}setownername
+│➽ ${prefix}setownernumber
+│➽ ${prefix}setprefix
+│➽ ${prefix}setstatusemoji
+│➽ ${prefix}setstickerauthor
+│➽ ${prefix}setstickerpackname
+│➽ ${prefix}settimezone
+│➽ ${prefix}setwarn
+│➽ ${prefix}setwatermark
+│➽ ${prefix}setwelcome
+┗▣ 
+
+${footer}`;
+}
+
+// Tools Menu
+function getToolsMenu(prefix = '.') {
+    return `┏▣ ◈ *🛠️ TOOLS MENU* ◈
+│➽ ${prefix}browse
+│➽ ${prefix}calculate
+│➽ ${prefix}device
+│➽ ${prefix}emojimix
+│➽ ${prefix}fancy
+│➽ ${prefix}filtervcf
+│➽ ${prefix}fliptext
+│➽ ${prefix}genpass
+│➽ ${prefix}getabout
+│➽ ${prefix}getpp
+│➽ ${prefix}gsmarena
+│➽ ${prefix}obfuscate
+│➽ ${prefix}qrcode
+│➽ ${prefix}runeval
+│➽ ${prefix}say
+│➽ ${prefix}ssweb
+│➽ ${prefix}sswebpc
+│➽ ${prefix}sswebtab
+│➽ ${prefix}sticker
+│➽ ${prefix}take
+│➽ ${prefix}texttopdf
+│➽ ${prefix}tinyurl
+│➽ ${prefix}toimage
+│➽ ${prefix}tourl
+│➽ ${prefix}vcc
+┗▣ 
+
+${footer}`;
+}
+
+// Function to handle menu command
+async function handleMenuCommand(socket, sender, args, prefix, pushName) {
+    const subCommand = args[0] ? args[0].toLowerCase() : 'main';
+    
+    let menuText = '';
+    
+    switch (subCommand) {
+        case 'ai':
+            menuText = getAIMenu(prefix);
+            break;
+        case 'audio':
+            menuText = getAudioMenu(prefix);
+            break;
+        case 'download':
+            menuText = getDownloadMenu(prefix);
+            break;
+        case 'group':
+            menuText = getGroupMenu(prefix);
+            break;
+        case 'owner':
+            menuText = getOwnerMenu(prefix);
+            break;
+        case 'settings':
+            menuText = getSettingsMenu(prefix);
+            break;
+        case 'tools':
+            menuText = getToolsMenu(prefix);
+            break;
+        default:
+            menuText = getMainMenu(prefix, pushName);
+    }
+    
+    await socket.sendMessage(sender, { 
+        image: { url: botLogo }, 
+        caption: menuText 
+    });
+}
+
+// Export functions
+module.exports = {
+    getMainMenu,
+    getAIMenu,
+    getAudioMenu,
+    getDownloadMenu,
+    getGroupMenu,
+    getOwnerMenu,
+    getSettingsMenu,
+    getToolsMenu,
+    handleMenuCommand,
+    config,
+    footer,
+    botLogo
+};
