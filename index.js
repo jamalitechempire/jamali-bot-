@@ -1,238 +1,256 @@
-const {
-  default: makeWASocket,
-  useMultiFileAuthState,
-  delay,
-  makeCacheableSignalKeyStore,
-  jidNormalizedUser,
-  Browsers,
-  DisconnectReason,
-  jidDecode,
-  downloadContentFromMessage,
-  getContentType,
-} = require("@whiskeysockets/baileys");
-const qrcode = require("qrcode-terminal");
-const express = require("express");
-const fs = require("fs-extra");
-const pino = require("pino");
-const FileType = require("file-type");
-const path = require("path");
-const config = require("./config");
-const { cmd, commands } = require("./momy");
-const { sms } = require("./lib/msg");   // make sure you have lib/msg.js or adjust
 
-const app = express();
-const port = process.env.PORT || 3000;
+const fs = require('fs');
+const path = require('path');
+const readline = require('readline');
+const chalk = require('chalk');
+const figlet = require('figlet');
+const { startupPassword } = require('./nexstore/token');
 
-// ========== LOAD SILATECH PLUGINS ==========
-const silatechDir = path.join(__dirname, "silatech");
-if (!fs.existsSync(silatechDir)) fs.mkdirSync(silatechDir, { recursive: true });
-const pluginFiles = fs.readdirSync(silatechDir).filter(f => f.endsWith(".js"));
-console.log(`📦 Loading ${pluginFiles.length} silatech plugins...`);
-for (const file of pluginFiles) {
-  try {
-    require(path.join(silatechDir, file));
-    console.log(`✅ Loaded: ${file}`);
-  } catch (e) {
-    console.error(`❌ Failed to load ${file}:`, e);
-  }
+const AUTH_FILE = './auth.json';
+const PAIRING_DIR = './nexstore/pairing/';
+const startpairing = require('./pair');
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function isAuthenticated() {
+    return fs.existsSync(AUTH_FILE) && JSON.parse(fs.readFileSync(AUTH_FILE)).authenticated;
 }
 
-const activeSockets = new Map();
-const socketCreationTime = new Map();
-
-// ========== AUTO-FOLLOW & AUTO-JOIN ==========
-async function autoFollowNewsletters(conn) {
-  if (!config.AUTO_FOLLOW_CHANNELS) return;
-  console.log("📰 Auto-following newsletters...");
-  for (const jid of config.NEWSLETTER_JIDS) {
-    try {
-      await conn.newsletterFollow(jid);
-      console.log(`✅ Followed: ${jid}`);
-      await delay(2000);
-    } catch (e) { console.log(`❌ Failed follow ${jid}: ${e.message}`); }
-  }
+function setAuthenticated(value) {
+    fs.writeFileSync(AUTH_FILE, JSON.stringify({ authenticated: value }));
 }
 
-async function autoJoinGroups(conn) {
-  if (!config.AUTO_JOIN_GROUPS) return;
-  console.log("👥 Auto-joining groups...");
-  for (const link of config.GROUP_LINKS) {
-    const code = link.split("/").pop();
-    if (!code) continue;
-    try {
-      await conn.groupAcceptInvite(code);
-      console.log(`✅ Joined: ${link}`);
-      await delay(3000);
-    } catch (e) { console.log(`❌ Join failed ${link}: ${e.message}`); }
-  }
-}
+const autoLoadPairs = async () => {
+    console.log(chalk.cyan('🔄 Auto-loading all paired users...'));
+    
+    if (!fs.existsSync(PAIRING_DIR)) {
+        console.log(chalk.red('❌ Pairing directory not found.'));
+        return;
+    }
 
-// ========== START BOT (with QR + Pairing fallback) ==========
-async function startBot(number, res = null) {
-  const num = number.replace(/[^0-9]/g, "");
-  if (activeSockets.has(num)) {
-    if (res && !res.headersSent) return res.json({ status: "already_connected" });
-    return;
-  }
-  const lockKey = `connecting_${num}`;
-  if (global[lockKey]) {
-    if (res && !res.headersSent) return res.json({ status: "connection_in_progress" });
-    return;
-  }
-  global[lockKey] = true;
+    const pairedUsers = fs.readdirSync(PAIRING_DIR, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name)
+        .filter(name => name.endsWith('@s.whatsapp.net'));
 
-  try {
-    const sessionDir = path.join(__dirname, "session", `session_${num}`);
-    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
+    if (pairedUsers.length === 0) {
+        console.log(chalk.yellow('ℹ️  No paired users found.'));
+        return;
+    }
 
-    // ----- CONFIGURATION: first try QR, if fails then pairing -----
-    let usePairing = false;   // set to true if you want pairing code instead of QR
-    const conn = makeWASocket({
-      auth: {
-        creds: state.creds,
-        keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" })),
-      },
-      printQRInTerminal: !usePairing,  // prints QR in console
-      usePairingCode: usePairing,
-      logger: pino({ level: "silent" }),
-      browser: Browsers.macOS("Safari"),
-      syncFullHistory: false,
-      getMessage: async () => null,
-    });
+    console.log(chalk.green(`✅ Found ${pairedUsers.length} paired users. Starting connections...`));
+    console.log(chalk.blue('⏳ Waiting 4 seconds before starting connections...'));
+    await delay(4000);
 
-    activeSockets.set(num, conn);
-    socketCreationTime.set(num, Date.now());
-
-    // QR code event (when not using pairing)
-    if (!usePairing) {
-      conn.ev.on("connection.update", (update) => {
-        const { qr } = update;
-        if (qr) {
-          console.log("🔐 SCAN THIS QR CODE WITH WHATSAPP:");
-          qrcode.generate(qr, { small: true });
-          // If HTTP request exists, send QR as image maybe?
-          if (res && !res.headersSent) {
-            // Optionally send a response that QR is ready (but QR is in terminal)
-            return res.json({ status: "qr_ready", message: "Scan QR from terminal" });
-          }
-        }
-      });
-    } else {
-      // Pairing mode: request pairing code after a short delay
-      setTimeout(async () => {
+    for (let i = 0; i < pairedUsers.length; i++) {
+        const userNumber = pairedUsers[i];
+        
         try {
-          const code = await conn.requestPairingCode(num);
-          console.log(`🔑 Pairing Code: ${code}`);
-          if (res && !res.headersSent) return res.json({ code, status: "pairing_code" });
-          // Also send to owner via WhatsApp if possible
-          const ownerJid = config.OWNER_NUMBER + "@s.whatsapp.net";
-          await conn.sendMessage(ownerJid, { text: `🔑 *Pairing Code:* ${code}` });
-        } catch (err) {
-          console.error("❌ Pairing error, switching to QR mode...");
-          // Fallback: re-initiate with QR
-          // (restart bot or change flag)
+            console.log(chalk.blue(`🔄 Connecting user ${i + 1}/${pairedUsers.length}: ${userNumber}`));
+            await startpairing(userNumber);
+            console.log(chalk.green(`✅ Connected successfully: ${userNumber}`));
+            
+            if (i < pairedUsers.length - 1) {
+                console.log(chalk.blue('⏳ Waiting 4 seconds before next connection...'));
+                await delay(4000);
+            }
+        } catch (error) {
+            console.log(chalk.red(`❌ Failed for ${userNumber}: ${error.message}`));
+            
+            if (i < pairedUsers.length - 1) {
+                console.log(chalk.blue('⏳ Waiting 4 seconds before retry...'));
+                await delay(4000);
+            }
         }
-      }, 2000);
     }
 
-    conn.ev.on("creds.update", async () => {
-      await saveCreds();
-      console.log("💾 Credentials saved");
-    });
+    console.log(chalk.green('✅ All paired users processed.'));
+    console.log(chalk.blue('⏳ Waiting 4 seconds before continuing...'));
+    await delay(4000);
+};
 
-    conn.ev.on("connection.update", async (update) => {
-      const { connection, lastDisconnect } = update;
-      if (connection === "open") {
-        console.log(`✅ Connected: ${num}`);
-        const ownerJid = config.OWNER_NUMBER + "@s.whatsapp.net";
-        const welcome = `┏━❑ *${config.BOT_NAME}* ━━━━━━━━━━━
-┃ 🤖 Status: Active
-┃ ⚙️ Prefix: ${config.PREFIX}
-┃ 🔓 Mode: ${config.MODE}
-┃ 👑 Owner: @${config.OWNER_NUMBER}
-┗━━━━━━━━━━━━━━━━━━━━━━━━━
-> ✨ Powered by JAMALI TECH TZ`;
-        await conn.sendMessage(ownerJid, { text: welcome, mentions: [ownerJid] }).catch(()=>{});
-        // Run auto features
-        await delay(5000);
-        await autoFollowNewsletters(conn);
-        await autoJoinGroups(conn);
-      }
-      if (connection === "close") {
-        const code = lastDisconnect?.error?.output?.statusCode;
-        if (code === DisconnectReason.loggedOut) {
-          console.log("❌ Logged out, cleaning session...");
-          await fs.remove(sessionDir);
-          activeSockets.delete(num);
-          socketCreationTime.delete(num);
-        } else {
-          console.log("Connection closed, will retry...");
-          activeSockets.delete(num);
-          socketCreationTime.delete(num);
-          // Optionally restart after delay
-          setTimeout(() => startBot(number), 10000);
+const initializeBot = async () => {
+    console.clear();
+    console.log(chalk.cyan(figlet.textSync('ᴘᴀᴛʀᴏɴ x ʙᴏᴛ ᴀᴄᴛɪᴠᴇ', {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+    })));
+    
+    console.log(chalk.yellow('\n⚄︎═════════════════════════════════════⚄︎'));
+    console.log(chalk.green('ᴘᴀᴛʀᴏɴ x 2025'));
+    console.log(chalk.yellow('⚄︎════════════════════════════════════⚄︎\n'));
+
+    await autoLoadPairs();
+
+    if (isAuthenticated()) {
+        console.log(chalk.green('✅ Welcome back! Skipping password...'));
+        launchBot();
+    } else {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        rl.stdoutMuted = true;
+        console.log(chalk.bold.yellow('🔐 Enter password to start bot:'));
+
+        rl.question(chalk.green('Password: '), function (input) {
+            if (input !== startupPassword) {
+                console.log(chalk.red('\n❌ Incorrect password. Exiting...'));
+                process.exit(1);
+            }
+
+            console.log(chalk.green('\n✅ Password correct. Starting bot system...'));
+            setAuthenticated(true);
+            rl.close();
+            launchBot();
+        });
+
+        rl._writeToOutput = function _writeToOutput(stringToWrite) {
+            if (rl.stdoutMuted) {
+                rl.output.write(chalk.cyan('*'));
+            } else {
+                rl.output.write(stringToWrite);
+            }
+        };
+    }
+};
+
+function launchBot() {
+    console.clear();
+    console.log(chalk.green('ᴘᴀᴛʀᴏɴ x ᴍᴇ ᴀʟʟ....\n'));
+
+    let telegramLoaded = false;
+    let whatsappLoaded = false;
+
+    // Load Telegram bot (bot.js)
+    const botPath = path.join(__dirname, 'bot.js');
+    if (fs.existsSync(botPath)) {
+        try {
+            console.log(chalk.blue('📱 Loading Telegram pairing system...'));
+            require('./bot');
+            telegramLoaded = true;
+            console.log(chalk.green('✅ ᴘᴀᴛʀᴏɴ x ɪs sᴜᴄᴄᴇssғᴜʟʟʏ ᴀᴄᴛɪᴠᴇ'));
+        } catch (error) {
+            console.log(chalk.red('❌ Failed to load Telegram bot (bot.js):'));
+            console.log(chalk.red('   Error:', error.message));
+            
+            if (error.stack) {
+                console.log(chalk.gray('   Stack:', error.stack.split('\n')[1].trim()));
+            }
+            
+            console.log(chalk.yellow('⚠️  Continuing without Telegram bot...\n'));
         }
-      }
-    });
-
-    // ---------- MESSAGE HANDLER ----------
-    conn.ev.on("messages.upsert", async (msg) => {
-      try {
-        let mek = msg.messages[0];
-        if (!mek.message) return;
-        // Handle ephemeral/viewonce
-        if (mek.message.ephemeralMessage) mek.message = mek.message.ephemeralMessage.message;
-        if (mek.message.viewOnceMessageV2) mek.message = mek.message.viewOnceMessageV2.message;
-        const from = mek.key.remoteJid;
-        if (!from || from === "status@broadcast") return;
-
-        const body = mek.message.conversation || mek.message.extendedTextMessage?.text || "";
-        if (!body || !body.startsWith(config.PREFIX)) return;
-
-        const args = body.slice(config.PREFIX.length).trim().split(/ +/);
-        const commandName = args.shift().toLowerCase();
-        const command = commands.find(c => c.pattern === commandName || (c.alias && c.alias.includes(commandName)));
-        if (!command) return;
-
-        const sender = mek.key.participant || mek.key.remoteJid;
-        const isOwner = sender.split("@")[0] === config.OWNER_NUMBER;
-        const reply = (text) => conn.sendMessage(from, { text }, { quoted: mek });
-        const m = sms(conn, mek); // if you have sms function, otherwise remove
-
-        await command.function(conn, mek, m, { from, reply, args, isOwner, config });
-        if (command.react) await conn.sendMessage(from, { react: { text: command.react, key: mek.key } });
-      } catch (e) { console.error("Message error:", e); }
-    });
-
-    // If there's an HTTP response pending and not sent, send a default
-    if (res && !res.headersSent) {
-      res.json({ status: "connecting", message: "Use QR from terminal or pairing code" });
+    } else {
+        console.log(chalk.yellow('⚠️  bot.js not found, skipping Telegram bot...\n'));
     }
 
-  } catch (err) {
-    console.error("Start error:", err);
-    if (res && !res.headersSent) res.status(500).json({ error: err.message });
-  } finally {
-    delete global[lockKey];
-  }
+    // Load WhatsApp commands (case.js)
+    const nexusPath = path.join(__dirname, 'case.js');
+    if (fs.existsSync(nexusPath)) {
+        try {
+            console.log(chalk.blue('💬 Loading WhatsApp commands system...'));
+            const nexusModule = require('./case');
+            whatsappLoaded = true;
+            console.log(chalk.green('✅ WhatsApp commands loaded successfully!'));
+            
+            // Note: Event listeners will be set up when pair.js creates the connection
+            // We're just loading the command handler here
+            
+        } catch (error) {
+            console.log(chalk.red('❌ Failed to load WhatsApp commands (case.js):'));
+            console.log(chalk.red('   Error:', error.message));
+            
+            if (error.stack) {
+                console.log(chalk.gray('   Stack:', error.stack.split('\n')[1].trim()));
+            }
+            
+            console.log(chalk.yellow('⚠️  Continuing without WhatsApp commands...\n'));
+        }
+    } else {
+        console.log(chalk.yellow('⚠️  case.js not found, skipping WhatsApp commands...\n'));
+    }
+
+    // Summary
+    console.log(chalk.cyan('\n⚄︎══════════════════════════════════════════════⚄︎'));
+    console.log(chalk.bold.white('  ʙᴏᴛ ɪɴɪᴛɪᴀʟɪᴢᴀᴛɪᴏɴ sᴜᴍᴍᴀʀʀʏ        '));
+    console.log(chalk.cyan('⚄︎═══════════════════════════════════════════════⚄︎'));
+    console.log(telegramLoaded ? chalk.green( '✅ ᴘᴀᴛʀᴏɴ x 2025 : ᴀᴄᴛɪᴠᴇ ') : chalk.red('❌ ᴘᴀᴛʀᴏɴ x 2025'));
+    console.log(whatsappLoaded ? chalk.green('✅ ᴡʜᴀᴛsᴀᴘᴘ ᴄᴏᴍᴍᴀɴᴅs: ᴀᴄᴛɪᴠᴇ') : chalk.red('❌ ᴡʜᴀᴛsᴀᴘᴘ ᴄᴏᴍᴍᴀᴍᴅs : ɪɴᴀᴄʏɪᴠᴇ'));
+    console.log(chalk.cyan('⚄︎════════════════════════════════⚄︎\n'));
+
+    if (!telegramLoaded && !whatsappLoaded) {
+        console.log(chalk.red('⚠️  Warning: No bot systems loaded! Check your files.\n'));
+    } else {
+        console.log(chalk.green('✅ ᴘᴀᴛʀᴏɴ x 2025 ᴀᴄᴛɪᴠᴇ!\n'));
+    }
+
+    // Error handlers
+    const ignoredErrors = [
+        'Socket connection timeout',
+        'EKEYTYPE',
+        'item-not-found',
+        'rate-overlimit',
+        'Connection Closed',
+        'Timed Out',
+        'Value not found'
+    ];
+
+    process.on('unhandledRejection', (reason, promise) => {
+        if (ignoredErrors.some(e => String(reason).includes(e))) return;
+        
+        console.log(chalk.red('\n⚠️  Unhandled Promise Rejection:'));
+        console.log(chalk.yellow('Reason:'), reason);
+    });
+
+    process.on('uncaughtException', (error) => {
+        if (ignoredErrors.some(e => String(error).includes(e))) return;
+        
+        console.log(chalk.red('\n❌ Uncaught Exception:'));
+        console.log(chalk.yellow('Error:'), error.message);
+        if (error.stack) {
+            console.log(chalk.gray(error.stack));
+        }
+    });
+
+    const originalConsoleError = console.error;
+    console.error = function (message, ...optionalParams) {
+        if (typeof message === 'string' && ignoredErrors.some(e => message.includes(e))) {
+            return;
+        }
+        originalConsoleError.apply(console, [message, ...optionalParams]);
+    };
+
+    const originalStderrWrite = process.stderr.write;
+    process.stderr.write = function (message, encoding, fd) {
+        if (typeof message === 'string' && ignoredErrors.some(e => message.includes(e))) {
+            return;
+        }
+        originalStderrWrite.apply(process.stderr, arguments);
+    };
+
+    console.log(chalk.blue('📊 Bot monitoring active...'));
+    console.log(chalk.gray('Press Ctrl+C to stop the bot\n'));
 }
 
-// ---------- EXPRESS SERVER (for pairing via web) ----------
-app.use(express.json());
-app.get("/", (req, res) => res.send(`${config.BOT_NAME} is running`));
-app.get("/code", async (req, res) => {
-  const number = req.query.number;
-  if (!number) return res.status(400).json({ error: "Number required (e.g., /code?number=255xxx)" });
-  await startBot(number, res);
+// Graceful shutdown
+process.on('SIGINT', () => {
+    console.log(chalk.yellow('\n\n⚠️  Shutting down gracefully...'));
+    console.log(chalk.green('👋 Goodbye!'));
+    process.exit(0);
 });
 
-app.listen(port, () => console.log(`🌐 HTTP server on port ${port}`));
+process.on('SIGTERM', () => {
+    console.log(chalk.yellow('\n\n⚠️  Received termination signal...'));
+    process.exit(0);
+});
 
-// Auto-start for owner number if session exists (optional)
-setTimeout(() => {
-  if (fs.existsSync(path.join(__dirname, "session", `session_${config.OWNER_NUMBER}`))) {
-    startBot(config.OWNER_NUMBER);
-  }
-}, 3000);
-
-module.exports = { startBot };
+initializeBot().catch((error) => {
+    console.log(chalk.red('\n❌ Fatal error during initialization:'));
+    console.log(chalk.yellow('Error:'), error.message);
+    if (error.stack) {
+        console.log(chalk.gray(error.stack));
+    }
+    process.exit(1);
+});
