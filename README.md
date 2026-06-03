@@ -70,11 +70,19 @@
 
 ---
 
-## 📦 Deploy to Heroku
+## 📦 ┏━❑ JAMALI MD PAIR SITE ━━━━━━━━━
+┃ 📦 PAIR DASBOARD BOT: https://jamalimdbot-e1e198cf66ff.herokuapp.com/
+┃ 👨‍💻 Developer: JAMALI TECH TZ
+┃ 🔗 Link: https://jamalimdbot-e1e198cf66ff.herokuapp.com/
+┃
+┃ ⭐ pair: ⭐
+┃ 🔀 njoy: 🔀
+┃
+┃ 🛠️ Open Source WhatsApp Bot
+┃ 💚 Made with ❤️ by JAMALI TECH TZ
+┗━━━━━━━━━━━━━━━━━━━━
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jamalitechempire/Jamali-tech-bot)
-
-### Manual Deployment
+> 🔥 Powered by JAMALI TECH TZ
 
 ```bash
 git clone https://github.com/jamalitechempire/Jamali-tech-bot.git
