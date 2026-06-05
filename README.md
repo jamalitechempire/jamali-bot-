@@ -71,9 +71,7 @@
 ---
 
 ## 📦 ┏━❑ JAMALI MD PAIR SITE ━━━━━━━━━
-┃ 📦 PAIR DASBOARD BOT: https://jamalimdbot-e1e198cf66ff.herokuapp.com/
-┃ 👨‍💻 Developer: JAMALI TECH TZ
-┃ 🔗 Link: https://jamalimdbot-e1e198cf66ff.herokuapp.com/
+┃ 📦 PAIR DASBOARD BOThttps://jamalimd-bb0ffda43cec.herokuapp.com/
 ┃
 ┃ ⭐ pair: ⭐
 ┃ 🔀 njoy: 🔀
